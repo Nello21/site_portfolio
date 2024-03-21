@@ -1,0 +1,16 @@
+.leftMenu {
+    position: sticky;
+    /* Цвет фона левого меню */
+    padding: 26px;
+    width: 220px;
+    top: 60
+  }
+  
+
+.icon {
+    font-size: 20px;
+    margin-right: 10px;
+    /* border-bottom: 3px solid orange */
+  }
+
+

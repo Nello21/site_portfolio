@@ -1,0 +1,24 @@
+.menuItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    
+    font-weight: 600;
+    font-family: Arial;
+    text-decoration: none;
+    color:dimgray;
+  }
+  
+
+
+  .active {
+    color: black;
+    font-weight: 800;
+  }
+
+
+  .menuItem:hover {
+    color: black;
+    transition: color .3s ease;
+  }
