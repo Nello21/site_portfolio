@@ -1,0 +1,102 @@
+import { createSlice } from '@reduxjs/toolkit';
+
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { fetchUserReviews, postAuthData, postRegisterData } from './effects';
+
+type User = {
+  id: number | null;
+  fullName: string | null;
+  email: string | null;
+  token: string | null;
+  avatar: string | null;
+};
+
+export type Review = {
+  movies_data_id: number | null;
+  user_id: number | null;
+  review: string | null;
+  rating: number | null;
+};
+
+type UserSliceState = {
+  user: User;
+  isLoading: boolean;
+  registerStatus: 'idle' | 'pending' | 'fulfilled' | 'rejected';
+  error: string | null;
+  userReviews: Review[];
+};
+
+const initialState: UserSliceState = {
+  user: {
+    id: null,
+    fullName: null,
+    email: null,
+    token: null,
+    avatar: null,
+  },
+  isLoading: false,
+  registerStatus: 'idle',
+  error: null,
+  userReviews: [],
+};
+
+export const userSlice = createSlice({
+  name: 'userData',
+  initialState,
+  reducers: {
+    setUserData: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+    },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setRegisterStatus: (state, action: PayloadAction<UserSliceState['registerStatus']>) => {
+      state.registerStatus = action.payload;
+    },
+    setUserReviews: (state, action: PayloadAction<Review[]>) => {
+      state.userReviews = action.payload;
+    },
+    clearUserStore: () => initialState,
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(postAuthData.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(postAuthData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(postAuthData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Что-то пошло не так';
+      })
+      .addCase(postRegisterData.pending, state => {
+        state.isLoading = true;
+        state.registerStatus = 'pending';
+      })
+      .addCase(postRegisterData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.registerStatus = 'fulfilled';
+      })
+      .addCase(postRegisterData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Что-то пошло не так';
+        state.registerStatus = 'rejected';
+      })
+      .addCase(fetchUserReviews.fulfilled, (state, action) => {
+        state.userReviews = action.payload;
+      });
+  },
+  selectors: {
+    getUserIsLoading: state => state.isLoading,
+    getRegisterStatus: state => state.registerStatus,
+    getUserToken: state => state.user.token,
+    getUserAvatar: state => state.user.avatar,
+    getUserReviews: state => state.userReviews,
+  },
+});
+
+export const userActions = userSlice.actions;
+
+export const { getUserAvatar, getUserIsLoading, getRegisterStatus, getUserToken, getUserReviews } = userSlice.selectors;

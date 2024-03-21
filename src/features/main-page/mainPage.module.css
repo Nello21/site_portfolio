@@ -1,0 +1,64 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.hitContainer {
+    margin: none;
+    padding: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.hitPoster{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+    background-color: black;
+    width: 750px;
+    height:550px;
+    border-radius: 20px;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    background-image: url('https://rare-gallery.com/livewalls/imgpreview/93006-Storm-In-The-Ocean.jpg');
+
+}
+
+.cinemaCard {
+ width: 400px;
+ height: 450px;
+ border-radius: 10px;
+ opacity: 1;
+}
+
+.cinemaCard:hover {
+    opacity: 85%;
+    box-shadow: 0 0 5px 5px rgba(242, 130, 18, 0.5);
+    transition: box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.moviesCards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.rating {
+    background-color: green;
+    z-index: 0;
+    position: absolute;
+    color: white;
+    font-size: 32px;
+    font-weight: bolder;
+    left: 50px;
+    top: 60px;
+   }

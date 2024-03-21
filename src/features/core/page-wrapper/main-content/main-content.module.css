@@ -1,5 +1,5 @@
 .root {
-    /* padding: 16px; */
     width: 100%;
-    /* max-width: 1000px; */
+    min-height: 800px;
+    border-left: 1px solid gray;
 }

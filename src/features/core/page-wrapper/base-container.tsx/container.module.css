@@ -1,5 +1,16 @@
 .baseContainer {
     position: relative;
-    background-color: white;
+    background-color: gainsboro;
     height: 100%;
+    /* display: grid;
+    grid-template-rows: min-content auto;     */
+    width: 100%;
+    max-width: 1920px; 
 }
+
+  
+  @media (max-width: 768px) {
+    .baseContainer {
+      max-width: none; 
+    }
+  }

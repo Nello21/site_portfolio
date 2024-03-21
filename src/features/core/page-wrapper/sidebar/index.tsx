@@ -12,21 +12,22 @@ import { NavButton } from 'shared/components/NavButton/navButton';
 export const Sidebar = () => {
   return (
     <nav className={styles.leftMenu}>
-      <NavButton url={`${ROUTES.root}?category=all`} className={styles.icon} icon={<House />}>
-        <span>Главная</span>
-      </NavButton>
-      <NavButton url={ROUTES.cinema} className={styles.icon} icon={<Play />}>
-        <span>Онлайн-кинотеатр</span>
-      </NavButton>
-      <NavButton url={ROUTES.movies} className={styles.icon} icon={<Movie />}>
-        <span>Фильмы</span>
-      </NavButton>
-      <NavButton url={ROUTES.serials} className={styles.icon} icon={<Serial />}>
-        <span>Сериалы</span>
-      </NavButton>
-      <NavButton url={ROUTES.tickets} className={styles.icon} icon={<Ticket />}>
-        <span>Билеты в кино</span>
-      </NavButton>
+      <div className={styles.menuItem}>
+        <NavButton url={`${ROUTES.root}?category=all`} className={styles.icon} icon={<House />}>
+          <span>Главная</span>
+        </NavButton>
+      </div>
+      <div className={styles.menuItem}>
+        <NavButton url={ROUTES.cinema} className={styles.icon} icon={<Play />}>
+          <span>Онлайн-кинотеатр</span>
+        </NavButton>
+      </div>
+      <div className={styles.menuItem}>
+        <NavButton url={ROUTES.navigator} className={styles.icon} icon={<Movie />}>
+          <span>Навигатор</span>
+        </NavButton>
+      </div>
+      <div className={styles.tooltip}></div>
     </nav>
   );
 };

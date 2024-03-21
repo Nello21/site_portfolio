@@ -1,0 +1,62 @@
+.moviesContainer {
+    margin-top: 30px;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(5, 200px);
+    gap:15px;
+    transition: all 0.5s ease;
+}
+
+.NameFilter {
+    margin: 15px;
+    display: flex;
+    font-family: sans-serif;
+    font-weight:bold;
+}
+
+.section {
+    flex-direction: 'column';
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+.text{
+    font-size: larger;
+}
+
+.checkboxContainer {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.checkboxInput {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  
+  .checkboxText {
+    font-weight: 400;
+    font-size: 16px;
+    color: #333;
+  }
+
+
+
+.select{
+    margin-top: 10px;
+}
+
+.sectionNumber {
+    display: flex;
+    background-color: orange;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+  }

@@ -1,7 +1,7 @@
 export const ROUTES = {
   root: '/',
+  auth: '/auth',
+  register: '/register',
   cinema: '/online-cinema',
-  movies: '/movies',
-  serials: '/serials',
-  tickets: '/tickets',
+  navigator: '/navigator',
 };

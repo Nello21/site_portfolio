@@ -1,0 +1,28 @@
+.article {
+   display: flex;
+   position: relative;
+   align-items: center;
+   width: 200px;
+   cursor: pointer;
+}
+
+.article img {
+   height: 300px;
+   width: 200px;
+   border-radius: 5px;
+}
+
+.text {
+   background-color: green;
+   z-index: 0;
+   position: absolute;
+   color: white;
+   font-size: 24px;
+   font-weight: bold;
+   left: 20px;
+   top: 50px;
+  }
+
+.article:hover {
+   opacity: 80%;
+}

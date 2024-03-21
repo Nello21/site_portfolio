@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* padding: 10px; */
+    margin: 10px;
+    position: relative;
+    height: 300px;
+    width: 830px;
+  }
+
+.content {
+  /* padding: 10px; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: black;
+  overflow: hidden;
+  /* overflow-x: scroll; */
+  /* scroll-behavior: smooth; */
+  transition: all 0.5s ease;
+}
+
+
+.container .rightScrollButton,
+.container .leftScrollButton{
+  position: absolute;
+  top: 40%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border:none;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  color:gray;
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 1;
+  transition: color 0.25s ease, translate .35s ease;
+}
+
+
+.leftScrollButton {
+  left: -18px;
+  box-shadow: -1px 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.rightScrollButton {
+  right: -18px;
+  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.leftScrollButton:hover {
+ translate: -4px;
+ color: black;
+}
+
+.rightScrollButton:hover {
+  translate: 4px;
+  color: black;
+}

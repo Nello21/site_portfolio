@@ -2,6 +2,12 @@ import React, { ReactNode } from 'react';
 import styles from './header.module.css';
 import { DropButton } from 'shared/components/DropButton/dropButton';
 import Basket from 'shared/assets/icons/basketball-solid.svg';
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from 'store';
+import { useSelector } from 'react-redux';
+import { getUserToken, userActions } from 'features/auth/model/store/slice';
+import { STORAGE_KEY, setStorageItem } from 'services/storage';
+import { ROUTES } from 'router/routes';
 
 export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
   return (
@@ -26,15 +32,38 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
             </div>
             <div className={styles.menuItem}>
               <span>Профиль</span>
-              <span>Поддержка</span>
-              <span>Разное</span>
-              <span>Профиль</span>
-              <span>Поддержка</span>
-              <span>Разное</span>
+              <span>Избранное</span>
+              <span>
+                <LoginButton />
+              </span>
+              <span className={styles.tooltip}></span>
             </div>
           </div>
         </div>
       </div>
     </nav>
+  );
+};
+
+const LoginButton = () => {
+  const dispatch = useAppDispatch();
+  const token = useSelector(getUserToken);
+
+  const logout = () => {
+    dispatch(userActions.clearUserStore());
+    setStorageItem(STORAGE_KEY.USER_DATA, null);
+  };
+
+  if (token)
+    return (
+      <button className={styles.newPostButton} onClick={logout}>
+        Выйти
+      </button>
+    );
+
+  return (
+    <Link to={ROUTES.auth} className={styles.newPostButton}>
+      Войти
+    </Link>
   );
 };
