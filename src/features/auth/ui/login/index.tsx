@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { useAppDispatch } from 'store';
-import { getUserIsLoading, getUserToken } from '../../model/store/slice';
+import { getUserIsLoading, getUserToken, userActions } from '../../model/store/slice';
 import { postAuthData } from '../../model/store/effects';
 import { ROUTES } from 'router/routes';
 import styles from './loginForm.module.css';

@@ -7,6 +7,7 @@ import { AuthPage } from 'pages/Auth';
 import { Register } from 'pages/Register';
 import { RootPage } from 'pages/RootPage';
 import { MoviePage } from 'pages/MoviePage';
+import { UserProfile } from 'pages/UserProfile';
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.auth,
         element: <AuthPage />,
+      },
+      {
+        path: `${ROUTES.userProfile}/:id`,
+        element: <UserProfile />,
       },
       { path: ROUTES.cinema, element: <OnlineCinema /> },
       { path: `${ROUTES.cinema}/:id`, element: <MoviePage /> },

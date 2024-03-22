@@ -1,9 +1,12 @@
+import { cinemaData } from 'shared/types/cinemaData';
+
 export type User = {
   id: number;
   fullName: string;
   email: string;
   token: string;
   avatar: string;
+  favorites_movies: cinemaData[];
 };
 
 export type Users = {
@@ -11,6 +14,7 @@ export type Users = {
   fullName: string;
   email: string;
   avatar: string;
+  favorites_movies: cinemaData[];
 };
 
 export type Review = {
@@ -21,8 +25,11 @@ export type Review = {
 };
 
 export type ReviewWithUser = {
-  review: Review;
-  user: User;
+  movies_data_id: number;
+  movie_name: string;
+  review: string;
+  rating: number;
+  user: Users;
 };
 
 export type UserResponse = {

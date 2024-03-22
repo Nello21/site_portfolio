@@ -1,0 +1,38 @@
+.userPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .avatarContainer {
+    margin-bottom: 20px;
+  }
+  
+  .avatar {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .fullName {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .comments {
+    width: 100%;
+  }
+  
+  .commentList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .commentItem {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }

@@ -1,30 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { fetchUser } from './effects';
+import { cinemaData } from 'shared/types/cinemaData';
 
-type Users = {
+type User = {
   id: number | null;
   fullName: string | null;
   email: string | null;
   avatar: string | null;
+  favorites_movies: cinemaData[];
 };
 
 type UserSliceState = {
-  users: Users[];
+  user: User;
   isLoading: boolean;
   error: string | null;
 };
 
 const initialState: UserSliceState = {
-  users: [],
+  user: {
+    id: null,
+    fullName: null,
+    email: null,
+    avatar: null,
+    favorites_movies: [],
+  },
   isLoading: false,
   error: null,
 };
 
-export const allUserSlice = createSlice({
-  name: 'OneUserData',
+export const userProfileSlice = createSlice({
+  name: 'userProfileData',
   initialState,
   reducers: {
+    setUserData: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+    },
     clearUserStore: () => initialState,
   },
   extraReducers: builder => {
@@ -34,19 +46,19 @@ export const allUserSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.users = action.payload;
+        state.user = action.payload;
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || 'Ошибка';
+        state.error = action.error.message || 'Что-то пошло не так';
       });
   },
   selectors: {
     getUserIsLoading: state => state.isLoading,
-    getUsers: state => state.users,
+    getUserProfile: state => state.user,
   },
 });
 
-export const userActions = allUserSlice.actions;
+export const userActions = userProfileSlice.actions;
 
-export const { getUserIsLoading, getUsers } = allUserSlice.selectors;
+export const { getUserProfile, getUserIsLoading } = userProfileSlice.selectors;

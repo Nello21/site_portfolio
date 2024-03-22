@@ -18,13 +18,13 @@ export const Sidebar = () => {
         </NavButton>
       </div>
       <div className={styles.menuItem}>
-        <NavButton url={ROUTES.cinema} className={styles.icon} icon={<Play />}>
-          <span>Онлайн-кинотеатр</span>
+        <NavButton url={ROUTES.navigator} className={styles.icon} icon={<Movie />}>
+          <span>Навигатор</span>
         </NavButton>
       </div>
       <div className={styles.menuItem}>
-        <NavButton url={ROUTES.navigator} className={styles.icon} icon={<Movie />}>
-          <span>Навигатор</span>
+        <NavButton url={ROUTES.cinema} className={styles.icon} icon={<Play />}>
+          <span>Онлайн-кинотеатр</span>
         </NavButton>
       </div>
       <div className={styles.tooltip}></div>

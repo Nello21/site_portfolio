@@ -1,15 +1,20 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import styles from './header.module.css';
 import { DropButton } from 'shared/components/DropButton/dropButton';
 import Basket from 'shared/assets/icons/basketball-solid.svg';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { useSelector } from 'react-redux';
-import { getUserToken, userActions } from 'features/auth/model/store/slice';
+import { getUserToken, userActions, getUser } from 'features/auth/model/store/slice';
 import { STORAGE_KEY, setStorageItem } from 'services/storage';
 import { ROUTES } from 'router/routes';
 
 export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
+  const dispatch = useAppDispatch();
+  const token = useSelector(getUserToken);
+  const user = useSelector(getUser);
+  console.log(user);
+
   return (
     <nav className={styles.headerContainer}>
       <div className={styles.leftSection}>
@@ -22,21 +27,34 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
       <div className={styles.rightSection}>
         <div className={styles.iconNotification}>🔖</div>
         <div className={styles.avatar}>
+          <img src={String(user.avatar)} className={styles.avatar} />
           <div className={styles.dropMenu}>
             <div className={styles.menuHeader}>
-              <div className={styles.userName}>
-                user name
-                <div className={styles.userEmail}>user1@email.com</div>
-              </div>
-              <div className={styles.menuAvatar}></div>
+              {token ? (
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div className={styles.userName}>
+                    {user.fullName}
+                    <div className={styles.userEmail}>{user.email}</div>
+                  </div>
+                  <img src={String(user.avatar)} className={styles.menuAvatar}></img>
+                </div>
+              ) : (
+                <div className={styles.userName}>Войдите</div>
+              )}
             </div>
             <div className={styles.menuItem}>
-              <span>Профиль</span>
-              <span>Избранное</span>
-              <span>
-                <LoginButton />
-              </span>
-              <span className={styles.tooltip}></span>
+              {token ? (
+                <div>
+                  <Link to={`${ROUTES.userProfile}/${user.id}`} style={{ textDecoration: 'none' }}>
+                    <span>Профиль</span>
+                  </Link>
+                  <span>Избранное</span>
+                </div>
+              ) : (
+                <div></div>
+              )}
+              <LoginButton />
+              {/* <span className={styles.tooltip}></span> */}
             </div>
           </div>
         </div>
@@ -56,14 +74,14 @@ const LoginButton = () => {
 
   if (token)
     return (
-      <button className={styles.newPostButton} onClick={logout}>
+      <span className={styles.newPostButton} onClick={logout}>
         Выйти
-      </button>
+      </span>
     );
 
   return (
-    <Link to={ROUTES.auth} className={styles.newPostButton}>
-      Войти
+    <Link to={ROUTES.auth} className={styles.newPostButton} style={{ textDecoration: 'none' }}>
+      <span style={{ color: 'orange' }}>Войти</span>
     </Link>
   );
 };

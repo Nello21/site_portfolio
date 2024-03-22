@@ -25,7 +25,7 @@
     display: block;
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: orange;
     color: white;
     border: none;
     border-radius: 10px;
@@ -33,11 +33,15 @@
     height: 45px;
     text-align: center;
     cursor: pointer;
+    transition: background-color 0.35s ease;
   }
+
   
-  .watchButton:hover {
-    background-color: #0056b3;
+  .closeButton {
+    color: white;
+    background-color:orangered;
   }
+
   
   .ratingSection {
     padding-top: 10px;
@@ -45,7 +49,7 @@
     align-items: center;
   }
   
-  .starFilled, .starEmpty {
+  .starFilled {
     font-size: 30px;
     color: #f0ad4e;
   }
@@ -65,4 +69,30 @@
   .description p {
     font-size: 16px;
     line-height: 1.5;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  .video-container {
+    animation: fade-in 1s ease-in-out;
+  }
+  
+  .video-hidden {
+    animation: fade-out 1s ease-in-out;
   }

@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { fetchUserReviews, postAuthData, postRegisterData } from './effects';
+import { postAuthData, postRegisterData } from './effects';
+import { cinemaData } from 'shared/types/cinemaData';
 
 type User = {
   id: number | null;
@@ -9,6 +10,7 @@ type User = {
   email: string | null;
   token: string | null;
   avatar: string | null;
+  favorites_movies: cinemaData[] | null;
 };
 
 export type Review = {
@@ -23,7 +25,6 @@ type UserSliceState = {
   isLoading: boolean;
   registerStatus: 'idle' | 'pending' | 'fulfilled' | 'rejected';
   error: string | null;
-  userReviews: Review[];
 };
 
 const initialState: UserSliceState = {
@@ -33,11 +34,11 @@ const initialState: UserSliceState = {
     email: null,
     token: null,
     avatar: null,
+    favorites_movies: [],
   },
   isLoading: false,
   registerStatus: 'idle',
   error: null,
-  userReviews: [],
 };
 
 export const userSlice = createSlice({
@@ -52,9 +53,6 @@ export const userSlice = createSlice({
     },
     setRegisterStatus: (state, action: PayloadAction<UserSliceState['registerStatus']>) => {
       state.registerStatus = action.payload;
-    },
-    setUserReviews: (state, action: PayloadAction<Review[]>) => {
-      state.userReviews = action.payload;
     },
     clearUserStore: () => initialState,
   },
@@ -83,20 +81,17 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || 'Что-то пошло не так';
         state.registerStatus = 'rejected';
-      })
-      .addCase(fetchUserReviews.fulfilled, (state, action) => {
-        state.userReviews = action.payload;
       });
   },
   selectors: {
     getUserIsLoading: state => state.isLoading,
     getRegisterStatus: state => state.registerStatus,
     getUserToken: state => state.user.token,
-    getUserAvatar: state => state.user.avatar,
-    getUserReviews: state => state.userReviews,
+    getUserId: state => state.user.id,
+    getUser: state => state.user,
   },
 });
 
 export const userActions = userSlice.actions;
 
-export const { getUserAvatar, getUserIsLoading, getRegisterStatus, getUserToken, getUserReviews } = userSlice.selectors;
+export const { getUser, getUserId, getUserIsLoading, getRegisterStatus, getUserToken } = userSlice.selectors;

@@ -171,6 +171,7 @@ module.exports = env => {
     plugins: [
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'template', 'index.html'),
+        publicPath: isDev ? '/' : 'auto',
       }),
       new ForkTsCheckerWebpackPlugin({
         async: false,
