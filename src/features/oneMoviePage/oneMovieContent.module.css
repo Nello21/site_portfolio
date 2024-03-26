@@ -1,4 +1,5 @@
-.container {
+
+  .container {
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -6,7 +7,7 @@
   
   .movieInfo {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-bottom: 20px;
   }
   
@@ -17,8 +18,9 @@
   }
   
   .poster {
-    width: 400px;
-    height: 500px;
+    width: 100%;
+    max-width: 400px;
+    height: auto; 
   }
   
   .watchButton {
@@ -29,37 +31,34 @@
     color: white;
     border: none;
     border-radius: 10px;
-    width: 130px;
-    height: 45px;
-    text-align: center;
+    width: 100%;
     cursor: pointer;
     transition: background-color 0.35s ease;
   }
-
-  
-  .closeButton {
-    color: white;
-    background-color:orangered;
-  }
-
   
   .ratingSection {
     padding-top: 10px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-direction: row;
   }
   
-  .starFilled {
-    font-size: 30px;
-    color: #f0ad4e;
+  .star {
+    cursor: pointer;
   }
   
-  .starEmpty {
-    color: #ccc;
+  .filledStar {
+    fill: gold;
   }
   
   .description {
-    width: 70%;
+    width: 100%; 
+    padding: 20px; 
+    background-color: #f9f9f9;
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    margin-top: 20px; 
   }
   
   .description h2 {
@@ -71,28 +70,29 @@
     line-height: 1.5;
   }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  .favoriteButtonContainer {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-top: 10px;
   }
   
-  @keyframes fade-out {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
+  .favoriteButtonLabel {
+    margin-right: 10px;
+    font-size: 20px;
   }
   
-  .video-container {
-    animation: fade-in 1s ease-in-out;
+  .favoriteButton {
+    width: 32px;
+    height: 32px;
   }
   
-  .video-hidden {
-    animation: fade-out 1s ease-in-out;
+  @media (min-width: 768px) {
+    .movieInfo {
+      flex-direction: row; 
+    }
+  
+    .description {
+      width: 70%;
+    }
   }

@@ -1,8 +1,15 @@
 .root {
-    display:flex;
+    display: flex;
     height: 100%;
     max-width: 1320px;
-    margin-left: 100px;
+    margin: 0 auto;
     background-color: white;
-    
-}
+  }
+  
+  @media (max-width: 768px) {
+    .root {
+      flex-direction: column; 
+      margin: 0;
+      padding: 16px;
+    }
+  }

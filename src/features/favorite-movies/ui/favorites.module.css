@@ -1,0 +1,60 @@
+.favoriteMoviesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .favoriteMoviesList {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px; 
+  }
+  
+  .favoriteMovieItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 2px solid #ccc; 
+    border-radius: 10px; 
+    padding: 20px;
+  }
+  
+  .movieContainer {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .movieImage {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+
+  .movieInfo {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-top: 10px;
+}
+
+.movieTitle {
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.movieDescription {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+  
+  @media screen and (max-width: 768px) {
+    .favoriteMoviesList {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    }
+  }

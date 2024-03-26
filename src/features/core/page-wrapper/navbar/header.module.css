@@ -1,209 +1,227 @@
 .headerContainer {
-    background-color: rgb(35, 32, 30);
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
-  }
+  background-color: rgb(35, 32, 30);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
+.leftSection {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.sideBar {
+  display:block
+}
+
+.burgerButton {
+  color: azure;
+  font-size: 25px;
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.siteName {
+  font-size: 25px;
+  font-weight: 600;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.siteName:hover {
+  text-shadow: 0 0 10px orange;
+  transition: text-shadow 0.3s ease, font-size 0.3s ease;
+}
+
+.centerSection {
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  padding: 5px;
+  margin-right: 10px;
+  border: none;
+  outline: 0;
+  border-radius: 10px;
+  background-color: darkgray;
+  width: 300px;
+  height: 25px;
+  box-shadow: 0;
+  transition: box-shadow 0.3s ease-in-out, background-color 0.25s ease-in-out;
+}
+
+.searchInput:hover {
+  box-shadow: -2px -1px 8px rgba(179, 0, 255), 2px 1px 8px yellow;
+}
+
+.searchInput:focus {
+  background-color: aliceblue;
+}
+
+.rightSection {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.iconNotification {
+  font-size: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: #ddd;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+
+.dropSideBar {
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+  position: absolute;
+  top: calc(120%);
+  left: 10px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  min-width: 130px;
+  max-width: 230px;
+  max-height: 150px;
+  cursor: default;
+  pointer-events: none;
+}
+
+.sideBarVisible{
+  opacity:1;
+  transition: opacity 0.35s ease;
+}
+
+.dropMenu {
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+  position: absolute;
+  top: calc(-20%);
+  right: -10px;
+  background-color: rgb(35, 32, 30);
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  min-width: 130px;
+  max-width: 230px;
+  cursor: default;
+  pointer-events: none;
+}
+.avatar:hover .dropMenu {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menuHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+.menuAvatar {
+  margin-left: 5px;
+  background-color: #ddd;
+  border: 3px solid orange;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.userName {
+  font-family: Arial;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.userEmail {
+  font-family: Arial;
+  color: white;
+  font-size: 13px;
+}
+
+.menuItem span {
+  display: block;
+  align-items: center;
+  height: 25px;
+  padding: 8px;
+  cursor: pointer;
+  color: white;
+  font-family: Arial;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.menuItem span:hover {
+  text-shadow: 0 0 3px white;
+  font-size: 20px;
+  transition: text-shadow 0.3s ease-in, font-weight 0.2s ease-in;
+}
+
+
+
+@media (max-width: 768px) {
+  .headerContainer {
+    padding: 10px;
+  }
 
   .leftSection {
-    display: flex;
-    align-items: center;
-    color: white;
-    padding-left: 90px;
+    padding-left: 10px;
   }
-
-
+  
   .burgerButton {
-    color: azure;
-    font-size: 25px;
-    font-weight: 700;
-    background: none;
-    border: none;
-    cursor: pointer;
+    padding-left: 10px;
   }
 
   .siteName {
-    font-size: 25px;
-    font-weight:600;
-    padding-left: 10px;
-    cursor: pointer;
+    display: none;
   }
 
-  .siteName:hover {
-    text-shadow: 0 0 10px orange;
-    transition: text-shadow .3s ease, font-size .3s ease;
-  }
-
-  .centerSection {
-    display: flex;
-    align-items: center;
-  }
-  
   .searchInput {
-    padding: 5px;
-    margin-right: 10px;
-    border: none;
-    outline: 0;
-    border-radius: 10px;
-    background-color: darkgray;
-    width: 300px;
-    height: 25px;
-    box-shadow: 0;
-    transition: box-shadow 0.3s ease-in-out, background-color 0.25s ease-in-out;
+    width: 200px;
   }
 
-  .searchInput:hover {
-    box-shadow: -2px -1px 8px rgba(179, 0, 255), 2px 1px 8px yellow;
-  }
-  
-  .searchInput:focus {
-    background-color: aliceblue;
-  }
-  
-  
-  .rightSection {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .iconNotification {
-    font-size: 20px;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-
-  
   .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .menuAvatar {
     width: 50px;
     height: 50px;
-    background-color: #ddd; /* Серый цвет */
-    border-radius: 50%;
-    margin-right: 10px;
-    cursor: pointer;
-    position: relative;
-    /* Вставьте фактическое изображение пользователя как фон */
-    /* background-image: url('path-to-avatar-image.jpg'); */
-    /* background-size: cover; */
-  }
-
-
-  .dropMenu {
-    opacity: 0;
-    transition: opacity .25s ease-in-out;
-    position: absolute;
-    top:-22px ;
-    right: -10px;
-    background-color: rgb(35, 32, 30);
-    border-radius: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-    padding: 10px; 
-    padding-top: 18px;
-    min-width: 230px;
-    cursor: default;
-    pointer-events: none;
-  }
-  
-  .menuHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    margin-left: 5px;
-  }
-  
-  .menuAvatar {
-    margin-left: 5px;
-    background-color: #ddd;
-    border: 3px solid orange;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 5px;
-    cursor: pointer;
-  }
-  
-  .avatar:hover .dropMenu {
-    opacity: 1;
-    pointer-events: auto;
   }
 
   .userName {
-    font-family: Arial;
-    color:white;
-    font-size: 25px;
-    cursor: pointer;
+    font-size: 20px;
   }
 
   .userEmail {
-    font-family: Arial;
-    color:white;
-    font-size: 13px;
+    font-size: 10px;
   }
-  
-
-  .menuItem span{
-    display: block;
-    align-items: center;
-    height: 25px;
-    padding: 8px;
-    cursor: pointer;
-    
-    color:white;
-    font-family: Arial;
-    font-size: large;
-    text-decoration: none;
-  }
-  
-  .menuItem span:hover {
-    text-shadow: 0 0 3px white;
-    transition: text-shadow .35s ease-in;
-  }
-
-  .tooltip {
-    position: absolute;
-    text-align: center;
-    background-color:gray;
-    box-shadow: 0 5px 10px rgba(0,0,0, 0.4);
-    border-radius: 5px;
-    width: 60%;
-    height: 35px;
-    margin-left: 10px;
-    left: 0;
-    z-index: -1;
-    top: 0;
-    display: none;
-    transition: top 0.35s ease 0s;
-  }
-
-  .menuItem span:hover  ~ .tooltip  {
-    display: block;
-  }
-
-  .menuItem span:nth-child(1):hover ~ .tooltip {
-    top: 22%;
-  }
-
-  .menuItem span:nth-child(2):hover ~ .tooltip {
-    top: 35%
-  }
-
-  .menuItem span:nth-child(3):hover ~ .tooltip {
-    top: 47.5%
-  }
-  .menuItem span:nth-child(4):hover ~ .tooltip {
-    top: 59.5%
-  }
-  .menuItem span:nth-child(5):hover ~ .tooltip {
-    top: 72%
-  }
-  .menuItem span:nth-child(6):hover ~ .tooltip {
-    top: 84.5%
-  }
+}

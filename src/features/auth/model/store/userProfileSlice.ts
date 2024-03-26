@@ -2,14 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { fetchUser } from './effects';
-import { cinemaData } from 'shared/types/cinemaData';
 
 type User = {
   id: number | null;
   fullName: string | null;
   email: string | null;
   avatar: string | null;
-  favorites_movies: cinemaData[];
+  favorite_movies: number[];
 };
 
 type UserSliceState = {
@@ -24,7 +23,7 @@ const initialState: UserSliceState = {
     fullName: null,
     email: null,
     avatar: null,
-    favorites_movies: [],
+    favorite_movies: [],
   },
   isLoading: false,
   error: null,
@@ -56,9 +55,10 @@ export const userProfileSlice = createSlice({
   selectors: {
     getUserIsLoading: state => state.isLoading,
     getUserProfile: state => state.user,
+    getUserFavoriteMovies: state => state.user.favorite_movies,
   },
 });
 
 export const userActions = userProfileSlice.actions;
 
-export const { getUserProfile, getUserIsLoading } = userProfileSlice.selectors;
+export const { getUserProfile, getUserFavoriteMovies, getUserIsLoading } = userProfileSlice.selectors;

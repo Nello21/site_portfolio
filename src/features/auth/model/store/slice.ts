@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { postAuthData, postRegisterData } from './effects';
-import { cinemaData } from 'shared/types/cinemaData';
 
 type User = {
   id: number | null;
@@ -10,7 +9,7 @@ type User = {
   email: string | null;
   token: string | null;
   avatar: string | null;
-  favorites_movies: cinemaData[] | null;
+  favorite_movies: number[] | null;
 };
 
 export type Review = {
@@ -34,7 +33,7 @@ const initialState: UserSliceState = {
     email: null,
     token: null,
     avatar: null,
-    favorites_movies: [],
+    favorite_movies: [],
   },
   isLoading: false,
   registerStatus: 'idle',
@@ -89,9 +88,11 @@ export const userSlice = createSlice({
     getUserToken: state => state.user.token,
     getUserId: state => state.user.id,
     getUser: state => state.user,
+    getAuthUserFavorites: state => state.user.favorite_movies,
   },
 });
 
 export const userActions = userSlice.actions;
 
-export const { getUser, getUserId, getUserIsLoading, getRegisterStatus, getUserToken } = userSlice.selectors;
+export const { getUser, getUserId, getUserIsLoading, getRegisterStatus, getUserToken, getAuthUserFavorites } =
+  userSlice.selectors;

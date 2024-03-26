@@ -62,3 +62,22 @@
     left: 50px;
     top: 60px;
    }
+
+   @media (max-width: 768px) {
+    .hitPoster {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  
+    .cinemaCard {
+      max-width: 90%;
+      height: auto;
+    }
+  
+    .rating {
+      font-size: 18px;
+      top: 10px;
+      left: 10px;
+    }
+  }

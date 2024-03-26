@@ -8,6 +8,7 @@ import { Register } from 'pages/Register';
 import { RootPage } from 'pages/RootPage';
 import { MoviePage } from 'pages/MoviePage';
 import { UserProfile } from 'pages/UserProfile';
+import { FavoriteMovies } from 'features/favorite-movies/ui';
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: `${ROUTES.userProfile}/:id`,
         element: <UserProfile />,
+      },
+      {
+        path: `${ROUTES.favorites}/:id`,
+        element: <FavoriteMovies />,
       },
       { path: ROUTES.cinema, element: <OnlineCinema /> },
       { path: `${ROUTES.cinema}/:id`, element: <MoviePage /> },

@@ -1,31 +1,41 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import styles from './header.module.css';
-import { DropButton } from 'shared/components/DropButton/dropButton';
-import Basket from 'shared/assets/icons/basketball-solid.svg';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { useSelector } from 'react-redux';
 import { getUserToken, userActions, getUser } from 'features/auth/model/store/slice';
 import { STORAGE_KEY, setStorageItem } from 'services/storage';
 import { ROUTES } from 'router/routes';
+import { Sidebar } from '../sidebar';
+import clsx from 'clsx';
 
 export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
-  const dispatch = useAppDispatch();
   const token = useSelector(getUserToken);
   const user = useSelector(getUser);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(prevState => !prevState);
+  };
+
   console.log(user);
 
   return (
     <nav className={styles.headerContainer}>
       <div className={styles.leftSection}>
-        <button className={styles.burgerButton}>☰</button>
+        <button className={styles.burgerButton} onClick={toggleMenu}>
+          ☰
+        </button>
+        <div className={clsx(styles.dropSideBar, { [styles.sideBarVisible]: isMenuOpen })}>
+          {isMenuOpen && <Sidebar />}
+        </div>
         <div className={styles.siteName}>КИНОЛЕНТА</div>
       </div>
       <div className={styles.centerSection}>
         <input type="text" placeholder="Search" className={styles.searchInput} onChange={onSearch} />
       </div>
       <div className={styles.rightSection}>
-        <div className={styles.iconNotification}>🔖</div>
         <div className={styles.avatar}>
           <img src={String(user.avatar)} className={styles.avatar} />
           <div className={styles.dropMenu}>
@@ -48,7 +58,9 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
                   <Link to={`${ROUTES.userProfile}/${user.id}`} style={{ textDecoration: 'none' }}>
                     <span>Профиль</span>
                   </Link>
-                  <span>Избранное</span>
+                  <Link to={`${ROUTES.favorites}/${user.id}`} style={{ textDecoration: 'none' }}>
+                    <span>Избранное</span>
+                  </Link>
                 </div>
               ) : (
                 <div></div>

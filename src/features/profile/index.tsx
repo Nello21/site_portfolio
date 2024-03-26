@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { getUserComments } from 'features/auth/model/store/reviewsSlice';
 import styles from './userProfile.module.css';
-import { getMovies } from 'store/cinema/slice';
 
 export const UserPage = () => {
   const { id } = useParams();
@@ -36,9 +35,23 @@ export const UserPage = () => {
         <div className={styles.commentList}>
           {reviews.map((review, index) => (
             <div key={index} className={styles.commentItem}>
-              <div style={{ display: 'flex', flexDirection: 'column' }}></div>
-              <div style={{ padding: '10px' }}>Название фильма: {review.movie_name}</div>
-              <div style={{ padding: '10px' }}>Отзыв: {review.review}</div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                  color: 'white',
+                  fontFamily: 'sans-serif',
+                  fontSize: '20px',
+                }}
+              >
+                <div style={{ padding: '10px', borderRadius: '10px', backgroundColor: 'orange', maxWidth: '300px' }}>
+                  Название фильма: {review.movie_name}
+                </div>
+                <div style={{ padding: '10px', borderRadius: '10px', backgroundColor: 'gray', maxWidth: '300px' }}>
+                  Отзыв: {review.review}
+                </div>
+              </div>
             </div>
           ))}
         </div>

@@ -8,23 +8,27 @@ import { useNavigate } from 'react-router-dom';
 import { fetchReviewsWithUsers } from 'features/auth/model/store/effects';
 import { reviewScheme } from './validation';
 import styles from './reviewForm.module.css';
+import { useEffect, useState } from 'react';
 
 type FormData = {
   review: string;
   rating: number;
 };
 
-export const CommentForm = ({ movie_name, movieId }: any) => {
+export const CommentForm = ({ movie_name, movieId, rating }: any) => {
   const dispatch = useAppDispatch();
   const isLoading = useSelector(getCreateCommentIsLoading);
   const token = useSelector(getUserToken);
   const navigate = useNavigate();
+  const [formRating, setFormRating] = useState(rating);
 
   const logIn = () => {
     navigate('/auth');
   };
 
-  if (!token) return <button onClick={logIn}>Войдите чтобы оставить комментарий</button>;
+  useEffect(() => {
+    setFormRating(rating);
+  }, [rating]);
 
   const handleSubmit = (values: FormData, actions: any) => {
     const { review, rating } = values;
@@ -32,6 +36,10 @@ export const CommentForm = ({ movie_name, movieId }: any) => {
       actions.resetForm();
       dispatch(fetchReviewsWithUsers(String(movieId)));
     });
+  };
+
+  const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormRating(parseInt(event.target.value));
   };
 
   return (
@@ -48,8 +56,22 @@ export const CommentForm = ({ movie_name, movieId }: any) => {
               <Field type="text" name="review" placeholder="Введите комментарий" className={styles.inputField} />
             </div>
             <div className={styles.formField}>
-              <Field type="number" name="rating" placeholder="Поставьте оценку" className={styles.inputField} />
+              <Field
+                type="number"
+                name="rating"
+                placeholder="Поставьте оценку"
+                className={styles.inputRatingField}
+                onChange={handleRatingChange}
+                value={formRating}
+              />
             </div>
+            {!token && (
+              <div className={styles.formField}>
+                <button type="button" onClick={logIn} className={styles.loginButton}>
+                  Войти, чтобы оставить комментарий
+                </button>
+              </div>
+            )}
             <button type="submit" disabled={isLoading} className={styles.submitButton}>
               {isLoading ? 'Отправка...' : 'Отправить'}
             </button>

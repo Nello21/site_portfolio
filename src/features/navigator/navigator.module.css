@@ -11,9 +11,10 @@
 .NameFilter {
     margin: 15px;
     display: flex;
+    flex-direction: column; /* Изменение направления на столбец */
     font-family: sans-serif;
-    font-weight:bold;
-}
+    font-weight: bold;
+  }
 
 .section {
     flex-direction: 'column';
@@ -59,4 +60,23 @@
     width: 32px;
     height: 32px;
     text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+      padding-top: 10px;
+      padding-left: 0; /* Уменьшение отступа слева */
+    }
+  
+    .checkboxContainer {
+      padding: 5px;
+    }
+  }
+  
+  /* Дополнительные стили для .moviesContainer при мобильной версии */
+  @media (max-width: 768px) {
+    .moviesContainer {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Гибкая сетка */
+      gap: 10px;
+    }
   }

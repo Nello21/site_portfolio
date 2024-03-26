@@ -3,7 +3,7 @@
   padding: 20px;
   top: 75px;
   width: 250px;
-  height: 200px;
+  height: calc(100vh - 75px);
   }
   
 
@@ -39,22 +39,39 @@
     transition: top 0.35s ease 0s;
   }
 
-  .menuItem:hover  ~ .tooltip  {
-    display: block;
+  .visible{
+    display:block
   }
 
-  .menuItem:nth-child(1):hover ~ .tooltip {
-    top: 5%;
-  }
+  @media (max-width: 768px) {
+    .leftMenu {
+      position: static; 
+      width: 100%; 
+      padding: 10px; 
+      height: auto; 
+    }
+    
+   
 
-  .menuItem:nth-child(2):hover ~ .tooltip {
-    top: 23.5%;
-  }
+    .menuItem {
+      padding: 10px 15px; 
+    }
+  
+    .icon {
+      font-size: 24px;
+    }
+  
+    .menuItem span {
+      font-size: 14px;
+    }
 
-  .menuItem:nth-child(3):hover ~ .tooltip {
-    top: 42.5%;
+    .menuItem:hover  ~ .tooltip  {
+      display: none;
+    }
+
+    .menuItem:hover span{
+      color: black;
+      text-shadow: 0 0 1px  black;
+      transition: color 0.35s ease-in, text-shadow .35s ease-in;
+    }
   }
-  .menuItem:nth-child(4):hover ~ .tooltip {
-    top: 61%;
-  }
- 

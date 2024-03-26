@@ -60,13 +60,15 @@ export const LoginForm = () => {
             required
           />
         </div>
-        <button disabled={isLoading} type="submit">
-          Войти
-        </button>
-        <div>Не зарегистрированы?</div>
-        <Link to={ROUTES.register}>
-          <button>зарегистрироваться</button>
-        </Link>
+        <div className={styles.buttonContainer}>
+          <button disabled={isLoading} type="submit" className={styles.loginButton}>
+            Войти
+          </button>
+          <div>Не зарегистрированы?</div>
+          <Link to={ROUTES.register}>
+            <button className={styles.loginButton}>зарегистрироваться</button>
+          </Link>
+        </div>
       </form>
     </div>
   );

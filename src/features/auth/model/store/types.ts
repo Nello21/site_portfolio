@@ -6,7 +6,7 @@ export type User = {
   email: string;
   token: string;
   avatar: string;
-  favorites_movies: cinemaData[];
+  favorite_movies: number[];
 };
 
 export type Users = {
@@ -14,7 +14,7 @@ export type Users = {
   fullName: string;
   email: string;
   avatar: string;
-  favorites_movies: cinemaData[];
+  favorite_movies: number[];
 };
 
 export type Review = {

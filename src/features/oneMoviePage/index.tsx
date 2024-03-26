@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getMovieIsLoading, getMovie, clearMovieStore } from 'store/cinema/oneMovieSlice';
 import { Link, useParams } from 'react-router-dom';
@@ -6,18 +6,35 @@ import { useAppDispatch } from 'store';
 import { getOneMovie } from 'store/cinema/effects';
 import { fetchReviewsWithUsers } from 'features/auth/model/store/effects';
 import { getReviewsWithUser } from 'features/auth/model/store/reviewsSlice';
-import styles from './oneMovieContent.module.css';
-import clsx from 'clsx';
 import { ROUTES } from 'router/routes';
 import { CommentForm } from 'features/create-review/ui';
+import { addFavoriteMovie, deleteFavoriteMovie } from 'features/favorite-movies/model/store/effects';
+import styles from './oneMovieContent.module.css';
+import clsx from 'clsx';
+import StarSVG from 'shared/assets/icons/star.svg';
+import HeartSVG from 'shared/assets/icons/heart.svg';
+import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
+import { getAuthUserFavorites, getUser, getUserId } from 'features/auth/model/store/slice';
+import { getAllCinema } from 'store/cinema/slice';
 
 export const OneMovieContent = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const movie = useSelector(getMovie);
   const reviews = useSelector(getReviewsWithUser);
-  console.log(reviews);
   const isLoading = useSelector(getMovieIsLoading);
+  const [rating, setRating] = useState(0);
+  const [hoveredRating, setHoveredRating] = useState(0);
+  const commentFormRef = useRef<HTMLDivElement>(null);
+
+  const user = useSelector(getUser);
+  const userId = user.id;
+  const favoriteMovieIds = useSelector(getUserFavoriteMovies);
+  console.log(favoriteMovieIds);
+
+  const movieId = Number(id);
+
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const [isVideoVisible, setIsVideoVisible] = useState(false);
 
@@ -26,41 +43,63 @@ export const OneMovieContent = () => {
       dispatch(getOneMovie(id));
       dispatch(fetchReviewsWithUsers(id));
     }
+
+    if (favoriteMovieIds !== null) {
+      setIsFavorite(favoriteMovieIds.includes(movieId));
+    }
+
     return () => {
       dispatch(clearMovieStore());
     };
-  }, [dispatch, id]);
+  }, [dispatch, id, favoriteMovieIds, movieId]);
+
+  const handleToggleFavorite = () => {
+    if (!userId) {
+      return;
+    }
+    if (isFavorite) {
+      dispatch(deleteFavoriteMovie(movieId));
+    } else {
+      dispatch(addFavoriteMovie(movieId));
+    }
+    setIsFavorite(!isFavorite);
+  };
 
   if (isLoading) return <div>Загрузка...</div>;
   if (!movie) return <div>Нет данных</div>;
 
-  const renderStarRating = () => {
-    const filledStars = movie.rating;
-    const remainingPercentage = (movie.rating - filledStars) * 100;
+  const handleStarClick = (value: number) => {
+    setRating(value);
+    commentFormRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-    const stars = [];
-
-    for (let i = 0; i < 10; i++) {
-      const starStyle: React.CSSProperties = {};
-
-      if (i < filledStars) {
-        starStyle.width = '100%'; // Заполняем звезду полностью
-      } else if (i === filledStars && remainingPercentage > 0) {
-        starStyle.backgroundSize = `${remainingPercentage}%`; // Устанавливаем ширину для частично заполненной звезды
-      }
-
-      stars.push(
-        <span key={i} className={styles.starFilled} style={starStyle}>
-          &#9733;
-        </span>,
-      );
-    }
-
-    return stars;
+  const handleStarHover = (value: number) => {
+    setHoveredRating(value);
   };
 
   const handleWatchClick = () => {
     setIsVideoVisible(prev => !prev);
+  };
+
+  const renderStarRating = () => {
+    const stars = [];
+
+    for (let i = 1; i <= 10; i++) {
+      const filled = i <= (hoveredRating || rating);
+      stars.push(
+        <StarSVG
+          key={i}
+          width="32"
+          height="32"
+          className={clsx(styles.star, { [styles.filledStar]: filled })}
+          onClick={() => handleStarClick(i)}
+          onMouseEnter={() => handleStarHover(i)}
+          onMouseLeave={() => handleStarHover(0)}
+        />,
+      );
+    }
+
+    return stars;
   };
 
   return (
@@ -69,7 +108,15 @@ export const OneMovieContent = () => {
         <div className={styles.imageSection}>
           <img src={movie.image} alt="Постер" className={styles.poster} />
           <div className={styles.ratingSection}>
-            <div className={styles.rating}>Рейтинг: {renderStarRating()}</div>
+            <div style={{ textAlign: 'center', fontSize: '20px' }}>Рейтинг: </div>
+            <div className={styles.rating}>{renderStarRating()}</div>
+          </div>
+
+          <div className={styles.favoriteButtonContainer}>
+            <div className={styles.favoriteButtonLabel}>Добавить в избранное</div>
+            <div className={styles.favoriteButton} onClick={handleToggleFavorite}>
+              <HeartSVG width="32" height="32" fill={isFavorite ? '#FF0000' : 'none'} />
+            </div>
           </div>
         </div>
         <div>
@@ -121,9 +168,9 @@ export const OneMovieContent = () => {
           </div>
         ))}
       </div>
-      <div>
+      <div ref={commentFormRef}>
         <h2>оставить комментарий</h2>
-        <CommentForm movie_name={movie.name} movieId={Number(id)} />
+        <CommentForm movie_name={movie.name} movieId={Number(id)} rating={rating} />
       </div>
     </div>
   );

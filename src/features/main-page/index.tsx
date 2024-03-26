@@ -13,6 +13,7 @@ export const MainPage = () => {
   const movies = useSelector(getMovies);
   const serials = useSelector(getSerials);
   const hitOfTheWeek = useSelector(getHitOfTheWeek);
+  console.log(hitOfTheWeek);
   const isLoading = useSelector(getCinemaIsLoading);
 
   useEffect(() => {

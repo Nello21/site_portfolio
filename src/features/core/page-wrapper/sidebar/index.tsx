@@ -9,7 +9,11 @@ import Serial from 'shared/assets/icons/desktop-solid.svg';
 import Ticket from 'shared/assets/icons/ticket-solid.svg';
 import { NavButton } from 'shared/components/NavButton/navButton';
 
-export const Sidebar = () => {
+type SideBarProps = {
+  isOpen?: boolean;
+};
+
+export const Sidebar = ({ isOpen }: SideBarProps) => {
   return (
     <nav className={styles.leftMenu}>
       <div className={styles.menuItem}>
@@ -20,11 +24,6 @@ export const Sidebar = () => {
       <div className={styles.menuItem}>
         <NavButton url={ROUTES.navigator} className={styles.icon} icon={<Movie />}>
           <span>Навигатор</span>
-        </NavButton>
-      </div>
-      <div className={styles.menuItem}>
-        <NavButton url={ROUTES.cinema} className={styles.icon} icon={<Play />}>
-          <span>Онлайн-кинотеатр</span>
         </NavButton>
       </div>
       <div className={styles.tooltip}></div>
