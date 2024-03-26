@@ -14,9 +14,9 @@ module.exports = env => {
   const isDev = env.MODE === 'development';
 
   return {
-    mode: env.MODE,
+    mode: 'production',
     entry: path.resolve(__dirname, 'src', 'index.tsx'),
-    devtool: isDev ? 'inline-source-map' : false,
+    devtool: isDev ? 'inline-source-map' : 'source-map',
     devServer: isDev
       ? {
           open: false,

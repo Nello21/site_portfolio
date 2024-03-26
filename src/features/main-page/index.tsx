@@ -32,7 +32,7 @@ export const MainPage = () => {
         <div className={styles.hitContainer}>
           <div className={styles.hitPoster}>
             <h2 style={{ fontSize: '32px' }}>Хит недели</h2>
-            <Link to={`${ROUTES.cinema}/${hitOfTheWeek.id}`}>
+            <Link to={`${ROUTES.root}/${hitOfTheWeek.id}`}>
               <img src={hitOfTheWeek.image} className={styles.cinemaCard} />
             </Link>
             <div className={styles.rating}>{hitOfTheWeek.rating}</div>
