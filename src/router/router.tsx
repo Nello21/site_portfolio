@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { ROUTES } from './routes';
 import { RootComponent } from 'features/core/Root';
-import { OnlineCinema } from 'pages/OnlineCinema';
 import { Navigator } from 'pages/Navigator';
 import { AuthPage } from 'pages/Auth';
 import { Register } from 'pages/Register';
@@ -32,8 +31,7 @@ export const router = createBrowserRouter([
         path: `${ROUTES.favorites}/:id`,
         element: <FavoriteMovies />,
       },
-      { path: ROUTES.cinema, element: <OnlineCinema /> },
-      { path: `${ROUTES.cinema}/:id`, element: <MoviePage /> },
+      { path: `${ROUTES.root}/:id`, element: <MoviePage /> },
       { path: ROUTES.navigator, element: <Navigator /> },
     ],
   },
