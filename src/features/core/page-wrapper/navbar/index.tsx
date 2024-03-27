@@ -37,7 +37,7 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
       </div>
       <div className={styles.rightSection}>
         <div className={styles.avatar}>
-          <img src={String(user.avatar)} className={styles.avatar} />
+          {token ? <img src={String(user.avatar)} className={styles.avatar} /> : <div></div>}
           <div className={styles.dropMenu}>
             <div className={styles.menuHeader}>
               {token ? (
