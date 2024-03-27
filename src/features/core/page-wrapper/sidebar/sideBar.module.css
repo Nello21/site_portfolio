@@ -18,8 +18,8 @@
   }
 
   .menuItem:hover span{
-    color:white;
-    text-shadow: 0 0 2px white;
+    color:black;
+    text-shadow: 0 0 2px black;
     transition: color 0.35s ease-in, text-shadow .35s ease-in;
   }
 
