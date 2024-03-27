@@ -14,7 +14,7 @@ export const CinemaOneCard = ({ post, className }: PostCardProps) => {
   return (
     <motion.div layout>
       <div className={styles.article}>
-        <Link to={`${ROUTES.root}/${post.id}`}>
+        <Link to={`${ROUTES.root}${post.id}`}>
           <img src={post.image} className={className} />
           <div className={styles.text}>{post.rating}</div>
         </Link>

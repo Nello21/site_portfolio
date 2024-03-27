@@ -8,6 +8,7 @@ import { RootPage } from 'pages/RootPage';
 import { MoviePage } from 'pages/MoviePage';
 import { UserProfile } from 'pages/UserProfile';
 import { FavoriteMovies } from 'features/favorite-movies/ui';
+import { OnlineCinema } from 'pages/OnlineCinema';
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +32,11 @@ export const router = createBrowserRouter([
         path: `${ROUTES.favorites}/:id`,
         element: <FavoriteMovies />,
       },
-      { path: `${ROUTES.root}/:id`, element: <MoviePage /> },
+      {
+        path: ROUTES.cinema,
+        element: <OnlineCinema />,
+      },
+      { path: `${ROUTES.root}:id`, element: <MoviePage /> },
       { path: ROUTES.navigator, element: <Navigator /> },
     ],
   },

@@ -73,31 +73,31 @@ export const CinemaCards = ({ cards }: { cards: cinemaData[] }) => {
     };
   }, []);
 
-  // const handleMouseDown = (e: any) => {
-  //   setIsMouseDown(true);
-  //   if (itemsRef && itemsRef.current) {
-  //     setStartX(e.pageX - -itemsRef.current.offsetLeft);
-  //     setScrollLeft(itemsRef.current.scrollLeft);
-  //   }
-  // };
+  const handleMouseDown = (e: any) => {
+    setIsMouseDown(true);
+    if (itemsRef && itemsRef.current) {
+      setStartX(e.pageX - -itemsRef.current.offsetLeft);
+      setScrollLeft(itemsRef.current.scrollLeft);
+    }
+  };
 
-  // const handleMouseLeave = () => {
-  //   setIsMouseDown(false);
-  // };
+  const handleMouseLeave = () => {
+    setIsMouseDown(false);
+  };
 
-  // const handleMouseUp = () => {
-  //   setIsMouseDown(false);
-  // };
+  const handleMouseUp = () => {
+    setIsMouseDown(false);
+  };
 
-  // const handleMouseMove = (e: any) => {
-  //   if (!isMouseDown) return;
-  //   e.preventDefault();
-  //   if (itemsRef && itemsRef.current) {
-  //     const x = e.pageX - itemsRef.current.offsetLeft;
-  //     const walk = (x - startX) * 2;
-  //     itemsRef.current.scrollLeft = scrollLeft - walk;
-  //   }
-  // };
+  const handleMouseMove = (e: any) => {
+    if (!isMouseDown) return;
+    e.preventDefault();
+    if (itemsRef && itemsRef.current) {
+      const x = e.pageX - itemsRef.current.offsetLeft;
+      const walk = (x - startX) * 2;
+      itemsRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -122,10 +122,10 @@ export const CinemaCards = ({ cards }: { cards: cinemaData[] }) => {
       <div
         className={styles.content}
         ref={itemsRef}
-        // onMouseDown={handleMouseDown}
-        // onMouseLeave={handleMouseLeave}
-        // onMouseUp={handleMouseUp}
-        // onMouseMove={handleMouseMove}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
       >
         {cards.map(card => (
           <CinemaOneCard post={card} key={card.id} />

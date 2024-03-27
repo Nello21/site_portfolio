@@ -14,8 +14,7 @@ import clsx from 'clsx';
 import StarSVG from 'shared/assets/icons/star.svg';
 import HeartSVG from 'shared/assets/icons/heart.svg';
 import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
-import { getAuthUserFavorites, getUser, getUserId } from 'features/auth/model/store/slice';
-import { getAllCinema } from 'store/cinema/slice';
+import { getUser } from 'features/auth/model/store/slice';
 
 export const OneMovieContent = () => {
   const { id } = useParams();

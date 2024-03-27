@@ -6,10 +6,8 @@ import { rootStore } from 'store';
 
 export const App = () => {
   return (
-    <SearchProvider>
-      <Provider store={rootStore}>
-        <RouterProvider router={router} />;
-      </Provider>
-    </SearchProvider>
+    <Provider store={rootStore}>
+      <RouterProvider router={router} />;
+    </Provider>
   );
 };
