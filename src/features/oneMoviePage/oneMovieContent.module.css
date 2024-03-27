@@ -36,6 +36,13 @@
     transition: background-color 0.35s ease;
   }
   
+
+  .favoriteButton {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+
   .ratingSection {
     padding-top: 10px;
     display: flex;

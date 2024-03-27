@@ -14,7 +14,7 @@ import clsx from 'clsx';
 import StarSVG from 'shared/assets/icons/star.svg';
 import HeartSVG from 'shared/assets/icons/heart.svg';
 import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
-import { getUser } from 'features/auth/model/store/slice';
+import { getUser, getUserToken } from 'features/auth/model/store/slice';
 
 export const OneMovieContent = () => {
   const { id } = useParams();
@@ -27,6 +27,7 @@ export const OneMovieContent = () => {
   const commentFormRef = useRef<HTMLDivElement>(null);
 
   const user = useSelector(getUser);
+  const token = useSelector(getUserToken);
   const userId = user.id;
   const favoriteMovieIds = useSelector(getUserFavoriteMovies);
   console.log(favoriteMovieIds);
@@ -111,12 +112,16 @@ export const OneMovieContent = () => {
             <div className={styles.rating}>{renderStarRating()}</div>
           </div>
 
-          <div className={styles.favoriteButtonContainer}>
-            <div className={styles.favoriteButtonLabel}>Добавить в избранное</div>
-            <div className={styles.favoriteButton} onClick={handleToggleFavorite}>
-              <HeartSVG width="32" height="32" fill={isFavorite ? '#FF0000' : 'none'} />
+          {token ? (
+            <div className={styles.favoriteButtonContainer}>
+              <div className={styles.favoriteButtonLabel}>Добавить в избранное</div>
+              <div className={styles.favoriteButton} onClick={handleToggleFavorite}>
+                <HeartSVG width="32" height="32" fill={isFavorite ? '#FF0000' : 'none'} />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className={styles.favoriteButtonLabel}>Войдите для добавления в избранное</div>
+          )}
         </div>
         <div>
           <button

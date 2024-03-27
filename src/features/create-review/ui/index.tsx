@@ -44,41 +44,42 @@ export const CommentForm = ({ movie_name, movieId, rating }: any) => {
 
   return (
     <div>
-      <Formik
-        initialValues={{ review: '', rating: 0 }}
-        onSubmit={handleSubmit}
-        validationSchema={reviewScheme}
-        validateOnBlur
-      >
-        {({ errors, touched }) => (
-          <Form className={styles.reviewForm}>
-            <div className={styles.formField}>
-              <Field type="text" name="review" placeholder="Введите комментарий" className={styles.inputField} />
-            </div>
-            <div className={styles.formField}>
-              <Field
-                type="number"
-                name="rating"
-                placeholder="Поставьте оценку"
-                className={styles.inputRatingField}
-                onChange={handleRatingChange}
-                value={formRating}
-              />
-            </div>
-            {!token && (
+      {token ? (
+        <Formik
+          initialValues={{ review: '', rating: 0 }}
+          onSubmit={handleSubmit}
+          validationSchema={reviewScheme}
+          validateOnBlur
+        >
+          {({ errors, touched }) => (
+            <Form className={styles.reviewForm}>
               <div className={styles.formField}>
-                <button type="button" onClick={logIn} className={styles.loginButton}>
-                  Войти, чтобы оставить комментарий
-                </button>
+                <Field type="text" name="review" placeholder="Введите комментарий" className={styles.inputField} />
               </div>
-            )}
-            <button type="submit" disabled={isLoading} className={styles.submitButton}>
-              {isLoading ? 'Отправка...' : 'Отправить'}
-            </button>
-            <ErrorMessage name="review" component="div" />
-          </Form>
-        )}
-      </Formik>
+              <div className={styles.formField}>
+                <Field
+                  type="number"
+                  name="rating"
+                  placeholder="Поставьте оценку"
+                  className={styles.inputRatingField}
+                  onChange={handleRatingChange}
+                  value={formRating}
+                />
+              </div>
+              <button type="submit" disabled={isLoading} className={styles.submitButton}>
+                {isLoading ? 'Отправка...' : 'Отправить'}
+              </button>
+              <ErrorMessage name="review" component="div" />
+            </Form>
+          )}
+        </Formik>
+      ) : (
+        <div className={styles.formField}>
+          <button type="button" onClick={logIn} className={styles.loginButton}>
+            Войти, чтобы оставить комментарий
+          </button>
+        </div>
+      )}
     </div>
   );
 };
