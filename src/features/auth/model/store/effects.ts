@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { STORAGE_KEY, setStorageItem } from 'services/storage';
 import { get, post } from 'services/transport';
-import { AuthRequestData, RegisterRequestData, UserResponse, ReviewWithUser, User } from './types';
+import { AuthRequestData, RegisterRequestData, UserResponse, ReviewWithUser, Users } from './types';
 
 export const postAuthData = createAsyncThunk('userData/postAuth', async (payload: AuthRequestData, thunkApi) => {
   const { data } = await post<UserResponse>('/auth', payload);
@@ -25,7 +25,7 @@ export const postRegisterData = createAsyncThunk(
 );
 
 export const fetchUser = createAsyncThunk('users/getUser', async (userId: string) => {
-  const { data } = await get<User[]>(`/users?id=${userId}`);
+  const { data } = await get<Users[]>(`/users?id=${userId}`);
   const user = { ...data[0] };
   return user;
 });

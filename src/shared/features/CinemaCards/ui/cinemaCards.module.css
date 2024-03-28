@@ -2,22 +2,18 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* padding: 10px; */
     margin: 10px;
     position: relative;
     height: 300px;
-    width: 830px;
+    max-width: 830px;
   }
 
 .content {
-  /* padding: 10px; */
   display: flex;
   align-items: center;
   gap: 10px;
   background-color: black;
   overflow: hidden;
-  /* overflow-x: scroll; */
-  /* scroll-behavior: smooth; */
   transition: all 0.5s ease;
 }
 
@@ -59,4 +55,22 @@
 .rightScrollButton:hover {
   translate: 4px;
   color: black;
+}
+
+@media (max-width:1140px) {
+  .container {
+    max-width: 620px;
+  }
+}
+
+@media (max-width:768px) {
+  .container {
+    max-width: 410px;
+  }
+}
+
+@media (max-width: 530px) {
+  .container {
+    max-width: 200px;
+  }
 }

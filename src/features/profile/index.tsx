@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { fetchUser, fetchUserComments } from 'features/auth/model/store/effects';
-import { getUserProfile, userActions } from 'features/auth/model/store/userProfileSlice';
+import { getUserProfile, userProfileActions } from 'features/auth/model/store/userProfileSlice';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from 'store';
@@ -20,7 +20,7 @@ export const UserPage = () => {
       dispatch(fetchUserComments(id));
     }
     return () => {
-      dispatch(userActions.clearUserStore());
+      dispatch(userProfileActions.clearUserStore());
     };
   }, [dispatch, id]);
 

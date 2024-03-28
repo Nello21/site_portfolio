@@ -2,7 +2,6 @@
    display: flex;
    position: relative;
    align-items: center;
-   width: 200px;
    cursor: pointer;
 }
 

@@ -2,15 +2,16 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import { useAppDispatch } from 'store';
-import { getUserIsLoading, getUserToken, userActions } from '../../model/store/slice';
+import { getUserIsLoading, getAuthUserToken, userActions } from '../../model/store/slice';
 import { postAuthData } from '../../model/store/effects';
 import { ROUTES } from 'router/routes';
 import styles from './loginForm.module.css';
+import { userProfileActions } from 'features/auth/model/store/userProfileSlice';
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
   const isLoading = useSelector(getUserIsLoading);
-  const token = useSelector(getUserToken);
+  const token = useSelector(getAuthUserToken);
 
   const [formData, setFormData] = useState({
     email: '',

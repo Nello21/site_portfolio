@@ -1,3 +1,7 @@
+.container {
+  display: flex;
+}
+
 .moviesContainer {
     margin-top: 30px;
     width: 100%;
@@ -8,7 +12,7 @@
     transition: all 0.5s ease;
 }
 
-.NameFilter {
+.FilterContainer {
     margin: 15px;
     display: flex;
     flex-direction: column;
@@ -16,21 +20,44 @@
     font-weight: bold;
   }
 
-.section {
-    flex-direction: 'column';
-    padding-top: 5px;
-    padding-left: 10px;
+
+.filterName {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
 }
 
-.text{
-    font-size: larger;
+.filterNumber {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  background-color: orange;
+  border-radius: 50%;
 }
+
+
+.section {
+  flex-direction: 'column';
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+
+.text{
+  font-size: larger;
+}
+
 
 .checkboxContainer {
     padding: 10px;
     display: flex;
     align-items: center;
 }
+
 
 .checkboxInput {
     width: 18px;
@@ -39,30 +66,48 @@
     margin-right: 8px;
   }
   
-  .checkboxText {
+
+.checkboxText {
     font-weight: 400;
     font-size: 16px;
     color: #333;
   }
 
 
+.searchInput {
+  margin-top: 10px;
+  height: 30px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
 
 .select{
     margin-top: 10px;
 }
 
-.sectionNumber {
-    display: flex;
-    background-color: orange;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    text-align: center;
+
+
+.buttonToTop {
+    position: fixed;
+    bottom: 15%;
+    right: 4%;
+}
+
+
+@media (max-width: 1280px) {
+  .moviesContainer {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 10px;
   }
+}
+
 
   @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+
     .section {
       padding-top: 10px;
       padding-left: 0;
@@ -71,11 +116,11 @@
     .checkboxContainer {
       padding: 5px;
     }
-  }
   
-  @media (max-width: 768px) {
-    .moviesContainer {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-      gap: 10px;
-    }
+
+    .select{
+      margin-top: 10px;
+      max-width: 200px;
+  }
+
   }

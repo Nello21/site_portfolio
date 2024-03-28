@@ -4,7 +4,7 @@ import { getMovieIsLoading, getMovie, clearMovieStore } from 'store/cinema/oneMo
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { getOneMovie } from 'store/cinema/effects';
-import { fetchReviewsWithUsers } from 'features/auth/model/store/effects';
+import { fetchReviewsWithUsers, fetchUser } from 'features/auth/model/store/effects';
 import { getReviewsWithUser } from 'features/auth/model/store/reviewsSlice';
 import { ROUTES } from 'router/routes';
 import { CommentForm } from 'features/create-review/ui';
@@ -13,8 +13,13 @@ import styles from './oneMovieContent.module.css';
 import clsx from 'clsx';
 import StarSVG from 'shared/assets/icons/star.svg';
 import HeartSVG from 'shared/assets/icons/heart.svg';
+import {
+  getAuthUserFavoriteMovies,
+  getAuthUserId,
+  getAuthUserToken,
+  userActions,
+} from 'features/auth/model/store/slice';
 import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
-import { getUser, getUserToken } from 'features/auth/model/store/slice';
 
 export const OneMovieContent = () => {
   const { id } = useParams();
@@ -22,21 +27,23 @@ export const OneMovieContent = () => {
   const movie = useSelector(getMovie);
   const reviews = useSelector(getReviewsWithUser);
   const isLoading = useSelector(getMovieIsLoading);
-  const [rating, setRating] = useState(0);
-  const [hoveredRating, setHoveredRating] = useState(0);
+
   const commentFormRef = useRef<HTMLDivElement>(null);
 
-  const user = useSelector(getUser);
-  const token = useSelector(getUserToken);
-  const userId = user.id;
+  const [rating, setRating] = useState(0);
+  const [hoveredRating, setHoveredRating] = useState(0);
+
+  const userId = useSelector(getAuthUserId);
+  console.log(userId);
+  const token = useSelector(getAuthUserToken);
   const favoriteMovieIds = useSelector(getUserFavoriteMovies);
   console.log(favoriteMovieIds);
-
-  const movieId = Number(id);
 
   const [isFavorite, setIsFavorite] = useState(false);
 
   const [isVideoVisible, setIsVideoVisible] = useState(false);
+
+  const movieId = Number(id);
 
   useEffect(() => {
     if (id) {
@@ -45,18 +52,18 @@ export const OneMovieContent = () => {
     }
 
     if (favoriteMovieIds !== null) {
-      setIsFavorite(favoriteMovieIds.includes(movieId));
+      setIsFavorite(favoriteMovieIds.includes(Number(id)));
     }
 
     return () => {
       dispatch(clearMovieStore());
     };
-  }, [dispatch, id, favoriteMovieIds, movieId]);
+  }, [dispatch, id, favoriteMovieIds]);
+
+  if (isLoading) return <div>Загрузка...</div>;
+  if (!movie) return <div>Нет данных</div>;
 
   const handleToggleFavorite = () => {
-    if (!userId) {
-      return;
-    }
     if (isFavorite) {
       dispatch(deleteFavoriteMovie(movieId));
     } else {
@@ -64,9 +71,6 @@ export const OneMovieContent = () => {
     }
     setIsFavorite(!isFavorite);
   };
-
-  if (isLoading) return <div>Загрузка...</div>;
-  if (!movie) return <div>Нет данных</div>;
 
   const handleStarClick = (value: number) => {
     setRating(value);
@@ -174,7 +178,7 @@ export const OneMovieContent = () => {
       </div>
       <div ref={commentFormRef}>
         <h2>оставить комментарий</h2>
-        <CommentForm movie_name={movie.name} movieId={Number(id)} rating={rating} />
+        <CommentForm movie_name={movie.name} movieId={movieId} rating={rating} />
       </div>
     </div>
   );

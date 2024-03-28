@@ -1,17 +1,18 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './header.module.css';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { useSelector } from 'react-redux';
-import { getUserToken, userActions, getUser } from 'features/auth/model/store/slice';
+import { getAuthUserToken, userActions, getAuthUser } from 'features/auth/model/store/slice';
 import { STORAGE_KEY, setStorageItem } from 'services/storage';
+import { DropSidebar } from 'shared/components/DropSidebar/dropSidebar';
 import { ROUTES } from 'router/routes';
-import { Sidebar } from '../sidebar';
 import clsx from 'clsx';
+import { userProfileActions } from 'features/auth/model/store/userProfileSlice';
 
 export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
-  const token = useSelector(getUserToken);
-  const user = useSelector(getUser);
+  const token = useSelector(getAuthUserToken);
+  const user = useSelector(getAuthUser);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -28,7 +29,7 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
           ☰
         </button>
         <div className={clsx(styles.dropSideBar, { [styles.sideBarVisible]: isMenuOpen })}>
-          {isMenuOpen && <Sidebar />}
+          {isMenuOpen && <DropSidebar />}
         </div>
         <div className={styles.siteName}>КИНОЛЕНТА</div>
       </div>
@@ -66,7 +67,6 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
                 <div></div>
               )}
               <LoginButton />
-              {/* <span className={styles.tooltip}></span> */}
             </div>
           </div>
         </div>
@@ -77,22 +77,23 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
 
 const LoginButton = () => {
   const dispatch = useAppDispatch();
-  const token = useSelector(getUserToken);
+  const token = useSelector(getAuthUserToken);
 
   const logout = () => {
     dispatch(userActions.clearUserStore());
+    dispatch(userProfileActions.clearUserStore());
     setStorageItem(STORAGE_KEY.USER_DATA, null);
   };
 
   if (token)
     return (
-      <span className={styles.newPostButton} onClick={logout}>
-        Выйти
-      </span>
+      <Link to={ROUTES.root} className={styles.newPostButton} onClick={logout}>
+        <span>Выйти</span>
+      </Link>
     );
 
   return (
-    <Link to={ROUTES.auth} className={styles.newPostButton} style={{ textDecoration: 'none' }}>
+    <Link to={ROUTES.auth} className={styles.newPostButton}>
       <span style={{ color: 'orange' }}>Войти</span>
     </Link>
   );

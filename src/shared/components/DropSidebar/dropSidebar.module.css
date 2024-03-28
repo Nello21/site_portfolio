@@ -1,0 +1,39 @@
+
+
+ .icon {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+  
+    .menuItem {
+      height: 40px;
+    }
+  
+    .menuItem:hover span{
+      color: black;
+      transition: color 0.35s ease-in;
+    }
+  
+    .visible{
+      display:block
+    }
+  
+    @media (max-width: 768px) {
+      .menuItem {
+        padding: 10px 15px; 
+      }
+    
+      .icon {
+        font-size: 24px;
+      }
+    
+      .menuItem span {
+        font-size: 14px;
+      }
+  
+  
+      .menuItem:hover span{
+        color: black;
+        transition: color 0.35s ease-in;
+      }
+    }

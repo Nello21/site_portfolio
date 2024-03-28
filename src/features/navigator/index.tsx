@@ -10,6 +10,7 @@ import Select from 'react-select';
 import styles from './navigator.module.css';
 import { getCinema } from 'store/cinema/effects';
 import { cinemaData } from 'shared/types/cinemaData';
+import { ButtonToTop } from 'shared/components/TopButton/topButton';
 
 export const NavigatorPage = () => {
   const dispatch = useAppDispatch();
@@ -147,22 +148,14 @@ export const NavigatorPage = () => {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div className={styles.NameFilter}>
-          <div className={styles.sectionNumber}>1</div>
+      <div className={styles.container}>
+        <div className={styles.FilterContainer}>
+          <div className={styles.filterName}>
+            <div className={styles.filterNumber}>1</div>
+            <div className={styles.text}>Навигатор по названию</div>
+          </div>
           <div className={styles.section}>
-            <div className={styles.text}>Навигатор по фильмам</div>
-            <input
-              style={{
-                marginTop: '10px',
-                height: '35px',
-                border: '1px solid lightgray',
-                borderRadius: '5px',
-              }}
-              type="text"
-              placeholder="Найти фильм"
-              onChange={handleSearchInputChange}
-            />
+            <input style={{}} type="text" placeholder="Найти фильм" onChange={handleSearchInputChange} />
 
             <div className={styles.checkboxContainer}>
               <input
@@ -191,10 +184,12 @@ export const NavigatorPage = () => {
           </div>
         </div>
 
-        <div className={styles.NameFilter}>
-          <div className={styles.sectionNumber}>2</div>
-          <div className={styles.section}>
+        <div className={styles.FilterContainer}>
+          <div className={styles.filterName}>
+            <div className={styles.filterNumber}>2</div>
             <div className={styles.text}>Жанры и рейтинг</div>
+          </div>
+          <div className={styles.section}>
             <Select
               closeMenuOnSelect={false}
               className={styles.select}
@@ -225,10 +220,12 @@ export const NavigatorPage = () => {
           </div>
         </div>
 
-        <div className={styles.NameFilter}>
-          <div className={styles.sectionNumber}>3</div>
-          <div className={styles.section}>
+        <div className={styles.FilterContainer}>
+          <div className={styles.filterName}>
+            <div className={styles.filterNumber}>3</div>
             <div className={styles.text}>Годы выхода</div>
+          </div>
+          <div className={styles.section}>
             <div style={{ marginTop: '15px' }}>
               <RangeSlider onChange={handleYearRangeChange} />
             </div>
@@ -243,6 +240,9 @@ export const NavigatorPage = () => {
           ))}
         </div>
       </motion.div>
+      <div className={styles.buttonToTop}>
+        <ButtonToTop />
+      </div>
     </div>
   );
 };

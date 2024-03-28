@@ -6,7 +6,7 @@ export const ButtonToTop = () => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 300) {
+      if (window.scrollY > 800) {
         setIsVisible(true);
       } else {
         setIsVisible(false);

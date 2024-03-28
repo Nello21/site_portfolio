@@ -95,11 +95,10 @@
 
 .dropSideBar {
   opacity: 0;
-  transition: opacity 0.25s ease-in-out;
   position: absolute;
-  top: calc(120%);
+  top: calc(100%);
   left: 10px;
-  background-color: white;
+  background-color: whitesmoke;
   border-radius: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
@@ -112,24 +111,26 @@
 
 .sideBarVisible{
   opacity:1;
-  transition: opacity 0.35s ease;
+  transition:opacity 0.35s ease-in-out;
+  pointer-events: auto;
 }
 
 .dropMenu {
   opacity: 0;
   transition: opacity 0.25s ease-in-out;
   position: absolute;
-  top: calc(-20%);
-  right: -10px;
+  top: -30%;
+  right: -10%;
   background-color: rgb(35, 32, 30);
   border-radius: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
-  min-width: 130px;
-  max-width: 230px;
+  min-width: 150px;
+  max-height: 250px;
   cursor: default;
   pointer-events: none;
 }
+
 .avatar:hover .dropMenu {
   opacity: 1;
   pointer-events: auto;
@@ -185,6 +186,15 @@
   transition: text-shadow 0.3s ease-in, font-weight 0.2s ease-in;
 }
 
+.newPostButton {
+  text-decoration: none;
+}
+
+@media (min-width:1280px){
+  .burgerButton {
+    display: none;
+  }
+}
 
 
 @media (max-width: 768px) {
@@ -200,6 +210,10 @@
     padding-left: 10px;
   }
 
+  .dropMenu{
+    top: 120%;
+    right: -50%;
+  }
   .siteName {
     display: none;
   }

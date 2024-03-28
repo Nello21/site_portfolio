@@ -7,8 +7,7 @@
   
   @media (max-width: 768px) {
     .root {
-      border-left: none; 
-      border-top: 1px solid gray; 
+      border:none; 
       padding: 16px; 
       min-height: auto; 
     }

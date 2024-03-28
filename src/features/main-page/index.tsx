@@ -33,7 +33,7 @@ export const MainPage = () => {
           <div className={styles.hitPoster}>
             <h2 style={{ fontSize: '32px' }}>Хит недели</h2>
             <Link to={`${ROUTES.root}${hitOfTheWeek.id}`}>
-              <img src={hitOfTheWeek.image} className={styles.cinemaCard} />
+              <img src={hitOfTheWeek.image} className={styles.hitImage} />
             </Link>
             <div className={styles.rating}>{hitOfTheWeek.rating}</div>
           </div>

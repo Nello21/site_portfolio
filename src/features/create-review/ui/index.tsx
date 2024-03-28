@@ -3,7 +3,7 @@ import { useAppDispatch } from 'store';
 import { createComment } from '../model/store/effects';
 import { getCreateCommentIsLoading } from '../model/store/slice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { getUserToken } from 'features/auth/model/store/slice';
+import { getAuthUserToken } from 'features/auth/model/store/slice';
 import { useNavigate } from 'react-router-dom';
 import { fetchReviewsWithUsers } from 'features/auth/model/store/effects';
 import { reviewScheme } from './validation';
@@ -18,7 +18,7 @@ type FormData = {
 export const CommentForm = ({ movie_name, movieId, rating }: any) => {
   const dispatch = useAppDispatch();
   const isLoading = useSelector(getCreateCommentIsLoading);
-  const token = useSelector(getUserToken);
+  const token = useSelector(getAuthUserToken);
   const navigate = useNavigate();
   const [formRating, setFormRating] = useState(rating);
 

@@ -1,77 +1,14 @@
-.leftMenu {
+.sidebar {
   position: sticky;
   padding: 20px;
   top: 75px;
-  width: 250px;
+  width: auto;
   height: calc(100vh - 75px);
   }
   
 
-.icon {
-    font-size: 20px;
-    margin-right: 10px;
-    /* border-bottom: 3px solid orange */
-  }
-
-  .menuItem {
-    height: 45px;
-  }
-
-  .menuItem:hover span{
-    color:black;
-    text-shadow: 0 0 2px black;
-    transition: color 0.35s ease-in, text-shadow .35s ease-in;
-  }
-
-  .tooltip {
-    position: absolute;
-    text-align: center;
-    background-color:gray;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
-    width: 90%;
-    height: 40px;
-    margin-left: 10px;
-    left: 0;
-    z-index: -1;
-    top: 0;
+@media (max-width:1280px) {
+  .sidebar {
     display: none;
-    transition: top 0.35s ease 0s;
   }
-
-  .visible{
-    display:block
-  }
-
-  @media (max-width: 768px) {
-    .leftMenu {
-      position: static; 
-      width: 100%; 
-      padding: 10px; 
-      height: auto; 
-    }
-    
-   
-
-    .menuItem {
-      padding: 10px 15px; 
-    }
-  
-    .icon {
-      font-size: 24px;
-    }
-  
-    .menuItem span {
-      font-size: 14px;
-    }
-
-    .menuItem:hover  ~ .tooltip  {
-      display: none;
-    }
-
-    .menuItem:hover span{
-      color: black;
-      text-shadow: 0 0 1px  black;
-      transition: color 0.35s ease-in, text-shadow .35s ease-in;
-    }
-  }
+}

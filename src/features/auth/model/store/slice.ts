@@ -9,7 +9,7 @@ type User = {
   email: string | null;
   token: string | null;
   avatar: string | null;
-  favorite_movies: number[] | null;
+  favorite_movies: number[];
 };
 
 export type Review = {
@@ -85,14 +85,20 @@ export const userSlice = createSlice({
   selectors: {
     getUserIsLoading: state => state.isLoading,
     getRegisterStatus: state => state.registerStatus,
-    getUserToken: state => state.user.token,
-    getUserId: state => state.user.id,
-    getUser: state => state.user,
-    getAuthUserFavorites: state => state.user.favorite_movies,
+    getAuthUserToken: state => state.user.token,
+    getAuthUserId: state => state.user.id,
+    getAuthUser: state => state.user,
+    getAuthUserFavoriteMovies: state => state.user.favorite_movies,
   },
 });
 
 export const userActions = userSlice.actions;
 
-export const { getUser, getUserId, getUserIsLoading, getRegisterStatus, getUserToken, getAuthUserFavorites } =
-  userSlice.selectors;
+export const {
+  getAuthUser,
+  getAuthUserId,
+  getUserIsLoading,
+  getRegisterStatus,
+  getAuthUserToken,
+  getAuthUserFavoriteMovies,
+} = userSlice.selectors;

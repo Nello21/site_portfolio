@@ -54,11 +54,12 @@ export const userProfileSlice = createSlice({
   },
   selectors: {
     getUserIsLoading: state => state.isLoading,
+    getUserId: state => state.user.id,
     getUserProfile: state => state.user,
     getUserFavoriteMovies: state => state.user.favorite_movies,
   },
 });
 
-export const userActions = userProfileSlice.actions;
+export const userProfileActions = userProfileSlice.actions;
 
-export const { getUserProfile, getUserFavoriteMovies, getUserIsLoading } = userProfileSlice.selectors;
+export const { getUserProfile, getUserFavoriteMovies, getUserIsLoading, getUserId } = userProfileSlice.selectors;
