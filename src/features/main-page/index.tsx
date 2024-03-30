@@ -7,21 +7,24 @@ import { getCinema } from 'store/cinema/effects';
 import styles from './mainPage.module.css';
 import { Link } from 'react-router-dom';
 import { ROUTES } from 'router/routes';
+import { fetchUser } from 'features/auth/model/store/effects';
+import { getAuthUserId } from 'features/auth/model/store/slice';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
   const movies = useSelector(getMovies);
   const serials = useSelector(getSerials);
   const hitOfTheWeek = useSelector(getHitOfTheWeek);
-  console.log(hitOfTheWeek);
+  const userId = useSelector(getAuthUserId);
   const isLoading = useSelector(getCinemaIsLoading);
 
   useEffect(() => {
     dispatch(getCinema());
+    dispatch(fetchUser(String(userId)));
     return () => {
       dispatch(clearCinemaStore());
     };
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   if (isLoading) return <div>Загрузка...</div>;
   if (!(movies && serials)) return <div>Нет данных</div>;

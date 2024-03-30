@@ -9,17 +9,13 @@ import { getReviewsWithUser } from 'features/auth/model/store/reviewsSlice';
 import { ROUTES } from 'router/routes';
 import { CommentForm } from 'features/create-review/ui';
 import { addFavoriteMovie, deleteFavoriteMovie } from 'features/favorite-movies/model/store/effects';
+import { getAuthUserId, getAuthUserToken } from 'features/auth/model/store/slice';
+import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
+import { STORAGE_KEY, setStorageItem } from 'services/storage';
 import styles from './oneMovieContent.module.css';
 import clsx from 'clsx';
 import StarSVG from 'shared/assets/icons/star.svg';
 import HeartSVG from 'shared/assets/icons/heart.svg';
-import {
-  getAuthUserFavoriteMovies,
-  getAuthUserId,
-  getAuthUserToken,
-  userActions,
-} from 'features/auth/model/store/slice';
-import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
 
 export const OneMovieContent = () => {
   const { id } = useParams();
@@ -27,17 +23,16 @@ export const OneMovieContent = () => {
   const movie = useSelector(getMovie);
   const reviews = useSelector(getReviewsWithUser);
   const isLoading = useSelector(getMovieIsLoading);
+  const favoriteMovieIds = useSelector(getUserFavoriteMovies);
+
+  console.log(favoriteMovieIds);
+
+  const token = useSelector(getAuthUserToken);
 
   const commentFormRef = useRef<HTMLDivElement>(null);
 
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
-
-  const userId = useSelector(getAuthUserId);
-  console.log(userId);
-  const token = useSelector(getAuthUserToken);
-  const favoriteMovieIds = useSelector(getUserFavoriteMovies);
-  console.log(favoriteMovieIds);
 
   const [isFavorite, setIsFavorite] = useState(false);
 

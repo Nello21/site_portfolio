@@ -46,7 +46,7 @@ export const CommentForm = ({ movie_name, movieId, rating }: any) => {
     <div>
       {token ? (
         <Formik
-          initialValues={{ review: '', rating: 0 }}
+          initialValues={{ review: '', rating: formRating }}
           onSubmit={handleSubmit}
           validationSchema={reviewScheme}
           validateOnBlur
