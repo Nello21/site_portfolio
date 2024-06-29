@@ -7,7 +7,7 @@ import { rootStore } from 'store';
 export const App = () => {
   return (
     <Provider store={rootStore}>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </Provider>
   );
 };

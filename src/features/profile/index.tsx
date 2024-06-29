@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { getUserComments } from 'features/auth/model/store/reviewsSlice';
 import styles from './userProfile.module.css';
+import { Loader } from 'shared/components/Loader/loader';
 
 export const UserPage = () => {
   const { id } = useParams();
@@ -23,6 +24,8 @@ export const UserPage = () => {
       dispatch(userProfileActions.clearUserStore());
     };
   }, [dispatch, id]);
+
+  if (!user || !reviews) return <Loader />;
 
   return (
     <div className={styles.userPage}>

@@ -29,5 +29,5 @@ export const filterTopRatedLastMonth = (data: cinemaData[]): cinemaData[] => {
     return releaseDate >= lastMonthDate && releaseDate <= currentDate;
   });
 
-  return filteredData.sort((a, b) => b.rating - a.rating).slice(0, 8);
+  return filteredData.sort((a, b) => b.rating - a.rating).slice(0, 12);
 };

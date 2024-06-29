@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="0" height="0">
+    <filter id="wavy">
+        <feTurbulence x="0" y="0" baseFrequency="0.01" numOctaves="3">
+        <animate attributeName="baseFrequency" dur="10s" values="0.01; 0.005; 0.01" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" scale="20" />
+    </filter>
+</svg>

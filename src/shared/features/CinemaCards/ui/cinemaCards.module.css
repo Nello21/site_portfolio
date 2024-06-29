@@ -1,20 +1,16 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 10px;
-    position: relative;
-    height: 300px;
-    max-width: 830px;
+  margin: 10px;
+  position: relative;
+  height: auto;
+  max-width: 830px;
   }
 
 .content {
   display: flex;
-  align-items: center;
   gap: 10px;
   background-color: black;
+  border-radius: 10px;
   overflow: hidden;
-  transition: all 0.5s ease;
 }
 
 
@@ -38,26 +34,46 @@
 
 
 .leftScrollButton {
-  left: -18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: -20px;
   box-shadow: -1px 0 2px rgba(0, 0, 0, 0.2);
 }
 
 .rightScrollButton {
-  right: -18px;
-  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: -20px;
+  box-shadow: 2px 0 2px rgba(0, 0, 0, 0.2);
 }
 
 .leftScrollButton:hover {
- translate: -4px;
- color: black;
+  translate: -4px;
+  color: black;
+  /* animation: squish 200ms ease-in-out; */
+
 }
 
 .rightScrollButton:hover {
   translate: 4px;
   color: black;
+  /* animation: squish 200ms ease-in-out; */
 }
 
-@media (max-width:1140px) {
+.arrowButton {
+  scale: 1.4;
+}
+
+
+@keyframes squish {
+  50% {
+    scale: 1.2 0.7
+  }
+}
+
+@media (max-width:1024px) {
   .container {
     max-width: 620px;
   }

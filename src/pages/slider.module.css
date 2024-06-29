@@ -1,0 +1,22 @@
+.sliderContainer {
+  border-radius: 10px;
+  height: 400px;
+  background-color: transparent;
+  position: relative;
+  overflow: hidden;
+  margin: 0 20px;
+}
+
+.imageTrack {
+  display: flex;
+  transform: translateX(0%);
+  position: absolute;
+  user-select: none;
+}
+
+.image {
+  height: 400px;
+  object-fit: cover;
+  object-position: 100% center;
+  flex-shrink: 0;
+}

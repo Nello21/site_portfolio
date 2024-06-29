@@ -1,98 +1,92 @@
-
 .container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20vmin;
+  color: white;
 }
 
-
-.hitContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
-}
-
-.hitPoster{
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: aliceblue;
-    background-color: black;
-    width: 750px;
-    height: 550px;
-    border-radius: 20px;
-    margin-top: 30px;
-    padding-bottom: 30px;
-    background-image: url('https://rare-gallery.com/livewalls/imgpreview/93006-Storm-In-The-Ocean.jpg');
-
+.hitPoster {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: aliceblue;
+  background-color: black;
+  width: 700px;
+  height: 600px;
+  border-radius: 20px;
+  background-image: url('https://rare-gallery.com/livewalls/imgpreview/93006-Storm-In-The-Ocean.jpg');
 }
 
 .hitImage {
- width: 430px;
- height: 450px;
- border-radius: 10px;
- opacity: 1;
+  width: 430px;
+  height: 450px;
+  border-radius: 10px;
+  opacity: 1;
 }
 
 .hitImage:hover {
-    opacity: 85%;
-    box-shadow: 0 0 5px 5px rgba(242, 130, 18, 0.5);
-    transition: box-shadow 0.2s ease, opacity 0.2s ease;
+  opacity: 85%;
+  box-shadow: 0 0 5px 5px rgba(242, 130, 18, 0.5);
+  transition:
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
 }
 
-.moviesCards {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 5vmin;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.movieHeader,
+.serialsHeader {
+  text-align: center;
 }
 
 .rating {
-    background-color: green;
-    z-index: 0;
-    position: absolute;
-    color: white;
-    font-size: 32px;
-    font-weight: bolder;
-    left: 50px;
-    top: 60px;
-   }
+  background-color: green;
+  z-index: 0;
+  position: absolute;
+  color: white;
+  font-size: 32px;
+  font-weight: bolder;
+  left: 50px;
+  top: 60px;
+}
 
-
-   @media (max-width: 768px) {
-    .hitPoster {
-      border-radius: 10px;
-      max-height: 500px;
-      max-width: 400px;
-    }
-
-    .hitImage {
-      max-height: 370px;
-      max-width: 350px;
-    }
-  
-    .cinemaCard {
-      max-width: 90%;
-      height: auto;
-    }
-  
-    .rating {
-      font-size: 18px;
-      top: 10px;
-      left: 10px;
-    }
+@media (max-width: 768px) {
+  .hitPoster {
+    border-radius: 10px;
+    max-height: 500px;
+    max-width: 400px;
   }
 
-  @media (max-width: 530px) {
-    .hitPoster {
-      max-height: 370px;
-      max-width: 290px;
-    }
-
-    .hitImage {
-      max-height: 270px;
-      max-width: 230px;
-    }
+  .hitImage {
+    max-height: 370px;
+    max-width: 350px;
   }
+
+  .rating {
+    font-size: 18px;
+    top: 10px;
+    left: 10px;
+  }
+}
+
+@media (max-width: 530px) {
+  .hitPoster {
+    max-height: 370px;
+    max-width: 290px;
+  }
+
+  .hitImage {
+    max-height: 270px;
+    max-width: 230px;
+  }
+}

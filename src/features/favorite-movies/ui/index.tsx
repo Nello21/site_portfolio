@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { fetchUser } from 'features/auth/model/store/effects';
 import { getAllCinema } from 'store/cinema/slice';
-import { userActions } from 'features/auth/model/store/slice';
 import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
 import { getCinema } from 'store/cinema/effects';
 import styles from './favorites.module.css';
@@ -30,11 +29,11 @@ export const FavoriteMovies = () => {
 
   return (
     <div className={styles.favoriteMoviesContainer}>
-      <h2>Избранные фильмы пользователя</h2>
+      <h2>Избранные фильмы</h2>
       <ul className={styles.favoriteMoviesList}>
         {favoriteMovies.map(movie => (
           <li key={movie.id} className={styles.favoriteMovieItem}>
-            <CinemaOneCard post={movie} className={styles.movieImage} />
+            <CinemaOneCard card={movie} className={styles.movieImage} />
             <div className={styles.movieInfo}>
               <h3 className={styles.movieTitle}>{movie.name}</h3>
               <p className={styles.movieDescription}>{movie.description}</p>

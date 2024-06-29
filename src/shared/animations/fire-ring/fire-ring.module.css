@@ -1,0 +1,66 @@
+:root {
+    --size: 300px;
+    --s: calc(var(--size) / 6);
+    --border: calc(var(--size) / 20);
+    --boxShadow: calc(var(--size) / 12);
+  }
+  
+
+
+  .circle {
+    width: var(--size);
+    height: var(--size);
+    filter: url(#wavy) blur(1px);
+  }
+  
+  .circle:before,
+  .circle:after {
+    content: "";
+    position: absolute;
+    top: var(--s);
+    left: var(--s);
+    right: var(--s);
+    bottom: var(--s);
+    border-radius: 50%;
+    border: var(--border) solid #fff;
+  }
+
+  .circle:before {
+    box-shadow: 0 0 var(--boxShadow) #0f0, inset 0 0 var(--boxShadow) #0f0;
+    -webkit-box-reflect: below 10px
+      linear-gradient(transparent, transparent, #0002);
+    animation: move 5s linear infinite;
+  }
+  
+  .circle:after {
+    box-shadow: 0 0 calc(var(--border)/2) #fff, inset 0 0 var(--border) #fff;
+  }
+  
+  @keyframes move {
+    0% {
+      box-shadow: 0 0 var(--boxShadow) #0f0, inset 0 0 var(--boxShadow) #0f0;
+      filter: hue-rotate(0deg);
+    }
+    20% {
+      box-shadow: 0 0 10px #0f0, inset 0 0 10px #0f0;
+    }
+  
+    40% {
+      box-shadow: 0 0 20px #0f0, inset 0 0 20px #0f0;
+    }
+    60% {
+      box-shadow: 0 0 40px #0f0, inset 0 0 40px #0f0;
+    }
+    80% {
+      box-shadow: 0 0 60px #0f0, inset 0 0 60px #0f0;
+    }
+    100% {
+      box-shadow: 0 0 var(--boxShadow) #0f0, inset 0 0 var(--boxShadow) #0f0;
+      filter: hue-rotate(360deg);
+    }
+  }
+  
+  .svgCircle {
+    width: 0;
+    height: 0;
+  }

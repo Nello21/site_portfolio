@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './header.module.css';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from 'store';
@@ -14,13 +14,32 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
   const token = useSelector(getAuthUserToken);
   const user = useSelector(getAuthUser);
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDropMenuHovered, setIsDropMenuHovered] = useState(false);
+  const avatarRef = useRef<HTMLDivElement>(null);
+  const sideRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
-    setIsMenuOpen(prevState => !prevState);
+    setIsSidebarOpen(prevState => !prevState);
+    sideRef.current?.focus();
   };
 
-  console.log(user);
+  const hideSidebar = useCallback((e: any) => {
+    if (e && !e.relatedTarget) {
+      setIsSidebarOpen(false);
+    }
+  }, []);
+
+  const handleMouseEnterMenu = () => {
+    setIsDropMenuHovered(true);
+    avatarRef.current?.focus();
+  };
+
+  const hideDropMenu = (e: any) => {
+    if (e && !e.relatedTarget) {
+      setIsDropMenuHovered(false);
+    }
+  };
 
   return (
     <nav className={styles.headerContainer}>
@@ -28,18 +47,25 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
         <button className={styles.burgerButton} onClick={toggleMenu}>
           ☰
         </button>
-        <div className={clsx(styles.dropSideBar, { [styles.sideBarVisible]: isMenuOpen })}>
-          {isMenuOpen && <DropSidebar />}
+        <div
+          className={clsx(styles.dropSideBar, { [styles.sideBarVisible]: isSidebarOpen })}
+          onBlur={hideSidebar}
+          ref={sideRef}
+          tabIndex={-1}
+        >
+          {isSidebarOpen && <DropSidebar />}
         </div>
-        <div className={styles.siteName}>КИНОЛЕНТА</div>
+        <div className={styles.siteName}>
+          <span>КИНОЛЕНТА</span>
+        </div>
       </div>
       <div className={styles.centerSection}>
         <input type="text" placeholder="Search" className={styles.searchInput} onChange={onSearch} />
       </div>
       <div className={styles.rightSection}>
-        <div className={styles.avatar}>
+        <div onMouseEnter={handleMouseEnterMenu} onBlur={hideDropMenu} ref={avatarRef} tabIndex={-1}>
           {token ? <img src={String(user.avatar)} className={styles.avatar} /> : <div></div>}
-          <div className={styles.dropMenu}>
+          <div className={clsx(styles.dropMenu, { [styles.dropMenuVisible]: isDropMenuHovered })}>
             <div className={styles.menuHeader}>
               {token ? (
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -56,10 +82,10 @@ export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInpu
             <div className={styles.menuItem}>
               {token ? (
                 <div>
-                  <Link to={`${ROUTES.userProfile}/${user.id}`} style={{ textDecoration: 'none' }}>
+                  <Link to={`${ROUTES.userProfile}/${user.id}`} className={styles.link}>
                     <span>Профиль</span>
                   </Link>
-                  <Link to={`${ROUTES.favorites}/${user.id}`} style={{ textDecoration: 'none' }}>
+                  <Link to={`${ROUTES.favorites}/${user.id}`} className={styles.link}>
                     <span>Избранное</span>
                   </Link>
                 </div>

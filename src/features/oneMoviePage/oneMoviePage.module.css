@@ -44,8 +44,9 @@
   }
 
   .ratingSection {
-    padding-top: 10px;
+    padding-top: 20px;
     display: flex;
+    text-align: center;
     align-items: center;
     justify-content: center;
     flex-direction: row;
@@ -53,10 +54,19 @@
   
   .star {
     cursor: pointer;
+    fill: transparent;
+    stroke-width: 0.3;
+    transition: all 0.25s ease;
   }
-  
+
   .filledStar {
     fill: gold;
+    stroke-width: 0;
+  }
+
+  .filledStar:hover {
+    scale: 1.4;
+    animation: star-animation 1s ease-in-out infinite;
   }
   
   .description {
@@ -89,10 +99,66 @@
     font-size: 20px;
   }
   
-  .favoriteButton {
+  .heartButton {
+    fill: transparent;
     width: 32px;
     height: 32px;
+    scale: 1;
+    stroke-width: 0.4;
+    stroke-dasharray: 55;
+    stroke-dashoffset: 0;
+    transition: all 300ms ease-in-out;
   }
+
+  .heartButton:hover {
+    stroke-width: 0.3;
+    scale: 1.2;
+    animation: heart-hover ease-in-out 0.5s;
+  }
+
+  .filledHeart {
+    stroke-width: 0;
+    fill: red;
+    animation: heart-animation ease-in-out 1.5s infinite;
+  }
+
+
+  @keyframes heart-hover {
+    0% {
+      transform: 0;
+    }
+
+    25% {
+      transform: translateX(1px);
+    }
+
+    50% {
+      transform: 0;
+    }
+
+    75% {
+      transform: translateX(-2px);
+    }
+
+    100% {
+      transform: 0;
+    }
+  }
+
+  @keyframes heart-animation {
+    0% {
+      scale: 1;
+    }
+
+    50% {
+      scale: 1.25;
+    }
+
+    100% {
+      scale: 1;
+    }
+  }
+
   
   @media (min-width: 768px) {
     .movieInfo {

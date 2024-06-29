@@ -6,17 +6,24 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from 'router/routes';
 
 type PostCardProps = {
-  post: cinemaData;
+  card: cinemaData;
   className?: string;
+  style?: React.CSSProperties;
+  hasMoved?: boolean;
 };
 
-export const CinemaOneCard = ({ post, className }: PostCardProps) => {
+export const CinemaOneCard = ({ card, className, style, hasMoved }: PostCardProps) => {
+  const handleClick = (e: React.MouseEvent) => {
+    if (hasMoved) {
+      e.preventDefault();
+    }
+  };
   return (
     <motion.div layout>
-      <div className={styles.article}>
-        <Link to={`${ROUTES.root}${post.id}`}>
-          <img src={post.image} className={className} />
-          <div className={styles.text}>{post.rating}</div>
+      <div className={styles.card} style={style}>
+        <Link to={`${ROUTES.root}${card.id}`} draggable="false" onClick={handleClick}>
+          <img src={card.image} className={className} style={style} draggable="false" />
+          <span className={styles.text}>{card.rating}</span>
         </Link>
       </div>
     </motion.div>

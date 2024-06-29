@@ -1,14 +1,6 @@
 .root {
-    width: 100%;
-    min-height: 800px;
-    border-left: 1px solid gray;
-    padding: 16px; 
-  }
-  
-  @media (max-width: 768px) {
-    .root {
-      border:none; 
-      padding: 16px; 
-      min-height: auto; 
-    }
-  }
+  width: 100%;
+  min-height: 100vh;
+  border-left: 2px solid #25283b;
+  padding: 16px 16px 0 16px;
+}

@@ -2,23 +2,24 @@
   background-color: rgb(35, 32, 30);
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Franklin Gothic Medium';
 }
 
 .leftSection {
   display: flex;
   align-items: center;
   color: white;
+  gap: 20px;
 }
 
 .sideBar {
-  display:block
+  display: block;
 }
 
 .burgerButton {
@@ -39,8 +40,17 @@
 }
 
 .siteName:hover {
-  text-shadow: 0 0 10px orange;
-  transition: text-shadow 0.3s ease, font-size 0.3s ease;
+  text-shadow: 0 0 5px orange;
+  transition:
+    text-shadow 0.3s ease,
+    font-size 0.3s ease;
+  animation: squish 300ms ease-in-out;
+}
+
+@keyframes squish {
+  50% {
+    scale: 1.1;
+  }
 }
 
 .centerSection {
@@ -58,11 +68,15 @@
   width: 300px;
   height: 25px;
   box-shadow: 0;
-  transition: box-shadow 0.3s ease-in-out, background-color 0.25s ease-in-out;
+  transition:
+    box-shadow 0.3s ease-in-out,
+    background-color 0.25s ease-in-out;
 }
 
 .searchInput:hover {
-  box-shadow: -2px -1px 8px rgba(179, 0, 255), 2px 1px 8px yellow;
+  box-shadow:
+    -2px -1px 8px rgba(179, 0, 255),
+    2px 1px 8px yellow;
 }
 
 .searchInput:focus {
@@ -81,9 +95,31 @@
   cursor: pointer;
 }
 
+.dropSideBar {
+  opacity: 0;
+  position: absolute;
+  top: calc(100%);
+  left: 10px;
+  background-color: rgb(94, 93, 93);
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 100%;
+  max-width: 230px;
+  max-height: 150px;
+  cursor: default;
+  pointer-events: none;
+}
+
+.sideBarVisible {
+  opacity: 1;
+  transition: opacity 0.35s ease-in-out;
+  pointer-events: auto;
+}
+
 .avatar {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   background-color: #ddd;
   border-radius: 50%;
   margin-right: 10px;
@@ -92,32 +128,7 @@
   text-align: center;
 }
 
-
-.dropSideBar {
-  opacity: 0;
-  position: absolute;
-  top: calc(100%);
-  left: 10px;
-  background-color: whitesmoke;
-  border-radius: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  min-width: 130px;
-  max-width: 230px;
-  max-height: 150px;
-  cursor: default;
-  pointer-events: none;
-}
-
-.sideBarVisible{
-  opacity:1;
-  transition:opacity 0.35s ease-in-out;
-  pointer-events: auto;
-}
-
 .dropMenu {
-  opacity: 0;
-  transition: opacity 0.25s ease-in-out;
   position: absolute;
   top: -30%;
   right: -10%;
@@ -127,11 +138,13 @@
   padding: 10px;
   min-width: 150px;
   max-height: 250px;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
   cursor: default;
   pointer-events: none;
 }
 
-.avatar:hover .dropMenu {
+.dropMenuVisible {
   opacity: 1;
   pointer-events: auto;
 }
@@ -148,18 +161,16 @@
   margin-left: 5px;
   background-color: #ddd;
   border: 3px solid orange;
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   margin-right: 5px;
-  cursor: pointer;
 }
 
 .userName {
   font-family: Arial;
   color: white;
   font-size: 25px;
-  cursor: pointer;
 }
 
 .userEmail {
@@ -169,48 +180,55 @@
 }
 
 .menuItem span {
-  display: block;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   height: 25px;
   padding: 8px;
   cursor: pointer;
   color: white;
+  font-size: 18px;
   font-family: Arial;
   font-weight: bold;
   text-decoration: none;
 }
 
+.link {
+  text-decoration: none;
+}
+
 .menuItem span:hover {
-  text-shadow: 0 0 3px white;
-  font-size: 20px;
-  transition: text-shadow 0.3s ease-in, font-weight 0.2s ease-in;
+  color: darksalmon;
+  transition: color 0.3s ease-in;
+  animation: squish 0.3s ease-in-out;
 }
 
 .newPostButton {
   text-decoration: none;
 }
 
-@media (min-width:1280px){
+@keyframes squish {
+  50% {
+    scale: 1.2;
+  }
+}
+
+@media (min-width: 1280px) {
   .burgerButton {
     display: none;
   }
 }
-
 
 @media (max-width: 768px) {
   .headerContainer {
     padding: 10px;
   }
 
-  .leftSection {
-    padding-left: 10px;
-  }
-  
   .burgerButton {
     padding-left: 10px;
   }
 
-  .dropMenu{
+  .dropMenu {
     top: 120%;
     right: -50%;
   }
@@ -219,7 +237,7 @@
   }
 
   .searchInput {
-    width: 200px;
+    width: 150px;
   }
 
   .avatar {

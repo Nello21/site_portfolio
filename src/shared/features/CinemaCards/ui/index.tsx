@@ -1,82 +1,45 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CinemaOneCard } from './CinemaCard';
 import { cinemaData } from '../../../types/cinemaData';
 import styles from './cinemaCards.module.css';
-
-const ITEM_WIDTH = 830;
+import Arrow from 'shared/assets/icons/arrow.svg';
 
 export const CinemaCards = ({ cards }: { cards: cinemaData[] }) => {
-  const itemsRef = useRef<HTMLInputElement>(null);
+  const itemsRef = useRef<HTMLDivElement>(null);
+  const leftButtonRef = useRef<HTMLButtonElement>(null);
+  const rightButtonRef = useRef<HTMLButtonElement>(null);
 
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const leftButtonRef = useRef<HTMLButtonElement>(null);
-  const rightButtonRef = useRef<HTMLButtonElement>(null);
 
-  const handleMouseClick = (scrollAmount: number) => {
-    if (itemsRef.current) {
-      smoothScroll(itemsRef.current, scrollAmount);
-    }
+  const [itemWidth, setItemWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const [imageIndex, setImageIndex] = useState(0);
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
   };
 
-  const smoothScroll = (e: HTMLElement, scrollAmount: number) => {
-    const step = 20;
-    let count = 0;
-
-    const scroll = () => {
-      if (count < Math.abs(scrollAmount)) {
-        e.scrollBy(scrollAmount > 0 ? step : -step, 0);
-        count += step;
-        requestAnimationFrame(scroll);
-      }
-    };
-
-    scroll();
+  const showNextImages = (scrollAmount: number) => {
+    setImageIndex(index => {
+      if (index === cards.length - scrollAmount) return 0;
+      return index + scrollAmount;
+    });
   };
 
-  useEffect(() => {
-    const currentItemsRef = itemsRef.current;
-    const handleScroll = () => {
-      if (currentItemsRef) {
-        const scrollPosition = currentItemsRef.scrollLeft;
-        if (scrollPosition <= 0) {
-          if (leftButtonRef.current) {
-            leftButtonRef.current.style.opacity = '0';
-            leftButtonRef.current.disabled = true;
-          }
-          if (rightButtonRef.current) {
-            rightButtonRef.current.style.opacity = '1';
-            rightButtonRef.current.disabled = false;
-          }
-        } else if (scrollPosition >= ITEM_WIDTH) {
-          if (rightButtonRef.current) {
-            rightButtonRef.current.style.opacity = '0';
-            rightButtonRef.current.disabled = true;
-          }
-          if (leftButtonRef.current) {
-            leftButtonRef.current.style.opacity = '1';
-            leftButtonRef.current.disabled = false;
-          }
-        }
-      }
-    };
-
-    if (currentItemsRef) {
-      currentItemsRef.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      if (currentItemsRef) {
-        currentItemsRef.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
+  const showPrevImages = (scrollAmount: number) => {
+    setImageIndex(index => {
+      if (index === 0) return cards.length - scrollAmount;
+      return index - scrollAmount;
+    });
+  };
 
   const handleMouseDown = (e: any) => {
     setIsMouseDown(true);
     if (itemsRef && itemsRef.current) {
-      setStartX(e.pageX - -itemsRef.current.offsetLeft);
+      setStartX(e.clientX);
       setScrollLeft(itemsRef.current.scrollLeft);
     }
   };
@@ -93,32 +56,35 @@ export const CinemaCards = ({ cards }: { cards: cinemaData[] }) => {
     if (!isMouseDown) return;
     e.preventDefault();
     if (itemsRef && itemsRef.current) {
-      const x = e.pageX - itemsRef.current.offsetLeft;
+      const x = e.clientX - itemsRef.current.offsetLeft;
       const walk = (x - startX) * 2;
       itemsRef.current.scrollLeft = scrollLeft - walk;
     }
   };
 
+  useEffect(() => {
+    if (windowWidth > 1024) {
+      setItemWidth(4);
+    }
+    if (windowWidth <= 1024) {
+      setItemWidth(3);
+    }
+    if (windowWidth <= 768) {
+      setItemWidth(2);
+    }
+    if (windowWidth <= 530) {
+      setItemWidth(1);
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [windowWidth]);
+
   return (
     <div className={styles.container}>
-      <button
-        ref={leftButtonRef}
-        className={styles.leftScrollButton}
-        onClick={() => {
-          handleMouseClick(-ITEM_WIDTH);
-        }}
-      >
-        Л
-      </button>
-      <button
-        ref={rightButtonRef}
-        className={styles.rightScrollButton}
-        onClick={() => {
-          handleMouseClick(ITEM_WIDTH);
-        }}
-      >
-        П
-      </button>
       <div
         className={styles.content}
         ref={itemsRef}
@@ -128,9 +94,27 @@ export const CinemaCards = ({ cards }: { cards: cinemaData[] }) => {
         onMouseMove={handleMouseMove}
       >
         {cards.map(card => (
-          <CinemaOneCard post={card} key={card.id} />
+          <CinemaOneCard card={card} key={card.id} style={{ translate: `${-105 * imageIndex}%` }} />
         ))}
       </div>
+      <button
+        ref={leftButtonRef}
+        className={styles.leftScrollButton}
+        onClick={() => {
+          showPrevImages(itemWidth);
+        }}
+      >
+        <Arrow className={styles.arrowButton} style={{ rotate: '180deg' }} />
+      </button>
+      <button
+        ref={rightButtonRef}
+        className={styles.rightScrollButton}
+        onClick={() => {
+          showNextImages(itemWidth);
+        }}
+      >
+        <Arrow className={styles.arrowButton} />
+      </button>
     </div>
   );
 };

@@ -2,41 +2,44 @@ import React, { useEffect, useState } from 'react';
 import { RangeSlider } from 'shared/components/RangeSlider/rangeSlider';
 import { CinemaOneCard } from 'shared/features/CinemaCards/ui/CinemaCard';
 import { Option } from 'shared/types/option';
-import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { clearCinemaStore, getAllCinema, getCinemaIsLoading } from 'store/cinema/slice';
 import { useAppDispatch } from 'store';
-import Select from 'react-select';
 import styles from './navigator.module.css';
 import { getCinema } from 'store/cinema/effects';
 import { cinemaData } from 'shared/types/cinemaData';
 import { ButtonToTop } from 'shared/components/TopButton/topButton';
+import { useSearchParams } from 'react-router-dom';
+import Select from 'react-select';
+import { Loader } from 'shared/components/Loader/loader';
+import { motion } from 'framer-motion';
 
 export const NavigatorPage = () => {
   const dispatch = useAppDispatch();
   const allCinema = useSelector(getAllCinema);
   const isLoading = useSelector(getCinemaIsLoading);
 
-  const [data, setData] = useState<cinemaData[]>([]);
-
-  const [showMovies, setShowMovies] = useState(true);
-  const [showSerials, setShowSerials] = useState(true);
-
-  const [searchValue, setSearchValue] = useState('');
-
-  const [sortByRating, setSortByRating] = useState<string | number>('-rating');
-
-  const [yearRange, setYearRange] = useState<number[]>([1970, 2024]);
-
-  const [selectedGenres, setSelectedGenres] = useState<Option[]>([]);
-
-  // const [genreOptions, setGenreOptions] = useState<Option[]>([]);
-
-  // Номер конкретной страницы в пагинации
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // Количество элементов на странице
-  // const [totalPages, setTotalPages] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams({
+    q: '',
+    onlySelectedGenres: 'false',
+    showMovies: 'true',
+    showSerials: 'true',
+    sortByRating: '-rating',
+    yearRange: '1970, 2024',
+    selectedGenres: '',
+  });
+  const q = searchParams.get('q');
+  const onlySelectedGenres = searchParams.get('onlySelectedGenres') === 'true';
+  const showMovies = searchParams.get('showMovies') === 'true';
+  const showSerials = searchParams.get('showSerials') === 'true';
+  const sortByRating = searchParams.get('sortByRating') === '-rating';
+  const [yearRangeStart, yearRangeEnd] = searchParams.get('yearRange')?.split(',').map(Number) || [1970, 2024];
+  const selectedGenresString = searchParams.get('selectedGenres');
+  const selectedGenres = selectedGenresString ? selectedGenresString.split(',') : [];
+  const selectedGenresOptions: Option[] = selectedGenres.map(genre => ({
+    value: genre,
+    label: genre,
+  }));
 
   useEffect(() => {
     dispatch(getCinema());
@@ -45,21 +48,30 @@ export const NavigatorPage = () => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
+  const contentFiltration = (content: cinemaData[]) => {
     //Фильтрация по поиску
-    const searchableMovies = allCinema.filter(movie => movie.name.toLowerCase().includes(searchValue.toLowerCase()));
+    const searchableMovies = content.filter(movie => movie.name.toLowerCase().includes(q!.toLowerCase()));
 
     // Фильтрация по жанрам
-    const filterByGenres = searchableMovies.filter(movie => {
+    const genreFilter = (content: cinemaData[]) => {
       if (selectedGenres.length > 0) {
-        return selectedGenres.some((selectedGenre: any) => movie.genre.includes(selectedGenre.value));
-      } else {
-        return true;
+        if (onlySelectedGenres) {
+          return content.filter(movie =>
+            selectedGenres.every((selectedGenre: string) => movie.genre.includes(selectedGenre)),
+          );
+        } else if (!onlySelectedGenres) {
+          return content.filter(movie =>
+            selectedGenres.some((selectedGenre: string) => movie.genre.includes(selectedGenre)),
+          );
+        }
       }
-    });
+      return content;
+    };
+
+    const filteredByGenres = genreFilter(searchableMovies);
 
     // Фильтрация по типу (фильм/сериал)
-    const filteredByType = filterByGenres.filter(movie => {
+    const filteredByType = filteredByGenres.filter(movie => {
       if (showMovies && showSerials) {
         return true;
       } else if (showMovies) {
@@ -74,13 +86,13 @@ export const NavigatorPage = () => {
     // Фильтрация по годам выхода
     const filterByYears = filteredByType.filter(movie => {
       const releaseYear = parseInt(movie.releaseYear.toString());
-      return releaseYear >= yearRange[0] && releaseYear <= yearRange[1];
+      return releaseYear >= yearRangeStart && releaseYear <= yearRangeEnd;
     });
 
-    // Сортировка
+    // Сортировка по рейтингу
     const sortMovies = () => {
       const sortedMovies = [...filterByYears];
-      if (sortByRating === '-rating') {
+      if (sortByRating) {
         sortedMovies.sort((a, b) => b.rating - a.rating);
       } else {
         sortedMovies.sort((a, b) => a.rating - b.rating);
@@ -89,46 +101,69 @@ export const NavigatorPage = () => {
     };
 
     const sortedMovies = sortMovies();
-    setData(sortedMovies);
-  }, [allCinema, searchValue, selectedGenres, showMovies, showSerials, yearRange, sortByRating]);
 
-  if (isLoading) return <div>Loading....</div>;
-  if (!allCinema) return <div>no data</div>;
-
-  const handleShowMoviesChange = () => {
-    setShowMovies(!showMovies);
+    console.log(selectedGenres);
+    console.log(selectedGenresOptions);
+    return sortedMovies;
   };
 
-  const handleShowSeriesChange = () => {
-    setShowSerials(!showSerials);
-  };
+  const content = contentFiltration(allCinema);
+
+  if (isLoading) return <Loader />;
+  if (!allCinema) return <div>нет данных</div>;
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchValue(value);
+    setSearchParams(prev => {
+      prev.set('q', e.target.value || '');
+      return prev;
+    });
   };
 
-  const handleYearRangeChange = (newRange: number[]) => {
-    setYearRange(newRange);
+  const handleShowMoviesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams(prev => {
+      prev.set('showMovies', e.target.checked.toString());
+      return prev;
+    });
   };
 
-  const handleGenreChange = (newValue: any) => {
-    setSelectedGenres(newValue);
+  const handleShowSeriesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams(prev => {
+      prev.set('showSerials', e.target.checked.toString());
+      return prev;
+    });
+  };
+
+  const handleGenreChange = (option: readonly Option[]) => {
+    if (option) {
+      const selectedGenresString = option.map(option => option.value).join(',');
+      setSearchParams(prev => {
+        prev.set('selectedGenres', selectedGenresString);
+        return prev;
+      });
+    }
+  };
+
+  const handleOnlySelectedGenres = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams(prev => {
+      prev.set('onlySelectedGenres', e.target.checked.toString());
+      return prev;
+    });
   };
 
   const handleSortRatingChange = (option: Option | null) => {
     if (option) {
-      setSortByRating(option.value);
+      setSearchParams(prev => {
+        prev.set('sortByRating', option.value.toString());
+        return prev;
+      });
     }
   };
 
-  const handleOnlySelectedGenres = () => {
-    if (selectedGenres.length > 0) {
-      const filteredMovies = allCinema.filter(movie =>
-        selectedGenres.every((selectedGenre: any) => movie.genre.includes(selectedGenre.value)),
-      );
-      setData(filteredMovies);
-    }
+  const handleYearRangeChange = (newRange: number[]) => {
+    setSearchParams(prev => {
+      prev.set('yearRange', newRange.join(','));
+      return prev;
+    });
   };
 
   const options: Option[] = [
@@ -155,7 +190,13 @@ export const NavigatorPage = () => {
             <div className={styles.text}>Навигатор по названию</div>
           </div>
           <div className={styles.section}>
-            <input style={{}} type="text" placeholder="Найти фильм" onChange={handleSearchInputChange} />
+            <input
+              style={{}}
+              type="text"
+              placeholder="Найти фильм"
+              value={q || ''}
+              onChange={handleSearchInputChange}
+            />
 
             <div className={styles.checkboxContainer}>
               <input
@@ -196,7 +237,7 @@ export const NavigatorPage = () => {
               placeholder="Выберите жанр"
               isMulti
               options={genreOptions}
-              value={selectedGenres}
+              value={selectedGenresOptions}
               onChange={handleGenreChange}
             />
             <div className={styles.checkboxContainer}>
@@ -204,7 +245,8 @@ export const NavigatorPage = () => {
                 type="checkbox"
                 id="only-selected-genres"
                 className={styles.checkboxInput}
-                onClick={handleOnlySelectedGenres}
+                checked={onlySelectedGenres}
+                onChange={handleOnlySelectedGenres}
               />
               <label htmlFor="only-selected-genres" className={styles.checkboxText}>
                 Только выбранные жанры
@@ -213,7 +255,7 @@ export const NavigatorPage = () => {
             <Select
               className={styles.select}
               placeholder="Выберите..."
-              value={options.find(option => option.value === sortByRating)}
+              value={sortByRating ? options[0] : options[1]}
               onChange={handleSortRatingChange}
               options={options}
             />
@@ -235,8 +277,8 @@ export const NavigatorPage = () => {
 
       <motion.div layout>
         <div className={styles.moviesContainer}>
-          {data.map(movie => (
-            <CinemaOneCard post={movie} key={movie.id} />
+          {content.map(movie => (
+            <CinemaOneCard card={movie} key={movie.id} style={{ height: '40vmin', width: '28vmin' }} />
           ))}
         </div>
       </motion.div>

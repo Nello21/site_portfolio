@@ -13,9 +13,13 @@ type NavButtonProps = {
 
 export const NavButton = ({ url, className, icon, children }: NavButtonProps) => {
   return (
-    <NavLink to={url} className={({ isActive }) => clsx(styles.menuItem, { [styles.active]: isActive })}>
-      {icon && <span className={className}>{icon}</span>}
-      {children}
-    </NavLink>
+    <div className={styles.itemContainer}>
+      <NavLink to={url} className={({ isActive }) => clsx(styles.icon, { [styles.iconActive]: isActive })}>
+        {icon && <div className={className}>{icon}</div>}
+      </NavLink>
+      <NavLink to={url} className={({ isActive }) => clsx(styles.menuItem, { [styles.itemActive]: isActive })}>
+        {children}
+      </NavLink>
+    </div>
   );
 };

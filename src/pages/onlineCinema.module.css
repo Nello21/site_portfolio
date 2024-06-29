@@ -1,0 +1,76 @@
+.mainContainer {
+  height: 100%;
+  gap: 10vmin;
+  perspective: 10px;
+}
+
+.hitHeader {
+  height: 110vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  background-color: #191a23;
+  z-index: -1;
+}
+
+.carousel {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+.title {
+  font-family: 'Franklin Gothic Medium';
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  max-width: 600px;
+  font-size: 6em;
+  line-height: 1em;
+  color: rgb(227, 159, 77);
+  padding-bottom: 400px;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.title::after {
+  position: absolute;
+  inset: 0 0 0 0;
+  content: attr(data-content);
+  z-index: 1;
+  -webkit-text-stroke: 2px #d2d2d2;
+  color: transparent;
+}
+
+.background {
+  background-image: url(shared/assets/images/CarouseImages/darthvader.png);
+  width: 100%;
+  height: 75vh;
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  background-size: auto 120%;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
+.content {
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5vmin;
+  background-color: black;
+}
+
+.movieHeader,
+.serialsHeader {
+  color: #d2d2d2;
+  font-family: 'ICA Rubrik';
+  font-size: 3em;
+  text-align: left;
+  padding-left: 10vh;
+}

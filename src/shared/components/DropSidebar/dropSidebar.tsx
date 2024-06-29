@@ -21,6 +21,11 @@ export const DropSidebar = ({ className }: SidebarProps) => {
           <span>Навигатор</span>
         </NavButton>
       </div>
+      <div className={styles.menuItem}>
+        <NavButton url={ROUTES.cinema} className={styles.icon} icon={<Movie />}>
+          <span>Кинотеатр</span>
+        </NavButton>
+      </div>
       <div className={styles.tooltip}></div>
     </nav>
   );

@@ -9,6 +9,9 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from 'router/routes';
 import { fetchUser } from 'features/auth/model/store/effects';
 import { getAuthUserId } from 'features/auth/model/store/slice';
+import { Loader } from 'shared/components/Loader/loader';
+import { Slider } from 'pages/Slider';
+import { Carousel3d } from 'pages/Carousel3d';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
@@ -26,31 +29,38 @@ export const MainPage = () => {
     };
   }, [dispatch, userId]);
 
-  if (isLoading) return <div>Загрузка...</div>;
+  if (isLoading) return <Loader />;
   if (!(movies && serials)) return <div>Нет данных</div>;
 
   return (
     <div className={styles.container}>
-      {hitOfTheWeek && (
-        <div className={styles.hitContainer}>
-          <div className={styles.hitPoster}>
-            <h2 style={{ fontSize: '32px' }}>Хит недели</h2>
-            <Link to={`${ROUTES.root}${hitOfTheWeek.id}`}>
-              <img src={hitOfTheWeek.image} className={styles.hitImage} />
-            </Link>
-            <div className={styles.rating}>{hitOfTheWeek.rating}</div>
-          </div>
+      {/* {hitOfTheWeek && (
+        <div className={styles.hitPoster}>
+          <h2 style={{ fontSize: '32px' }}>Хит недели</h2>
+          <Link to={`${ROUTES.root}${hitOfTheWeek.id}`}>
+            <img src={hitOfTheWeek.image} className={styles.hitImage} />
+          </Link>
+          <div className={styles.rating}>{hitOfTheWeek.rating}</div>
         </div>
-      )}
+      )} */}
+      <div className={styles.content}>
+        <div>
+          <Carousel3d cards={movies} />
+        </div>
 
-      <div className={styles.moviesCards}>
-        <h2>Фильмы</h2>
-        <CinemaCards cards={movies} />
-      </div>
+        <h2 className={styles.movieHeader}>Фильмы</h2>
 
-      <div className={styles.moviesCards}>
-        <h2>Сериалы</h2>
-        <CinemaCards cards={serials} />
+        <Slider cards={movies} />
+
+        <h2 className={styles.serialsHeader}>Сериалы</h2>
+
+        <Slider cards={movies} />
+        <h2 className={styles.serialsHeader}>Сериалы</h2>
+
+        <Slider cards={movies} />
+        <h2 className={styles.serialsHeader}>Сериалы</h2>
+
+        <Slider cards={movies} />
       </div>
     </div>
   );

@@ -9,13 +9,13 @@ import { getReviewsWithUser } from 'features/auth/model/store/reviewsSlice';
 import { ROUTES } from 'router/routes';
 import { CommentForm } from 'features/create-review/ui';
 import { addFavoriteMovie, deleteFavoriteMovie } from 'features/favorite-movies/model/store/effects';
-import { getAuthUserId, getAuthUserToken } from 'features/auth/model/store/slice';
+import { getAuthUserToken } from 'features/auth/model/store/slice';
 import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
-import { STORAGE_KEY, setStorageItem } from 'services/storage';
-import styles from './oneMovieContent.module.css';
+import styles from './oneMoviePage.module.css';
 import clsx from 'clsx';
 import StarSVG from 'shared/assets/icons/star.svg';
 import HeartSVG from 'shared/assets/icons/heart.svg';
+import { Loader } from 'shared/components/Loader/loader';
 
 export const OneMovieContent = () => {
   const { id } = useParams();
@@ -32,6 +32,7 @@ export const OneMovieContent = () => {
   const commentFormRef = useRef<HTMLDivElement>(null);
 
   const [rating, setRating] = useState(0);
+
   const [hoveredRating, setHoveredRating] = useState(0);
 
   const [isFavorite, setIsFavorite] = useState(false);
@@ -55,7 +56,7 @@ export const OneMovieContent = () => {
     };
   }, [dispatch, id, favoriteMovieIds]);
 
-  if (isLoading) return <div>Загрузка...</div>;
+  if (isLoading) return <Loader />;
   if (!movie) return <div>Нет данных</div>;
 
   const handleToggleFavorite = () => {
@@ -84,7 +85,10 @@ export const OneMovieContent = () => {
     const stars = [];
 
     for (let i = 1; i <= 10; i++) {
-      const filled = i <= (hoveredRating || rating);
+      let filled = false;
+      if (i <= (hoveredRating || rating)) {
+        filled = true;
+      }
       stars.push(
         <StarSVG
           key={i}
@@ -106,16 +110,21 @@ export const OneMovieContent = () => {
       <div className={styles.movieInfo}>
         <div className={styles.imageSection}>
           <img src={movie.image} alt="Постер" className={styles.poster} />
+
           <div className={styles.ratingSection}>
-            <div style={{ textAlign: 'center', fontSize: '20px' }}>Рейтинг: </div>
+            <div style={{ fontSize: '20px' }}>Рейтинг: </div>
             <div className={styles.rating}>{renderStarRating()}</div>
           </div>
 
           {token ? (
             <div className={styles.favoriteButtonContainer}>
-              <div className={styles.favoriteButtonLabel}>Добавить в избранное</div>
+              <div className={styles.favoriteButtonLabel}>Добавить в избранное: </div>
               <div className={styles.favoriteButton} onClick={handleToggleFavorite}>
-                <HeartSVG width="32" height="32" fill={isFavorite ? '#FF0000' : 'none'} />
+                <HeartSVG
+                  width="32"
+                  height="32"
+                  className={clsx(styles.heartButton, { [styles.filledHeart]: isFavorite })}
+                />
               </div>
             </div>
           ) : (
