@@ -311,7 +311,13 @@ export const NavigatorPage = () => {
       <motion.div layout>
         <div className={styles.moviesContainer}>
           {content.map(movie => (
-            <CinemaOneCard card={movie} key={movie.id} style={{ height: '38vmin', width: '50vmin' }} />
+            <CinemaOneCard
+              card={movie}
+              key={movie.id}
+              style={
+                window.innerWidth > 768 ? { height: '38vmin', width: '47vmin' } : { height: '34vmin', width: '44vmin' }
+              }
+            />
           ))}
         </div>
       </motion.div>

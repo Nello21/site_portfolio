@@ -9,7 +9,7 @@
   width: 100%;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(40vmin, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(47vmin, 1fr));
   gap: 20px;
   transition: all 0.5s ease;
 }
@@ -127,16 +127,10 @@
   right: 4%;
 }
 
-@media (max-width: 1280px) {
-  .moviesContainer {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-  }
-}
-
 @media (max-width: 768px) {
   .moviesContainer {
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(44vmin, 1fr));
+    gap: 5px;
   }
 
   .selectSection {

@@ -29,7 +29,7 @@ export const CinemaOneCard = ({ card, className, style, hasMoved, hideAttributes
             {card.rating}
           </div>
           <div className={styles.playButton}>
-            <PlayButton width={80} height={80} />
+            <PlayButton width={80} height={80} className={styles.svg} />
           </div>
         </Link>
       </div>

@@ -44,3 +44,14 @@
 .card:hover .playButton {
   opacity: 1;
 }
+
+@media (max-width: 540px) {
+  .svg {
+    transform: scale(0.8);
+  }
+}
+@media (max-width: 540px) {
+  .svg {
+    transform: scale(0.6);
+  }
+}

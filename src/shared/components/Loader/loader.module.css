@@ -5,3 +5,10 @@
   background-color: transparent;
   z-index: 2;
 }
+
+@media (max-width: 768px) {
+  .loader {
+    left: 22.5%;
+    top: 10%;
+  }
+}
