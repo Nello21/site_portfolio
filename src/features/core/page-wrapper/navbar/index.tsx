@@ -22,17 +22,16 @@ export const Header = () => {
   const location = useLocation();
   const [hideBurgerButton, setHideBurgerButton] = useState(false);
   const [hideNavbar, setHideNavbar] = useState(false);
-  const [hideDropBars, setHideDropBards] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const controlBars = useCallback(() => {
     if (window.scrollY > lastScrollY) {
       setHideNavbar(true);
-      setHideDropBards(true);
+      setChecked(false);
     } else {
       setHideNavbar(false);
-      setHideDropBards(false);
     }
 
     setLastScrollY(window.scrollY);
@@ -56,6 +55,10 @@ export const Header = () => {
 
   const handleMouseEnterMenu = () => {
     setIsDropMenuHovered(true);
+    DropMenuRef.current?.focus();
+  };
+
+  const handleMouseClickMenu = () => {
     DropMenuRef.current?.focus();
   };
 
@@ -84,11 +87,17 @@ export const Header = () => {
   return (
     <nav className={clsx(styles.headerContainer, { [styles.hiddenNavbar]: hideNavbar })}>
       <div className={styles.leftSection}>
-        <input type="checkbox" className={styles.burgerInput} id="burgerButton" />
+        <input
+          type="checkbox"
+          checked={checked}
+          onClick={() => setChecked(!checked)}
+          className={styles.burgerInput}
+          id="burgerButton"
+        />
         <label htmlFor="burgerButton" className={styles.burgerButton} onClick={burgerAnimation} ref={burgerRef}>
           ☰
         </label>
-        <div className={clsx(styles.dropSideBar, { [styles.dropSideBarVisible]: hideDropBars })} tabIndex={-1}>
+        <div className={styles.dropSideBar}>
           <DropSidebar />
         </div>
         <Link to={ROUTES.root} className={styles.siteName}>
@@ -99,7 +108,7 @@ export const Header = () => {
         <SearchBar />
       </div>
       <div className={styles.rightSection}>
-        <div onMouseEnter={handleMouseEnterMenu} tabIndex={-1}>
+        <div onMouseEnter={handleMouseEnterMenu} onClick={handleMouseClickMenu}>
           {token ? (
             <img src={String(user.avatar)} className={styles.avatar} />
           ) : (
