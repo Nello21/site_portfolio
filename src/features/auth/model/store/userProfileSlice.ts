@@ -36,6 +36,9 @@ export const userProfileSlice = createSlice({
     setUserData: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    setUserAvatar: (state, action: PayloadAction<User['avatar']>) => {
+      state.user.avatar = action.payload;
+    },
     clearUserStore: () => initialState,
   },
   extraReducers: builder => {

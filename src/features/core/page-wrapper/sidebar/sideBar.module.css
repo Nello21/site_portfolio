@@ -1,19 +1,15 @@
 .container {
-  margin: 10px 0;
+  padding: 15px 0;
   display: flex;
   justify-items: center;
-  position: sticky;
-  width: auto;
-  height: 50vh;
-}
-
-.sidebar {
-  position: sticky;
-  align-items: center;
+  width: 100%;
+  width: 200px;
+  height: 100%;
+  transition: width 0.45s ease-in-out;
 }
 
 @media (max-width: 1280px) {
-  .sidebar {
+  .container {
     display: none;
   }
 }

@@ -1,5 +1,3 @@
-import { cinemaData } from 'shared/types/cinemaData';
-
 export type addFavoriteMoviePayload = {
   movieId: number;
 };

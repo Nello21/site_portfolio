@@ -6,71 +6,53 @@ import { getUserIsLoading, getAuthUserToken, userActions } from '../../model/sto
 import { postAuthData } from '../../model/store/effects';
 import { ROUTES } from 'router/routes';
 import styles from './loginForm.module.css';
-import { userProfileActions } from 'features/auth/model/store/userProfileSlice';
+import { Field, Form, Formik } from 'formik';
+import { AuthRequestData } from 'features/auth/model/store/types';
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
   const isLoading = useSelector(getUserIsLoading);
   const token = useSelector(getAuthUserToken);
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    dispatch(postAuthData(formData));
+  const handleSubmit = async (values: AuthRequestData) => {
+    dispatch(postAuthData(values) as any);
   };
 
   if (token) return <Navigate to={ROUTES.root} />;
 
   return (
-    <div className={styles.loginContainer}>
+    <div className={styles.container}>
       <h2 className={styles.loginTitle}>Авторизация</h2>
-      <form className={styles.loginForm} onSubmit={handleSubmit}>
-        <div className={styles.formGroup}>
-          <label htmlFor="username">Имя пользователя:</label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            autoComplete="off"
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="password">Пароль:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className={styles.buttonContainer}>
-          <button disabled={isLoading} type="submit" className={styles.loginButton}>
-            Войти
-          </button>
-          <div>Не зарегистрированы?</div>
-          <Link to={ROUTES.register}>
-            <button className={styles.loginButton}>зарегистрироваться</button>
-          </Link>
-        </div>
-      </form>
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        onSubmit={handleSubmit}
+        validateOnBlur
+      >
+        <Form className={styles.loginForm}>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Почта:</label>
+            <Field type="text" id="email" name="email" className={styles.inputField} />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="password">Пароль:</label>
+            <Field type="password" id="password" name="password" className={styles.inputField} />
+          </div>
+          <div className={styles.buttonContainer}>
+            <button disabled={isLoading} type="submit" className={styles.loginButton}>
+              Войти
+            </button>
+            <div style={{ fontSize: '18px', color: 'orange' }}>Не зарегистрированы?</div>
+            <button className={styles.loginButton}>
+              <Link to={ROUTES.register} style={{ textDecoration: 'none', color: 'white' }}>
+                зарегистрироваться
+              </Link>
+            </button>
+          </div>
+        </Form>
+      </Formik>
     </div>
   );
 };

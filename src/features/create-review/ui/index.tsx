@@ -5,7 +5,7 @@ import { getCreateCommentIsLoading } from '../model/store/slice';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { getAuthUserToken } from 'features/auth/model/store/slice';
 import { useNavigate } from 'react-router-dom';
-import { fetchReviewsWithUsers } from 'features/auth/model/store/effects';
+import { fetchReviews } from 'features/auth/model/store/effects';
 import { reviewScheme } from './validation';
 import styles from './reviewForm.module.css';
 import { useEffect, useState } from 'react';
@@ -34,7 +34,7 @@ export const CommentForm = ({ movie_name, movieId, rating }: any) => {
     const { review, rating } = values;
     dispatch(createComment({ movies_data_id: movieId, movie_name, review, rating })).then(() => {
       actions.resetForm();
-      dispatch(fetchReviewsWithUsers(String(movieId)));
+      dispatch(fetchReviews(String(movieId)));
     });
   };
 
@@ -57,6 +57,7 @@ export const CommentForm = ({ movie_name, movieId, rating }: any) => {
                 <Field type="text" name="review" placeholder="Введите комментарий" className={styles.inputField} />
               </div>
               <div className={styles.formField}>
+                Ваша оценка:
                 <Field
                   type="number"
                   name="rating"
@@ -66,6 +67,7 @@ export const CommentForm = ({ movie_name, movieId, rating }: any) => {
                   value={formRating}
                 />
               </div>
+              <ErrorMessage name="rating" component="div" />
               <button type="submit" disabled={isLoading} className={styles.submitButton}>
                 {isLoading ? 'Отправка...' : 'Отправить'}
               </button>

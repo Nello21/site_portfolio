@@ -29,7 +29,7 @@ export type ReviewWithUser = {
   movie_name: string;
   review: string;
   rating: number;
-  user: Users;
+  user_id: number;
 };
 
 export type UserResponse = {

@@ -1,4 +1,3 @@
-import { OneMovieContent } from 'features/oneMoviePage';
-import React from 'react';
+import { OneMovieContent } from 'features/one-movie-page';
 
 export const MoviePage = () => <OneMovieContent />;

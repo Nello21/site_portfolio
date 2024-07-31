@@ -30,7 +30,12 @@ export const fetchUser = createAsyncThunk('users/getUser', async (userId: string
   return user;
 });
 
-export const fetchReviewsWithUsers = createAsyncThunk('userData/getUsersReviews', async (movieId: string) => {
+export const fetchAllUsers = createAsyncThunk('users/fetchUsersByIds', async filterParams => {
+  const { data } = await get<Users[]>(`/users`, { params: filterParams });
+  return data;
+});
+
+export const fetchReviews = createAsyncThunk('userData/getUsersReviews', async (movieId: string) => {
   const { data } = await get<ReviewWithUser[]>(`/reviews?movies_data_id=${movieId}`);
   return data;
 });

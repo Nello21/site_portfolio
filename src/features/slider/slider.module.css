@@ -1,6 +1,5 @@
 .sliderContainer {
   border-radius: 10px;
-  height: 400px;
   background-color: transparent;
   position: relative;
   overflow: hidden;
@@ -15,8 +14,13 @@
 }
 
 .image {
-  height: 400px;
   object-fit: cover;
   object-position: 100% center;
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .sliderContainer {
+    margin: 0 5px;
+  }
 }

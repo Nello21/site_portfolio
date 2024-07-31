@@ -1,55 +1,48 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchReviewsWithUsers, fetchUserComments } from './effects';
+import { fetchReviews, fetchUserComments } from './effects';
 
-type User = {
-  id: number | null;
-  fullName: string | null;
-  email: string | null;
-  avatar: string | null;
-};
-
-type ReviewWithUser = {
+type Reviews = {
   movie_name: string;
   movies_data_id: number | null;
   review: string | null;
   rating: number | null;
-  user: User;
+  user_id: number;
 };
 
-type UserSliceState = {
-  reviewsWithUsers: ReviewWithUser[];
+type reviewsSliceState = {
+  reviews: Reviews[];
   isLoading: boolean;
   error: string | null;
 };
 
-const initialState: UserSliceState = {
-  reviewsWithUsers: [],
+const initialState: reviewsSliceState = {
+  reviews: [],
   isLoading: false,
   error: null,
 };
 
 export const reviewsSlice = createSlice({
-  name: 'reviewsData',
+  name: 'reviews',
   initialState,
   reducers: {
     clearUserStore: () => initialState,
   },
   extraReducers: builder => {
-    builder.addCase(fetchReviewsWithUsers.fulfilled, (state, action) => {
-      state.reviewsWithUsers = action.payload;
-    });
-    builder.addCase(fetchUserComments.fulfilled, (state, action) => {
-      state.reviewsWithUsers = action.payload;
-    });
+    builder
+      .addCase(fetchReviews.fulfilled, (state, action) => {
+        state.reviews = action.payload;
+      })
+      .addCase(fetchUserComments.fulfilled, (state, action) => {
+        state.reviews = action.payload;
+      });
   },
   selectors: {
-    getUserIsLoading: state => state.isLoading,
-    getReviewsWithUser: state => state.reviewsWithUsers,
-    getUserComments: state => state.reviewsWithUsers,
+    getReviews: state => state.reviews,
+    getUserComments: state => state.reviews,
   },
 });
 
-export const userActions = reviewsSlice.actions;
+export const reviewsActions = reviewsSlice.actions;
 
-export const { getUserIsLoading, getReviewsWithUser, getUserComments } = reviewsSlice.selectors;
+export const { getReviews, getUserComments } = reviewsSlice.selectors;

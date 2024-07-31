@@ -1,81 +1,124 @@
 .container {
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .moviesContainer {
-  margin-top: 30px;
+  margin: 30px 0px;
   width: 100%;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(5, 200px);
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(40vmin, 1fr));
+  gap: 20px;
   transition: all 0.5s ease;
 }
 
-.FilterContainer {
-  margin: 15px;
+.filterContainer {
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
+  margin: 15px;
+  gap: 10px;
   font-weight: bold;
+  font-size: 22px;
 }
 
-.filterName {
+.filterHeader {
   display: flex;
-  flex-direction: row;
-  gap: 5px;
   align-items: center;
+  flex-direction: row;
+  gap: 15px;
 }
 
 .filterNumber {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   text-align: center;
-  background-color: orange;
+  background: linear-gradient(-45deg, darkmagenta 40%, darkblue 100%);
   border-radius: 50%;
-}
-
-.section {
-  flex-direction: 'column';
-  padding-top: 5px;
-  padding-left: 10px;
 }
 
 .text {
   font-size: larger;
+  color: white;
 }
 
-.checkboxContainer {
-  padding: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.checkboxInput {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  margin-right: 8px;
-}
-
-.checkboxText {
-  font-weight: 400;
-  font-size: 16px;
-  color: #333;
+.selectSection {
+  padding-left: 55px;
+  width: min(280px, 80%);
 }
 
 .searchInput {
-  margin-top: 10px;
-  height: 30px;
-  border: 1px solid lightgray;
+  width: min(90%, 200px);
+  height: 35px;
   border-radius: 5px;
+  border: 3px solid black;
+  outline: none;
 }
 
-.select {
-  margin-top: 10px;
+.searchInput:focus {
+  border-color: darkmagenta;
+}
+
+.checkboxContainer {
+  margin: 15px 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.checkboxInput {
+  position: absolute;
+  z-index: 2;
+  width: 1em;
+  height: 1em;
+  opacity: 0;
+}
+
+.tick {
+  color: transparent;
+  position: absolute;
+  z-index: 1;
+}
+
+.checkedTick {
+  color: white;
+}
+
+.checkboxInput + label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+
+.checkboxInput + label::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #adb5bd;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+  z-index: 0;
+}
+
+.checkboxInput:checked + label::before {
+  border-color: darkmagenta;
+  background-color: darkmagenta;
+}
+
+.checkboxText {
+  font-weight: 500;
+  font-size: 20px;
+  color: darkgray;
 }
 
 .buttonToTop {
@@ -86,19 +129,22 @@
 
 @media (max-width: 1280px) {
   .moviesContainer {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
   }
 }
 
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
+  .moviesContainer {
+    gap: 20px;
   }
 
-  .section {
-    padding-top: 10px;
-    padding-left: 0;
+  .selectSection {
+    padding-left: 0px;
+  }
+
+  .container {
+    flex-direction: column;
   }
 
   .checkboxContainer {
@@ -106,7 +152,6 @@
   }
 
   .select {
-    margin-top: 10px;
     max-width: 200px;
   }
 }

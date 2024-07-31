@@ -5,19 +5,25 @@ import { Option } from 'shared/types/option';
 import { useSelector } from 'react-redux';
 import { clearCinemaStore, getAllCinema, getCinemaIsLoading } from 'store/cinema/slice';
 import { useAppDispatch } from 'store';
-import styles from './navigator.module.css';
 import { getCinema } from 'store/cinema/effects';
 import { cinemaData } from 'shared/types/cinemaData';
 import { ButtonToTop } from 'shared/components/TopButton/topButton';
 import { useSearchParams } from 'react-router-dom';
-import Select from 'react-select';
 import { Loader } from 'shared/components/Loader/loader';
 import { motion } from 'framer-motion';
+import Tick from '../../shared/assets/icons/tick.svg';
+import styles from './navigator.module.css';
+import Select from 'react-select';
+import clsx from 'clsx';
 
 export const NavigatorPage = () => {
   const dispatch = useAppDispatch();
   const allCinema = useSelector(getAllCinema);
   const isLoading = useSelector(getCinemaIsLoading);
+
+  const [isMoviesChecked, setIsMoviesChecked] = useState(true);
+  const [isSerialsChecked, setIsSerialsChecked] = useState(true);
+  const [isGenresChecked, setIsGenresChecked] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams({
     q: '',
@@ -124,6 +130,7 @@ export const NavigatorPage = () => {
       prev.set('showMovies', e.target.checked.toString());
       return prev;
     });
+    setIsMoviesChecked(prev => !prev);
   };
 
   const handleShowSeriesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,6 +138,7 @@ export const NavigatorPage = () => {
       prev.set('showSerials', e.target.checked.toString());
       return prev;
     });
+    setIsSerialsChecked(prev => !prev);
   };
 
   const handleGenreChange = (option: readonly Option[]) => {
@@ -148,6 +156,7 @@ export const NavigatorPage = () => {
       prev.set('onlySelectedGenres', e.target.checked.toString());
       return prev;
     });
+    setIsGenresChecked(prev => !prev);
   };
 
   const handleSortRatingChange = (option: Option | null) => {
@@ -181,17 +190,41 @@ export const NavigatorPage = () => {
     { value: 'Детектив', label: 'Детектив' },
   ];
 
+  const customStyles = {
+    control: (base: any, state: any) => ({
+      ...base,
+      boxShadow: 0,
+      border: '3px solid',
+      borderColor: state.isFocused ? 'darkmagenta' : 'black',
+      '&:hover': {
+        borderColor: state.isFocused ? 'darkmagenta' : 'black',
+      },
+    }),
+    option: ({ isDisabled, isSelected }: any) => {
+      return {
+        cursor: isDisabled ? 'not-allowed' : 'default',
+
+        ':active': {
+          backgroundColor: !isDisabled ? (isSelected ? 'darkmagenta' : 'darkmagenta') : undefined,
+        },
+        ':hover': {
+          backgroundColor: !isDisabled ? 'darkmagenta' : undefined,
+        },
+      };
+    },
+  };
+
   return (
     <div>
       <div className={styles.container}>
-        <div className={styles.FilterContainer}>
-          <div className={styles.filterName}>
+        <div className={styles.filterContainer}>
+          <div className={styles.filterHeader}>
             <div className={styles.filterNumber}>1</div>
             <div className={styles.text}>Навигатор по названию</div>
           </div>
-          <div className={styles.section}>
+          <div className={styles.selectSection}>
             <input
-              style={{}}
+              className={styles.searchInput}
               type="text"
               placeholder="Найти фильм"
               value={q || ''}
@@ -201,7 +234,7 @@ export const NavigatorPage = () => {
             <div className={styles.checkboxContainer}>
               <input
                 type="checkbox"
-                id="show-movies"
+                name="show-movies"
                 className={styles.checkboxInput}
                 checked={showMovies}
                 onChange={handleShowMoviesChange}
@@ -209,11 +242,12 @@ export const NavigatorPage = () => {
               <label htmlFor="show-movies" className={styles.checkboxText}>
                 Показать фильмы
               </label>
+              <Tick className={clsx(styles.tick, { [styles.checkedTick]: isMoviesChecked })} />
             </div>
             <div className={styles.checkboxContainer}>
               <input
                 type="checkbox"
-                id="show-series"
+                name="show-series"
                 className={styles.checkboxInput}
                 checked={showSerials}
                 onChange={handleShowSeriesChange}
@@ -221,19 +255,20 @@ export const NavigatorPage = () => {
               <label htmlFor="show-series" className={styles.checkboxText}>
                 Показать сериалы
               </label>
+              <Tick className={clsx(styles.tick, { [styles.checkedTick]: isSerialsChecked })} />
             </div>
           </div>
         </div>
 
-        <div className={styles.FilterContainer}>
-          <div className={styles.filterName}>
+        <div className={styles.filterContainer}>
+          <div className={styles.filterHeader}>
             <div className={styles.filterNumber}>2</div>
             <div className={styles.text}>Жанры и рейтинг</div>
           </div>
-          <div className={styles.section}>
+          <div className={styles.selectSection}>
             <Select
               closeMenuOnSelect={false}
-              className={styles.select}
+              styles={customStyles}
               placeholder="Выберите жанр"
               isMulti
               options={genreOptions}
@@ -243,7 +278,7 @@ export const NavigatorPage = () => {
             <div className={styles.checkboxContainer}>
               <input
                 type="checkbox"
-                id="only-selected-genres"
+                name="only-selected-genres"
                 className={styles.checkboxInput}
                 checked={onlySelectedGenres}
                 onChange={handleOnlySelectedGenres}
@@ -251,26 +286,24 @@ export const NavigatorPage = () => {
               <label htmlFor="only-selected-genres" className={styles.checkboxText}>
                 Только выбранные жанры
               </label>
+              <Tick className={clsx(styles.tick, { [styles.checkedTick]: isGenresChecked })} />
             </div>
             <Select
-              className={styles.select}
-              placeholder="Выберите..."
-              value={sortByRating ? options[0] : options[1]}
+              styles={customStyles}
+              placeholder="По рейтингу"
               onChange={handleSortRatingChange}
               options={options}
             />
           </div>
         </div>
 
-        <div className={styles.FilterContainer}>
-          <div className={styles.filterName}>
+        <div className={styles.filterContainer}>
+          <div className={styles.filterHeader}>
             <div className={styles.filterNumber}>3</div>
             <div className={styles.text}>Годы выхода</div>
           </div>
-          <div className={styles.section}>
-            <div style={{ marginTop: '15px' }}>
-              <RangeSlider onChange={handleYearRangeChange} />
-            </div>
+          <div className={styles.selectSection}>
+            <RangeSlider onChange={handleYearRangeChange} />
           </div>
         </div>
       </div>
@@ -278,7 +311,7 @@ export const NavigatorPage = () => {
       <motion.div layout>
         <div className={styles.moviesContainer}>
           {content.map(movie => (
-            <CinemaOneCard card={movie} key={movie.id} style={{ height: '40vmin', width: '28vmin' }} />
+            <CinemaOneCard card={movie} key={movie.id} style={{ height: '38vmin', width: '50vmin' }} />
           ))}
         </div>
       </motion.div>

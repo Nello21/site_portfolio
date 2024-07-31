@@ -4,21 +4,17 @@ import { Header } from './navbar';
 import { ContentWrapper } from './content-wrapper';
 import { Sidebar } from './sidebar';
 import { MainContent } from './main-content/index';
+import { Footer } from './footer/index';
 
-export const PageWrapper = ({
-  children,
-  onSearch,
-}: {
-  children: ReactNode;
-  onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) => {
+export const PageWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <BaseContainer>
-      <Header onSearch={onSearch} />
+      <Header />
       <ContentWrapper>
         <Sidebar />
         <MainContent>{children}</MainContent>
       </ContentWrapper>
+      <Footer />
     </BaseContainer>
   );
 };

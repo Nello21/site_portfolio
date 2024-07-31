@@ -14,20 +14,58 @@ export const Slider = ({ cards }: { cards: cinemaData[] }) => {
   const [prevPercentage, setPrevPercentage] = useState(0);
   const [maxPercentage, setMaxPercentage] = useState(0);
 
-  const imageWidth = 300;
-  const gap = 35;
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [imageQuantity, setimageQuantity] = useState(5);
+  const [imageWidth, setImageWidth] = useState(0);
+  const [imageHeight, setImageHeight] = useState(0);
+  const [gap, setGap] = useState(30);
 
   const handleResize = useCallback(() => {
     const track = sliderContainerRef.current;
     if (track) {
-      const scrollWidth = cards.length * imageWidth + (cards.length - 1) * gap;
       const visibleWidth = track.clientWidth;
+      const imageWidth = (visibleWidth - (imageQuantity - 1) * gap) / imageQuantity;
+      const imageHeight = imageWidth * 1.2;
+
+      track.style.height = `${imageHeight}px`;
+
+      setImageWidth(imageWidth);
+      setImageHeight(imageHeight);
+
+      const scrollWidth = cards.length * imageWidth + (cards.length - 1) * gap;
+
       const maxPercent = -100 * (1 - visibleWidth / scrollWidth);
       setMaxPercentage(maxPercent);
     }
-  }, [cards.length]);
+    setWindowWidth(window.innerWidth);
+  }, [cards.length, gap, imageQuantity]);
 
   useEffect(() => {
+    if (windowWidth > 1280) {
+      setimageQuantity(5);
+      setGap(25);
+    }
+    if (windowWidth <= 1280) {
+      setimageQuantity(5);
+      setGap(20);
+    }
+    if (windowWidth <= 1024) {
+      setimageQuantity(4);
+      setGap(20);
+    }
+    if (windowWidth <= 768) {
+      setimageQuantity(3);
+      setGap(15);
+    }
+    if (windowWidth <= 530) {
+      setimageQuantity(3);
+      setGap(10);
+    }
+    if (windowWidth <= 320) {
+      setimageQuantity(2);
+      setGap(5);
+    }
+
     handleResize();
 
     window.addEventListener('resize', handleResize);
@@ -35,7 +73,7 @@ export const Slider = ({ cards }: { cards: cinemaData[] }) => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [handleResize]);
+  }, [handleResize, windowWidth]);
 
   const handleOnDown = (e: any) => {
     const clientX = (e as MouseEvent).clientX ?? (e as TouchEvent).touches[0].clientX;
@@ -122,13 +160,13 @@ export const Slider = ({ cards }: { cards: cinemaData[] }) => {
       ref={sliderContainerRef}
     >
       <div className={styles.imageTrack} ref={trackRef} style={{ gap: `${gap}px` }}>
-        {cards.map(card => (
+        {cards.map((card, index) => (
           <CinemaOneCard
-            card={card}
-            key={card.id}
+            key={index}
             hasMoved={hasMoved}
+            card={card}
             className={styles.image}
-            style={{ width: `${imageWidth}px` }}
+            style={{ width: `${imageWidth}px`, height: `${imageHeight}px` }}
           />
         ))}
       </div>

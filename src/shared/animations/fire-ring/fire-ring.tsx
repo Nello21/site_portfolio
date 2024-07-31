@@ -5,8 +5,8 @@ export const FireRing = () => {
   return (
     <div className={styles.container}>
       <div className={styles.circle}></div>
-      <span>ЗАГРУЗКА</span>
       <FireRingSvg className={styles.svgCircle} />
+      <span>ЗАГРУЗКА</span>
     </div>
   );
 };

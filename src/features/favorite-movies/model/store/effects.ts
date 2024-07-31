@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { addFavoriteMoviePayload, deleteFavoriteMoviePayload } from '../schemes/addFavoriteMovie';
 import { RootState } from 'store';
 import { addFavoriteMovieApi, deleteFavoriteMovieApi } from '../api';
 

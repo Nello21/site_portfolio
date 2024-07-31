@@ -1,15 +1,15 @@
 import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
-import styles from './carousel.module.css';
 import { CinemaOneCard } from 'shared/features/CinemaCards/ui/CinemaCard';
 import { cinemaData } from 'shared/types/cinemaData';
+import styles from './carousel.module.css';
 
 export const Carousel3d = ({ cards }: { cards: cinemaData[] }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [startX, setStartX] = useState(0);
   const [startY, setStartY] = useState(0);
 
-  const [degreeX, setDegreeX] = useState(0);
-  const [degreeY, setDegreeY] = useState(0);
+  const [degreeX, setDegreeX] = useState(15);
+  const [degreeY, setDegreeY] = useState(-16);
   const [prevDegreeX, setPrevDegreeX] = useState(15);
   const [prevDegreeY, setPrevDegreeY] = useState(-16);
 
@@ -65,7 +65,7 @@ export const Carousel3d = ({ cards }: { cards: cinemaData[] }) => {
           {
             transform: `perspective(1000px) rotateX(${nextDegreeY}deg) rotateY(${nextDegreeX}deg)`,
           },
-          { duration: 4000 },
+          { duration: 5000 },
         );
       }
     },
@@ -99,16 +99,18 @@ export const Carousel3d = ({ cards }: { cards: cinemaData[] }) => {
   }, [isDragging, handleOnMove, handleOnUp]);
 
   return (
-    <div
-      className={styles.banner}
-      onMouseDown={handleOnDown}
-      onTouchStart={handleOnDown}
-      onMouseMove={handleOnMove}
-      onTouchMove={handleOnMove}
-    >
-      <div className={styles.slider} style={{ '--quantity': '12' } as CSSProperties} ref={sliderRef}>
+    <div className={styles.banner}>
+      <div
+        className={styles.slider}
+        style={{ '--quantity': 12 } as CSSProperties}
+        onMouseDown={handleOnDown}
+        onTouchStart={handleOnDown}
+        onMouseMove={handleOnMove}
+        onTouchMove={handleOnMove}
+        ref={sliderRef}
+      >
         {cards.map(card => (
-          <div className={styles.item} key={card.id} style={{ '--position': `${card.id}` } as CSSProperties}>
+          <div className={styles.item} key={card.id} style={{ '--position': card.id } as CSSProperties}>
             <CinemaOneCard card={card} className={styles.image} hasMoved={hasMoved} />
           </div>
         ))}

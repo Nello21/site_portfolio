@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { cinemaData } from 'shared/types/cinemaData';
-import { filterTopRatedLastMonth, findHitOfTheWeek } from './filters';
+import { findTopRatedLastMonth, findHitOfTheWeek } from './filters';
 import { getCinema } from './effects';
 
 type Cinema = {
@@ -46,12 +46,9 @@ export const moviesSlice = createSlice({
   selectors: {
     getCinemaIsLoading: state => state.isLoading,
     getAllCinema: state => state.cinema.data,
-    getMovies: state => filterTopRatedLastMonth(state.cinema.data.filter(item => item.type === 'Фильм')),
-    getSerials: state => filterTopRatedLastMonth(state.cinema.data.filter(item => item.type === 'Сериал')),
-    getHitOfTheWeek: state => findHitOfTheWeek(state.cinema.data),
   },
 });
 
 export const { clearCinemaStore } = moviesSlice.actions;
 
-export const { getCinemaIsLoading, getAllCinema, getMovies, getSerials, getHitOfTheWeek } = moviesSlice.selectors;
+export const { getCinemaIsLoading, getAllCinema } = moviesSlice.selectors;

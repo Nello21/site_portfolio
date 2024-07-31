@@ -20,4 +20,4 @@ baseTranspport.interceptors.request.use(config => {
 export const get = baseTranspport.get;
 export const post = baseTranspport.post;
 export const patch = baseTranspport.patch;
-export const deleted = baseTranspport.delete;
+export const deleteRequest = baseTranspport.delete;

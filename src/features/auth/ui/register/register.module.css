@@ -1,75 +1,118 @@
 .registerForm {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0;
+  padding: 20px;
+  border: 3px solid lightgray;
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+  margin-bottom: 20px;
+  max-width: 250px;
+  padding-right: 20px;
+}
+
+.label {
+  padding-bottom: 10px;
+}
+
+.inputField,
+.textareaField,
+.fileInput {
+  width: 100%;
+  padding: 10px;
+  border: 3px solid transparent;
+  outline: none;
+  border-radius: 4px;
+}
+
+.inputField:focus {
+  border: 3px solid darkmagenta;
+}
+
+.textareaField {
+  min-height: 100px;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.submitButton {
+  padding: 10px;
+  background-color: darkmagenta;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darkblue;
   }
-  
-  .formField {
-    margin-bottom: 20px;
-    max-width: 250px;
-    padding-right: 20px;
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
-  
-  .inputField,
-  .textareaField,
-  .fileInput {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+}
+
+.avatarButton {
+  padding: 10px;
+  background-color: blueviolet;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
   }
-  
-  .textareaField {
-    min-height: 100px;
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
-  
-  .errorMessage {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
+}
+
+.resetButton {
+  margin-top: 16px;
+  padding: 10px;
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
   }
-  
-  .submitButton {
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  
-    &:hover {
-      background-color: #0056b3;
-    }
-  
-    &:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
-  
-  .resetButton {
-    margin-top: 16px;
-    padding: 10px;
-    background-color: red;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  
-    &:hover {
-      background-color: #0056b3;
-    }
-  
-    &:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-  }
+}
+
+.selectedAvatar {
+  padding: 10px 0px;
+  border-radius: 50%;
+  max-width: 100px;
+  max-height: 100px;
+}

@@ -1,67 +1,71 @@
-import React, { useEffect } from 'react';
-import { CinemaCards } from 'shared/features/CinemaCards/ui';
 import { useAppDispatch } from 'store';
 import { useSelector } from 'react-redux';
-import { getHitOfTheWeek, getSerials, getMovies, getCinemaIsLoading, clearCinemaStore } from 'store/cinema/slice';
+import { clearCinemaStore, getAllCinema, getCinemaIsLoading } from 'store/cinema/slice';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getCinema } from 'store/cinema/effects';
-import styles from './mainPage.module.css';
-import { Link } from 'react-router-dom';
-import { ROUTES } from 'router/routes';
-import { fetchUser } from 'features/auth/model/store/effects';
-import { getAuthUserId } from 'features/auth/model/store/slice';
+import { Slider } from 'features/slider';
+import { Carousel3d } from 'features/carousel3d';
+import { findTopRatedLastMonth, findHitOfTheWeek } from 'store/cinema/filters';
 import { Loader } from 'shared/components/Loader/loader';
-import { Slider } from 'pages/Slider';
-import { Carousel3d } from 'pages/Carousel3d';
+import styles from './main-page.module.css';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
-  const movies = useSelector(getMovies);
-  const serials = useSelector(getSerials);
-  const hitOfTheWeek = useSelector(getHitOfTheWeek);
-  const userId = useSelector(getAuthUserId);
+  const allCinema = useSelector(getAllCinema);
+  const serials = allCinema.filter(item => item.type === 'Сериал');
+  const movies = findTopRatedLastMonth(allCinema.filter(item => item.type === 'Фильм'));
+
+  console.log('Movies:', movies);
+  console.log('Serials:', serials);
+
   const isLoading = useSelector(getCinemaIsLoading);
+
+  const backgroundRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = useCallback(() => {
+    if (backgroundRef.current) {
+      const scrollPosition = window.scrollY;
+      backgroundRef.current.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(getCinema());
-    dispatch(fetchUser(String(userId)));
+    window.addEventListener('scroll', handleScroll);
     return () => {
       dispatch(clearCinemaStore());
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [dispatch, userId]);
+  }, [dispatch, handleScroll]);
 
   if (isLoading) return <Loader />;
   if (!(movies && serials)) return <div>Нет данных</div>;
 
   return (
-    <div className={styles.container}>
-      {/* {hitOfTheWeek && (
-        <div className={styles.hitPoster}>
-          <h2 style={{ fontSize: '32px' }}>Хит недели</h2>
-          <Link to={`${ROUTES.root}${hitOfTheWeek.id}`}>
-            <img src={hitOfTheWeek.image} className={styles.hitImage} />
-          </Link>
-          <div className={styles.rating}>{hitOfTheWeek.rating}</div>
-        </div>
-      )} */}
-      <div className={styles.content}>
-        <div>
+    <div className={styles.mainContainer}>
+      <div className={styles.hitHeader}>
+        <div className={styles.carousel}>
           <Carousel3d cards={movies} />
         </div>
-
-        <h2 className={styles.movieHeader}>Фильмы</h2>
-
-        <Slider cards={movies} />
-
-        <h2 className={styles.serialsHeader}>Сериалы</h2>
-
-        <Slider cards={movies} />
-        <h2 className={styles.serialsHeader}>Сериалы</h2>
-
-        <Slider cards={movies} />
-        <h2 className={styles.serialsHeader}>Сериалы</h2>
-
-        <Slider cards={movies} />
+        <h1 className={styles.title} data-content="Хиты Недели">
+          Хиты Недели
+        </h1>
+        <div className={styles.background} ref={backgroundRef} />
       </div>
+
+      <section className={styles.content}>
+        <h2 className={styles.movieHeader}>Фильмы</h2>
+        <Slider cards={movies} />
+
+        <h2 className={styles.serialsHeader}>Фильмы</h2>
+        <Slider cards={movies} />
+
+        <h2 className={styles.serialsHeader}>Сериалы</h2>
+        <Slider cards={serials} />
+
+        <h2 className={styles.serialsHeader}>Сериалы</h2>
+        <Slider cards={serials} />
+      </section>
     </div>
   );
 };

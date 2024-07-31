@@ -13,7 +13,6 @@ export const FavoriteMovies = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const favoriteMovieId = useSelector(getUserFavoriteMovies);
-  console.log(favoriteMovieId);
   const movies = useSelector(getAllCinema);
 
   useEffect(() => {
@@ -23,9 +22,13 @@ export const FavoriteMovies = () => {
     }
   }, [dispatch, id]);
 
+  if (!favoriteMovieId)
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', fontSize: '25px', padding: '20px 0' }}>
+        Вы еще не добавляли в избранное
+      </div>
+    );
   const favoriteMovies = movies.filter(movie => favoriteMovieId.includes(movie.id));
-
-  console.log(favoriteMovies);
 
   return (
     <div className={styles.favoriteMoviesContainer}>

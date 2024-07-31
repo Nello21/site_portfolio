@@ -1,83 +1,136 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import styles from './header.module.css';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { useSelector } from 'react-redux';
 import { getAuthUserToken, userActions, getAuthUser } from 'features/auth/model/store/slice';
 import { STORAGE_KEY, setStorageItem } from 'services/storage';
 import { DropSidebar } from 'shared/components/DropSidebar/dropSidebar';
 import { ROUTES } from 'router/routes';
-import clsx from 'clsx';
 import { userProfileActions } from 'features/auth/model/store/userProfileSlice';
+import { SearchBar } from 'features/searchBar/searchBar';
+import clsx from 'clsx';
+import styles from './header.module.css';
 
-export const Header = ({ onSearch }: { onSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
+export const Header = () => {
   const token = useSelector(getAuthUserToken);
   const user = useSelector(getAuthUser);
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDropMenuHovered, setIsDropMenuHovered] = useState(false);
-  const avatarRef = useRef<HTMLDivElement>(null);
-  const sideRef = useRef<HTMLDivElement>(null);
+  const DropMenuRef = useRef<HTMLDivElement>(null);
+  const burgerRef = useRef<HTMLLabelElement>(null);
 
-  const toggleMenu = () => {
-    setIsSidebarOpen(prevState => !prevState);
-    sideRef.current?.focus();
-  };
+  const location = useLocation();
+  const [hideBurgerButton, setHideBurgerButton] = useState(false);
+  const [hideNavbar, setHideNavbar] = useState(false);
+  const [hideDropBars, setHideDropBards] = useState(false);
 
-  const hideSidebar = useCallback((e: any) => {
-    if (e && !e.relatedTarget) {
-      setIsSidebarOpen(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const controlBars = useCallback(() => {
+    if (window.scrollY > lastScrollY) {
+      setHideNavbar(true);
+      setHideDropBards(true);
+    } else {
+      setHideNavbar(false);
+      setHideDropBards(false);
     }
-  }, []);
+
+    setLastScrollY(window.scrollY);
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', controlBars);
+
+    return () => {
+      window.removeEventListener('scroll', controlBars);
+    };
+  }, [controlBars]);
+
+  useEffect(() => {
+    if (location.pathname === '/navigator' || location.pathname === '/') {
+      setHideBurgerButton(true);
+    } else {
+      setHideBurgerButton(false);
+    }
+  }, [hideBurgerButton, location.pathname]);
 
   const handleMouseEnterMenu = () => {
     setIsDropMenuHovered(true);
-    avatarRef.current?.focus();
+    DropMenuRef.current?.focus();
   };
 
-  const hideDropMenu = (e: any) => {
+  const hideDropMenuOnBlur = useCallback((e: any) => {
     if (e && !e.relatedTarget) {
       setIsDropMenuHovered(false);
+    }
+  }, []);
+
+  const handleMouseLeaveMenu = (e: any) => {
+    setIsDropMenuHovered(false);
+  };
+
+  const burgerAnimation = () => {
+    const burger = burgerRef.current;
+    if (burger) {
+      burger.animate(
+        {
+          transform: 'scaleY(0.7) scaleX(1.3)',
+        },
+        { duration: 350, easing: 'ease' },
+      );
     }
   };
 
   return (
-    <nav className={styles.headerContainer}>
+    <nav className={clsx(styles.headerContainer, { [styles.hiddenNavbar]: hideNavbar })}>
       <div className={styles.leftSection}>
-        <button className={styles.burgerButton} onClick={toggleMenu}>
+        <input type="checkbox" className={styles.burgerInput} id="burgerButton" />
+        <label htmlFor="burgerButton" className={styles.burgerButton} onClick={burgerAnimation} ref={burgerRef}>
           ☰
-        </button>
-        <div
-          className={clsx(styles.dropSideBar, { [styles.sideBarVisible]: isSidebarOpen })}
-          onBlur={hideSidebar}
-          ref={sideRef}
-          tabIndex={-1}
-        >
-          {isSidebarOpen && <DropSidebar />}
+        </label>
+        <div className={clsx(styles.dropSideBar, { [styles.dropSideBarVisible]: hideDropBars })} tabIndex={-1}>
+          <DropSidebar />
         </div>
-        <div className={styles.siteName}>
+        <Link to={ROUTES.root} className={styles.siteName}>
           <span>КИНОЛЕНТА</span>
-        </div>
+        </Link>
       </div>
       <div className={styles.centerSection}>
-        <input type="text" placeholder="Search" className={styles.searchInput} onChange={onSearch} />
+        <SearchBar />
       </div>
       <div className={styles.rightSection}>
-        <div onMouseEnter={handleMouseEnterMenu} onBlur={hideDropMenu} ref={avatarRef} tabIndex={-1}>
-          {token ? <img src={String(user.avatar)} className={styles.avatar} /> : <div></div>}
-          <div className={clsx(styles.dropMenu, { [styles.dropMenuVisible]: isDropMenuHovered })}>
+        <div onMouseEnter={handleMouseEnterMenu} tabIndex={-1}>
+          {token ? (
+            <img src={String(user.avatar)} className={styles.avatar} />
+          ) : (
+            <button className={styles.logInButton}>Аккаунт</button>
+          )}
+          <div
+            className={clsx(styles.dropMenu, { [styles.dropMenuVisible]: isDropMenuHovered })}
+            onMouseLeave={handleMouseLeaveMenu}
+            onBlur={hideDropMenuOnBlur}
+            ref={DropMenuRef}
+          >
             <div className={styles.menuHeader}>
-              {token ? (
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                  <div className={styles.userName}>
-                    {user.fullName}
-                    <div className={styles.userEmail}>{user.email}</div>
-                  </div>
-                  <img src={String(user.avatar)} className={styles.menuAvatar}></img>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <div className={styles.userName}>
+                  {user.fullName}
+                  <div className={styles.userEmail}>{user.email}</div>
                 </div>
-              ) : (
-                <div className={styles.userName}>Войдите</div>
-              )}
+                {token ? (
+                  <img src={String(user.avatar)} className={styles.menuAvatar}></img>
+                ) : (
+                  <div className={styles.menuAvatar}>Аватар</div>
+                )}
+              </div>
             </div>
             <div className={styles.menuItem}>
               {token ? (
@@ -117,10 +170,10 @@ const LoginButton = () => {
         <span>Выйти</span>
       </Link>
     );
-
-  return (
-    <Link to={ROUTES.auth} className={styles.newPostButton}>
-      <span style={{ color: 'orange' }}>Войти</span>
-    </Link>
-  );
+  else
+    return (
+      <Link to={ROUTES.auth} className={styles.newPostButton}>
+        <span style={{ color: 'salmon' }}>Войти</span>
+      </Link>
+    );
 };

@@ -1,0 +1,16 @@
+.resultLists {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  max-height: 210px;
+  background-color: rgb(52, 48, 45);
+  box-shadow: 0px 0px 8px #ddd;
+  border-radius: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}

@@ -1,38 +1,37 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getMovieIsLoading, getMovie, clearMovieStore } from 'store/cinema/oneMovieSlice';
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { getOneMovie } from 'store/cinema/effects';
-import { fetchReviewsWithUsers, fetchUser } from 'features/auth/model/store/effects';
-import { getReviewsWithUser } from 'features/auth/model/store/reviewsSlice';
+import { fetchReviews, fetchAllUsers } from 'features/auth/model/store/effects';
 import { ROUTES } from 'router/routes';
 import { CommentForm } from 'features/create-review/ui';
 import { addFavoriteMovie, deleteFavoriteMovie } from 'features/favorite-movies/model/store/effects';
 import { getAuthUserToken } from 'features/auth/model/store/slice';
 import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
-import styles from './oneMoviePage.module.css';
 import clsx from 'clsx';
 import StarSVG from 'shared/assets/icons/star.svg';
 import HeartSVG from 'shared/assets/icons/heart.svg';
 import { Loader } from 'shared/components/Loader/loader';
+import styles from './oneMoviePage.module.css';
+import { getReviews } from 'features/auth/model/store/reviewsSlice';
+import { getAllUsers } from 'features/auth/model/store/allUsersSlice';
 
 export const OneMovieContent = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const movie = useSelector(getMovie);
-  const reviews = useSelector(getReviewsWithUser);
+  const users = useSelector(getAllUsers);
+  const reviews = useSelector(getReviews);
   const isLoading = useSelector(getMovieIsLoading);
   const favoriteMovieIds = useSelector(getUserFavoriteMovies);
-
-  console.log(favoriteMovieIds);
 
   const token = useSelector(getAuthUserToken);
 
   const commentFormRef = useRef<HTMLDivElement>(null);
 
   const [rating, setRating] = useState(0);
-
   const [hoveredRating, setHoveredRating] = useState(0);
 
   const [isFavorite, setIsFavorite] = useState(false);
@@ -41,10 +40,16 @@ export const OneMovieContent = () => {
 
   const movieId = Number(id);
 
+  const getUserFullnameByReviewId = (id: number | null) => {
+    const user = users.find(user => user.id === id);
+    return user ? user.fullName : null;
+  };
+
   useEffect(() => {
     if (id) {
+      dispatch(fetchAllUsers());
       dispatch(getOneMovie(id));
-      dispatch(fetchReviewsWithUsers(id));
+      dispatch(fetchReviews(id));
     }
 
     if (favoriteMovieIds !== null) {
@@ -57,6 +62,7 @@ export const OneMovieContent = () => {
   }, [dispatch, id, favoriteMovieIds]);
 
   if (isLoading) return <Loader />;
+  if (!favoriteMovieIds) return <div>ошибка</div>;
   if (!movie) return <div>Нет данных</div>;
 
   const handleToggleFavorite = () => {
@@ -130,56 +136,67 @@ export const OneMovieContent = () => {
           ) : (
             <div className={styles.favoriteButtonLabel}>Войдите для добавления в избранное</div>
           )}
-        </div>
-        <div>
-          <button
-            style={{ textAlign: 'center' }}
-            className={clsx(styles.watchButton, { [styles.closeButton]: isVideoVisible })}
-            onClick={handleWatchClick}
-          >
-            {isVideoVisible ? 'Закрыть' : 'Смотреть трейлер'}
-          </button>
-          {isVideoVisible && (
-            <div style={{ borderRadius: '10px', marginTop: '10px' }}>
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/_WZCvQ5J3pk?si=vIPAKHfHtuFB_YD3"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe>
-            </div>
-          )}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <button
+              className={clsx(styles.watchButton, { [styles.closeButton]: isVideoVisible })}
+              onClick={handleWatchClick}
+            >
+              {isVideoVisible ? 'Закрыть' : 'Смотреть трейлер'}
+            </button>
+            {isVideoVisible && (
+              <div>
+                <iframe
+                  className={styles.iframe}
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/_WZCvQ5J3pk?si=vIPAKHfHtuFB_YD3"
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className={styles.description}>
         <h2>Описание</h2>
         <p>{movie.description}</p>
-        <h2>Отзывы</h2>
-        {reviews.map((review, index) => (
-          <div style={{ padding: '10px' }} key={index}>
-            {review.user && (
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                <Link to={`${ROUTES.userProfile}/${review.user.id}`} style={{ textDecoration: 'none' }}>
-                  <img
-                    src={String(review.user.avatar)}
-                    alt="Avatar"
-                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-                  />
-                </Link>
-                <div style={{ padding: '10px', fontSize: '22px' }}>{review.user.fullName}</div>
-              </div>
-            )}
-            <div style={{ display: 'flex', flexDirection: 'row', paddingTop: '10px', fontSize: '18px' }}>
-              {review.review}
+      </div>
+      <h2>Отзывы</h2>
+      {reviews.map((review, index) => (
+        <div className={styles.comments} key={index}>
+          {review.user_id && (
+            <div>
+              <Link
+                to={`${ROUTES.userProfile}/${review.user_id}`}
+                style={{
+                  textDecoration: 'none',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  color: 'white',
+                }}
+              >
+                <img
+                  src={String()}
+                  alt="Avatar"
+                  style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                  className={styles.image}
+                />
+                <div style={{ padding: '10px', fontSize: '22px' }} className={styles.userName}>
+                  {getUserFullnameByReviewId(review.user_id)}
+                </div>
+              </Link>
             </div>
+          )}
+          <div style={{ display: 'flex', flexDirection: 'column', paddingTop: '10px', fontSize: '20px', gap: '5px' }}>
+            {review.review}
             <div>Оценка: {review.rating}</div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
       <div ref={commentFormRef}>
         <h2>оставить комментарий</h2>
         <CommentForm movie_name={movie.name} movieId={movieId} rating={rating} />

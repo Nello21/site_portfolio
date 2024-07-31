@@ -1,0 +1,35 @@
+.resultContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.searchResult {
+  color: white;
+  font-size: 1.3em;
+  padding: 0 10px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.imageResult {
+  width: 70px;
+  height: 60px;
+  border-radius: 8px;
+}
+
+.searchResult:hover {
+  animation: squish 0.4s ease-in-out;
+}
+
+@keyframes squish {
+  50% {
+    scale: 1.15;
+  }
+}

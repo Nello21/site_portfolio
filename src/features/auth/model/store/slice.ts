@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { postAuthData, postRegisterData } from './effects';
 
@@ -10,13 +9,6 @@ type User = {
   token: string | null;
   avatar: string | null;
   favorite_movies: number[];
-};
-
-export type Review = {
-  movies_data_id: number | null;
-  user_id: number | null;
-  review: string | null;
-  rating: number | null;
 };
 
 type UserSliceState = {

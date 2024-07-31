@@ -1,86 +1,91 @@
 .headerContainer {
-  background-color: rgb(35, 32, 30);
   position: sticky;
+  padding: 10px;
   top: 0;
-  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  z-index: 100;
+  background-color: rgb(36, 38, 43);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: 'Franklin Gothic Medium';
+  transition: top 0.3s linear;
+}
+
+.hiddenNavbar {
+  position: sticky;
+  top: -86px;
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  transition: top 0.3s linear;
 }
 
 .leftSection {
+  padding-left: 10px;
   display: flex;
   align-items: center;
-  color: white;
+  color: azure;
   gap: 20px;
+  user-select: none;
 }
 
 .sideBar {
   display: block;
 }
 
+.burgerInput {
+  display: none;
+}
+
 .burgerButton {
-  color: azure;
-  font-size: 25px;
-  font-weight: 700;
-  background: none;
-  border: none;
-  cursor: pointer;
-  position: relative;
+  font-size: 26px;
+}
+
+.burgerInput:checked ~ .dropSideBar {
+  opacity: 1;
+}
+
+.dropSideBar {
+  opacity: 0;
+  backdrop-filter: blur(5px);
+  position: absolute;
+  top: calc(100%);
+  left: 10px;
+  border: 2px outset white;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 100%;
+  max-width: 230px;
+  max-height: 150px;
+  cursor: default;
+  pointer-events: none;
+  transition: opacity 0.35s ease-in-out;
+  pointer-events: auto;
+}
+
+.dropSideBarHide {
+  opacity: 0;
 }
 
 .siteName {
-  font-size: 25px;
+  color: azure;
+  font-size: 30px;
   font-weight: 600;
   padding-left: 10px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .siteName:hover {
-  text-shadow: 0 0 5px orange;
-  transition:
-    text-shadow 0.3s ease,
-    font-size 0.3s ease;
-  animation: squish 300ms ease-in-out;
-}
-
-@keyframes squish {
-  50% {
-    scale: 1.1;
-  }
+  transform: scale(1.1) translateX(10px);
+  animation: text-gradient 0.3s ease;
+  transition: transform 0.25s ease;
 }
 
 .centerSection {
   display: flex;
   align-items: center;
-}
-
-.searchInput {
-  padding: 5px;
-  margin-right: 10px;
-  border: none;
-  outline: 0;
-  border-radius: 10px;
-  background-color: darkgray;
-  width: 300px;
-  height: 25px;
-  box-shadow: 0;
-  transition:
-    box-shadow 0.3s ease-in-out,
-    background-color 0.25s ease-in-out;
-}
-
-.searchInput:hover {
-  box-shadow:
-    -2px -1px 8px rgba(179, 0, 255),
-    2px 1px 8px yellow;
-}
-
-.searchInput:focus {
-  background-color: aliceblue;
+  user-select: none;
 }
 
 .rightSection {
@@ -95,45 +100,36 @@
   cursor: pointer;
 }
 
-.dropSideBar {
-  opacity: 0;
-  position: absolute;
-  top: calc(100%);
-  left: 10px;
-  background-color: rgb(94, 93, 93);
-  border-radius: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  width: 100%;
-  max-width: 230px;
-  max-height: 150px;
-  cursor: default;
-  pointer-events: none;
-}
-
-.sideBarVisible {
-  opacity: 1;
-  transition: opacity 0.35s ease-in-out;
-  pointer-events: auto;
+.logInButton {
+  width: 100px;
+  height: auto;
+  text-align: center;
+  padding: 5%;
+  color: white;
+  font-size: 22px;
+  border-radius: 10px;
+  border: none;
+  background-color: darkmagenta;
 }
 
 .avatar {
-  width: 55px;
-  height: 55px;
+  width: 60px;
+  height: 60px;
   background-color: #ddd;
   border-radius: 50%;
   margin-right: 10px;
   cursor: pointer;
   position: relative;
   text-align: center;
+  user-select: none;
 }
 
 .dropMenu {
   position: absolute;
   top: -30%;
   right: -10%;
-  background-color: rgb(35, 32, 30);
   border-radius: 15px;
+  backdrop-filter: blur(5px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
   min-width: 150px;
@@ -149,34 +145,45 @@
   pointer-events: auto;
 }
 
+.dropMenuHide {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .menuHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
-  margin-left: 5px;
 }
 
 .menuAvatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
   margin-left: 5px;
-  background-color: #ddd;
-  border: 3px solid orange;
-  width: 65px;
-  height: 65px;
+  border: 3px solid transparent;
+  background: linear-gradient(100deg, darkmagenta 30%, darkblue 100%);
+  background-position: 55%;
+  background-size: 200px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
-  margin-right: 5px;
+  user-select: none;
 }
 
 .userName {
-  font-family: Arial;
   color: white;
-  font-size: 25px;
+  font-size: 28px;
+  position: relative;
 }
 
 .userEmail {
-  font-family: Arial;
   color: white;
-  font-size: 13px;
+  font-size: 18px;
+  padding-top: 2px;
 }
 
 .menuItem span {
@@ -187,10 +194,10 @@
   padding: 8px;
   cursor: pointer;
   color: white;
-  font-size: 18px;
-  font-family: Arial;
+  font-size: 23px;
   font-weight: bold;
   text-decoration: none;
+  user-select: none;
 }
 
 .link {
@@ -198,9 +205,10 @@
 }
 
 .menuItem span:hover {
-  color: darksalmon;
-  transition: color 0.3s ease-in;
-  animation: squish 0.3s ease-in-out;
+  transition:
+    color 0.3s ease-in,
+    text-shadow 0.3s ease-in;
+  animation: squish 0.4s ease-in-out;
 }
 
 .newPostButton {
@@ -209,29 +217,58 @@
 
 @keyframes squish {
   50% {
-    scale: 1.2;
+    scale: 1.1;
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
+  .centerSection {
+    padding-right: 100px;
+  }
+}
+
+@media (max-width: 1280px) {
   .burgerButton {
-    display: none;
+    display: var(--burgerVisible);
   }
 }
 
 @media (max-width: 768px) {
-  .headerContainer {
-    padding: 10px;
-  }
-
   .burgerButton {
     padding-left: 10px;
   }
 
-  .dropMenu {
-    top: 120%;
-    right: -50%;
+  .logInButton {
+    width: 70px;
+    height: auto;
+    padding: 5px 5px;
+    font-size: 18px;
+    border-radius: 5px;
   }
+
+  .dropSideBar {
+    padding: 5px;
+    width: 100%;
+    max-width: 150px;
+    max-height: 130px;
+  }
+
+  .menuItem span {
+    height: 20px;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .dropMenu {
+    top: 122%;
+    right: -15%;
+    border: 2px outset white;
+    padding: 10px;
+    min-width: 100px;
+    max-height: 150px;
+  }
+
   .siteName {
     display: none;
   }
@@ -241,13 +278,16 @@
   }
 
   .avatar {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
   }
 
   .menuAvatar {
-    width: 50px;
-    height: 50px;
+    display: none;
+  }
+
+  .menuHeader {
+    margin-bottom: 2px;
   }
 
   .userName {

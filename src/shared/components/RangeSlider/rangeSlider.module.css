@@ -1,39 +1,65 @@
 .container {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .box {
-    height: 60px;
-    width: 250px;
-    padding: 10px;
-    background-color: rgb(206, 206, 206);
-    border-radius: 10px;
-    box-shadow: 0 1px 4px rgba(18, 23, 33, .12);
+  height: 100%;
+  width: fit-content;
+  padding: 10px;
+  background-color: rgb(249, 249, 249);
+  border-radius: 15px;
+  box-shadow: 0 1px 4px rgba(18, 23, 33, 0.12);
 }
 
 .Years {
-    flex-direction: column;
-    padding-left: 6px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  width: 100%;
+  color: black;
+}
+
+.input {
+  max-width: 55px;
+  outline: none;
+  border-radius: 5px;
+  text-align: center;
+  outline: none;
+  border: none;
+  background: darkmagenta;
+  color: rgb(255, 255, 255);
 }
 
 .slider {
-    padding: 5px;
+  padding: 20px 0;
 }
 
 .sliderLine {
-    width: 100%;
-    height: 2px;
-    background-color: black;
-    margin-top: 10px;
+  display: flex;
+  align-items: center;
+  width: min(100%, 250px);
+}
+
+.track {
+  height: 10px;
+  background-color: lightgray;
+}
+.track-1 {
+  height: 10px;
+  background: salmon;
+}
+.track-2 {
+  height: 10px;
+  background: salmon;
 }
 
 .thumb {
-    z-index: 0;
-    top: -10px;
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    border-radius: 50%;
-    border: 2px solid orange;
-    background-color: orange;
+  width: 4px;
+  height: 25px;
+  background: darkmagenta;
+  cursor: grab;
+  outline: none;
+  z-index: 0;
 }
