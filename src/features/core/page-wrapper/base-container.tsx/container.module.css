@@ -5,6 +5,7 @@
   width: 100%;
   scroll-behavior: smooth;
   color: white;
+  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
