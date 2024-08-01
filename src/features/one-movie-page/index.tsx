@@ -45,6 +45,11 @@ export const OneMovieContent = () => {
     return user ? user.fullName : null;
   };
 
+  const getUserAvatarByReviewId = (id: number | null) => {
+    const user = users.find(user => user.id === id);
+    return user ? user.avatar : null;
+  };
+
   useEffect(() => {
     if (id) {
       dispatch(fetchAllUsers());
@@ -167,7 +172,7 @@ export const OneMovieContent = () => {
       <h2>Отзывы</h2>
       {reviews.map((review, index) => (
         <div className={styles.comments} key={index}>
-          {review.user_id && (
+          {review && (
             <div>
               <Link
                 to={`${ROUTES.userProfile}/${review.user_id}`}
@@ -180,7 +185,7 @@ export const OneMovieContent = () => {
                 }}
               >
                 <img
-                  src={String()}
+                  src={String(getUserAvatarByReviewId(review.user_id))}
                   alt="Avatar"
                   style={{ width: '50px', height: '50px', borderRadius: '50%' }}
                   className={styles.image}
@@ -193,7 +198,20 @@ export const OneMovieContent = () => {
           )}
           <div style={{ display: 'flex', flexDirection: 'column', paddingTop: '10px', fontSize: '20px', gap: '5px' }}>
             {review.review}
-            <div>Оценка: {review.rating}</div>
+            <div style={{ fontFamily: 'Teko', fontSize: ' 20px' }}>
+              Оценка:{' '}
+              <span
+                style={
+                  review.rating && review.rating > 7
+                    ? { color: 'green' }
+                    : review.rating && review.rating >= 5
+                      ? { color: 'goldenrod' }
+                      : { color: 'red' }
+                }
+              >
+                {review.rating}
+              </span>
+            </div>
           </div>
         </div>
       ))}

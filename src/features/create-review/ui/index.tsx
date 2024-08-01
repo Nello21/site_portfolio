@@ -31,15 +31,12 @@ export const CommentForm = ({ movie_name, movieId, rating }: any) => {
   }, [rating]);
 
   const handleSubmit = (values: FormData, actions: any) => {
-    const { review, rating } = values;
-    dispatch(createComment({ movies_data_id: movieId, movie_name, review, rating })).then(() => {
+    const { review } = values;
+    console.log('tam', review);
+    dispatch(createComment({ movies_data_id: movieId, movie_name, review, rating: formRating })).then(() => {
       actions.resetForm();
       dispatch(fetchReviews(String(movieId)));
     });
-  };
-
-  const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormRating(parseInt(event.target.value));
   };
 
   return (
@@ -56,14 +53,16 @@ export const CommentForm = ({ movie_name, movieId, rating }: any) => {
               <div className={styles.formField}>
                 <Field type="text" name="review" placeholder="Введите комментарий" className={styles.inputField} />
               </div>
-              <div className={styles.formField}>
+              <div className={styles.ratingSection}>
                 Ваша оценка:
                 <Field
+                  className={styles.rating}
+                  style={
+                    formRating > 7 ? { color: 'green' } : formRating >= 5 ? { color: 'goldenrod' } : { color: 'red' }
+                  }
                   type="number"
                   name="rating"
                   placeholder="Поставьте оценку"
-                  className={styles.inputRatingField}
-                  onChange={handleRatingChange}
                   value={formRating}
                 />
               </div>
