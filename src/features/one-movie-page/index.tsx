@@ -52,7 +52,7 @@ export const OneMovieContent = () => {
       dispatch(fetchReviews(id));
     }
 
-    if (favoriteMovieIds !== null) {
+    if (id && favoriteMovieIds && favoriteMovieIds !== null) {
       setIsFavorite(favoriteMovieIds.includes(Number(id)));
     }
 
