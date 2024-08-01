@@ -8,11 +8,11 @@ import { getUserComments } from 'features/auth/model/store/reviewsSlice';
 import { Loader } from 'shared/components/Loader/loader';
 import { getAllCinema } from 'store/cinema/slice';
 import { getCinema } from 'store/cinema/effects';
-import styles from './userProfile.module.css';
 import { AvatarModal } from 'features/avatar-upload/ui';
 import { changeAvatar } from 'features/avatar-upload/model/store/effects';
 import { getAuthUser, getAuthUserToken, userActions } from 'features/auth/model/store/slice';
 import { setStorageItem, STORAGE_KEY } from 'services/storage';
+import styles from './userProfile.module.css';
 
 export const UserPage = () => {
   const { id } = useParams();

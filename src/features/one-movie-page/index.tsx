@@ -4,11 +4,11 @@ import { getMovieIsLoading, getMovie, clearMovieStore } from 'store/cinema/oneMo
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { getOneMovie } from 'store/cinema/effects';
-import { fetchReviews, fetchAllUsers } from 'features/auth/model/store/effects';
+import { fetchReviews, fetchAllUsers, fetchUser } from 'features/auth/model/store/effects';
 import { ROUTES } from 'router/routes';
 import { CommentForm } from 'features/create-review/ui';
 import { addFavoriteMovie, deleteFavoriteMovie } from 'features/favorite-movies/model/store/effects';
-import { getAuthUserToken } from 'features/auth/model/store/slice';
+import { getAuthUser, getAuthUserToken } from 'features/auth/model/store/slice';
 import { getUserFavoriteMovies } from 'features/auth/model/store/userProfileSlice';
 import clsx from 'clsx';
 import StarSVG from 'shared/assets/icons/star.svg';
@@ -26,6 +26,7 @@ export const OneMovieContent = () => {
   const reviews = useSelector(getReviews);
   const isLoading = useSelector(getMovieIsLoading);
   const favoriteMovieIds = useSelector(getUserFavoriteMovies);
+  console.log(favoriteMovieIds);
 
   const token = useSelector(getAuthUserToken);
 
@@ -52,6 +53,7 @@ export const OneMovieContent = () => {
 
   useEffect(() => {
     if (id) {
+      // dispatch(fetchUser());
       dispatch(fetchAllUsers());
       dispatch(getOneMovie(id));
       dispatch(fetchReviews(id));
@@ -67,7 +69,6 @@ export const OneMovieContent = () => {
   }, [dispatch, id, favoriteMovieIds]);
 
   if (isLoading) return <Loader />;
-  if (!favoriteMovieIds) return <div>ошибка</div>;
   if (!movie) return <div>Нет данных</div>;
 
   const handleToggleFavorite = () => {

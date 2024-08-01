@@ -33,7 +33,10 @@ export const FavoriteMovies = () => {
   return (
     <div className={styles.favoriteMoviesContainer}>
       <h2>Избранные фильмы</h2>
-      <ul className={styles.favoriteMoviesList}>
+      <ul
+        className={styles.favoriteMoviesList}
+        style={favoriteMovieId.length === 1 ? { display: 'flex', width: 'min(100%,1000px)' } : {}}
+      >
         {favoriteMovies.map(movie => (
           <li key={movie.id} className={styles.favoriteMovieItem}>
             <CinemaOneCard card={movie} className={styles.movieImage} />

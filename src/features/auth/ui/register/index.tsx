@@ -41,6 +41,7 @@ export const RegisterForm = () => {
           email: '',
           password: '',
           avatar: '',
+          favorite_movies: [],
         }}
         validationSchema={registerScheme}
         onSubmit={handleSubmit}

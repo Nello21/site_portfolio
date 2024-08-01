@@ -47,4 +47,5 @@ export type RegisterRequestData = {
   email: string;
   password: string;
   avatar: string;
+  favorite_movies: number[];
 };
