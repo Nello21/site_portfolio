@@ -65,7 +65,7 @@ export const Carousel3d = ({ cards }: { cards: cinemaData[] }) => {
           {
             transform: `perspective(1000px) rotateX(${nextDegreeY}deg) rotateY(${nextDegreeX}deg)`,
           },
-          window.innerWidth > 768 ? { duration: 5000 } : { duration: 2000 },
+          { duration: 5000 },
         );
       }
     },

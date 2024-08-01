@@ -108,7 +108,7 @@ export const Slider = ({ cards }: { cards: cinemaData[] }) => {
           {
             transform: `translate(${nextPercentage}%)`,
           },
-          windowWidth > 768 ? { duration: 1200, fill: 'forwards' } : { duration: 600, fill: 'forwards' },
+          { duration: 1200, fill: 'forwards' },
         );
 
         for (const image of trackRef.current.getElementsByClassName(styles.image)) {
@@ -116,12 +116,12 @@ export const Slider = ({ cards }: { cards: cinemaData[] }) => {
             {
               objectPosition: `${100 + nextPercentage}% center`,
             },
-            windowWidth > 768 ? { duration: 1200, fill: 'forwards' } : { duration: 600, fill: 'forwards' },
+            { duration: 1200, fill: 'forwards' },
           );
         }
       }
     },
-    [isDragging, startX, prevPercentage, maxPercentage, windowWidth],
+    [isDragging, startX, prevPercentage, maxPercentage],
   );
 
   useEffect(() => {
