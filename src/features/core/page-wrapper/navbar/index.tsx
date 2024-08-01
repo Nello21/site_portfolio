@@ -15,7 +15,7 @@ export const Header = () => {
   const token = useSelector(getAuthUserToken);
   const user = useSelector(getAuthUser);
 
-  const [isDropMenuHovered, setIsDropMenuHovered] = useState(false);
+  const [isDropMenuOpen, setIsDropMenuOpen] = useState(false);
   const DropMenuRef = useRef<HTMLDivElement>(null);
   const burgerRef = useRef<HTMLLabelElement>(null);
 
@@ -54,7 +54,7 @@ export const Header = () => {
   }, [hideBurgerButton, location.pathname]);
 
   const handleMouseEnterMenu = () => {
-    setIsDropMenuHovered(true);
+    setIsDropMenuOpen(true);
     DropMenuRef.current?.focus();
   };
 
@@ -64,12 +64,12 @@ export const Header = () => {
 
   const hideDropMenuOnBlur = useCallback((e: any) => {
     if (e && !e.relatedTarget) {
-      setIsDropMenuHovered(false);
+      setIsDropMenuOpen(false);
     }
   }, []);
 
   const handleMouseLeaveMenu = (e: any) => {
-    setIsDropMenuHovered(false);
+    setIsDropMenuOpen(false);
   };
 
   const burgerAnimation = () => {
@@ -90,7 +90,7 @@ export const Header = () => {
         <input
           type="checkbox"
           checked={checked}
-          onClick={() => setChecked(!checked)}
+          onChange={() => setChecked(!checked)}
           className={styles.burgerInput}
           id="burgerButton"
         />
@@ -112,10 +112,12 @@ export const Header = () => {
           {token ? (
             <img src={String(user.avatar)} className={styles.avatar} />
           ) : (
-            <button className={styles.logInButton}>Аккаунт</button>
+            <button className={styles.logInButton} onClick={() => setIsDropMenuOpen(!isDropMenuOpen)}>
+              Аккаунт
+            </button>
           )}
           <div
-            className={clsx(styles.dropMenu, { [styles.dropMenuVisible]: isDropMenuHovered })}
+            className={clsx(styles.dropMenu, { [styles.dropMenuVisible]: isDropMenuOpen })}
             onMouseLeave={handleMouseLeaveMenu}
             onBlur={hideDropMenuOnBlur}
             ref={DropMenuRef}

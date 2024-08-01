@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  color: black;
 }
 
 .moviesContainer {
@@ -48,7 +49,11 @@
 
 .selectSection {
   padding-left: 55px;
-  width: min(280px, 80%);
+  width: min(310px, 100%);
+}
+
+.ratingSelect {
+  width: 70%;
 }
 
 .searchInput {

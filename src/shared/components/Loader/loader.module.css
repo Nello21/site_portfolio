@@ -12,3 +12,9 @@
     top: 10%;
   }
 }
+@media (max-width: 400px) {
+  .loader {
+    left: 14%;
+    top: 10%;
+  }
+}

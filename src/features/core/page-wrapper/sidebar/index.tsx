@@ -11,8 +11,6 @@ export const Sidebar = () => {
     const sidebar = sidebarRef.current;
     if (sidebar && (location.pathname === '/navigator' || location.pathname === '/')) {
       sidebar.style.display = 'none';
-    } else if (sidebar) {
-      sidebar.style.display = 'block';
     }
   }, [location.pathname]);
 

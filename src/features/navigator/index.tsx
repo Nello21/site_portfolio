@@ -234,6 +234,7 @@ export const NavigatorPage = () => {
             <div className={styles.checkboxContainer}>
               <input
                 type="checkbox"
+                id="show-movies"
                 name="show-movies"
                 className={styles.checkboxInput}
                 checked={showMovies}
@@ -247,6 +248,7 @@ export const NavigatorPage = () => {
             <div className={styles.checkboxContainer}>
               <input
                 type="checkbox"
+                id="show-series"
                 name="show-series"
                 className={styles.checkboxInput}
                 checked={showSerials}
@@ -278,6 +280,7 @@ export const NavigatorPage = () => {
             <div className={styles.checkboxContainer}>
               <input
                 type="checkbox"
+                id="only-selected-genres"
                 name="only-selected-genres"
                 className={styles.checkboxInput}
                 checked={onlySelectedGenres}
@@ -289,6 +292,7 @@ export const NavigatorPage = () => {
               <Tick className={clsx(styles.tick, { [styles.checkedTick]: isGenresChecked })} />
             </div>
             <Select
+              className={styles.ratingSelect}
               styles={customStyles}
               placeholder="По рейтингу"
               onChange={handleSortRatingChange}
