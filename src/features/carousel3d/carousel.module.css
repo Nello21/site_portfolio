@@ -64,31 +64,32 @@
 }
 @media (max-width: 540px) {
   .banner .slider {
-    width: 110px;
-    height: 120px;
-    left: calc(50% - 60px);
+    width: 90px;
+    height: 80px;
+    left: calc(50% - 45px);
+    top: 16%;
   }
 
   .banner .slider .item .image {
-    height: 95px;
+    height: 70px;
   }
 
   .banner .slider .item {
-    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(300px);
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(240px);
   }
 }
 @media (max-width: 340px) {
   .banner .slider {
     width: 85px;
-    height: 70px;
+    height: 50px;
     left: calc(50% - 40px);
   }
 
   .banner .slider .item .image {
-    height: 70px;
+    height: 65px;
   }
 
   .banner .slider .item {
-    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(200px);
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(210px);
   }
 }

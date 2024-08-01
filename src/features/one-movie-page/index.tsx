@@ -118,13 +118,13 @@ export const OneMovieContent = () => {
           <img src={movie.image} alt="Постер" className={styles.poster} />
 
           <div className={styles.ratingSection}>
-            <div style={{ fontSize: '20px' }}>Рейтинг: </div>
+            <div className={styles.ratingLabel}>Рейтинг</div>
             <div className={styles.rating}>{renderStarRating()}</div>
           </div>
 
           {token ? (
             <div className={styles.favoriteButtonContainer}>
-              <div className={styles.favoriteButtonLabel}>Добавить в избранное: </div>
+              <div className={styles.favoriteButtonLabel}>Добавить в избранное </div>
               <div className={styles.favoriteButton} onClick={handleToggleFavorite}>
                 <HeartSVG
                   width="32"

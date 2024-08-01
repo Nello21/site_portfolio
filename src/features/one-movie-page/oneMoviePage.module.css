@@ -59,6 +59,17 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: large;
+  font-weight: bold;
+}
+
+.ratingLabel {
+  font-size: 20px;
+  background-color: blueviolet;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 .star {
@@ -128,6 +139,9 @@
 .favoriteButtonLabel {
   margin-right: 10px;
   font-size: 20px;
+  background-color: blueviolet;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 .heartButton {
