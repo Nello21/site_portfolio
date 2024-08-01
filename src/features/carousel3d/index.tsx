@@ -60,13 +60,18 @@ export const Carousel3d = ({ cards }: { cards: cinemaData[] }) => {
       console.log('new', newDegreeY);
       console.log('next', nextDegreeY);
 
-      if (track) {
-        track.animate(
-          {
-            transform: `perspective(1000px) rotateX(${nextDegreeY}deg) rotateY(${nextDegreeX}deg)`,
-          },
-          { duration: 5000 },
-        );
+      if (track && window.innerWidth <= 768) {
+        track.style.transform = `perspective(1000px) rotateX(${nextDegreeY}deg) rotateY(${nextDegreeX}deg)`;
+        track.style.transition = 'transform 0.25s ease';
+      } else {
+        if (track) {
+          track.animate(
+            {
+              transform: `perspective(1000px) rotateX(${nextDegreeY}deg) rotateY(${nextDegreeX}deg)`,
+            },
+            { duration: 5000 },
+          );
+        }
       }
     },
     [isDragging, startX, startY, prevDegreeX, prevDegreeY],
