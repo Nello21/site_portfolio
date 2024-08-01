@@ -64,7 +64,7 @@
 }
 @media (max-width: 540px) {
   .banner .slider {
-    width: 10px;
+    width: 100px;
     height: 80px;
     left: calc(50% - 45px);
     top: 16%;
