@@ -25,7 +25,7 @@ export const MainPage = () => {
   const handleScroll = useCallback(() => {
     if (backgroundRef.current) {
       const scrollPosition = window.scrollY;
-      backgroundRef.current.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+      backgroundRef.current.style.transform = `translateY(${scrollPosition * 0.4}px)`;
     }
   }, []);
 
