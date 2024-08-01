@@ -99,14 +99,16 @@ export const Carousel3d = ({ cards }: { cards: cinemaData[] }) => {
   }, [isDragging, handleOnMove, handleOnUp]);
 
   return (
-    <div
-      className={styles.banner}
-      onMouseDown={handleOnDown}
-      onTouchStart={handleOnDown}
-      onMouseMove={handleOnMove}
-      onTouchMove={handleOnMove}
-    >
-      <div className={styles.slider} style={{ '--quantity': 12 } as CSSProperties} ref={sliderRef}>
+    <div className={styles.banner}>
+      <div
+        className={styles.slider}
+        style={{ '--quantity': 12 } as CSSProperties}
+        onMouseDown={handleOnDown}
+        onTouchStart={handleOnDown}
+        onMouseMove={handleOnMove}
+        onTouchMove={handleOnMove}
+        ref={sliderRef}
+      >
         {cards.map(card => (
           <div className={styles.item} key={card.id} style={{ '--position': card.id } as CSSProperties}>
             <CinemaOneCard card={card} className={styles.image} hasMoved={hasMoved} />
