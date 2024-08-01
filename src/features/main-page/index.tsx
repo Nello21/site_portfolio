@@ -15,9 +15,6 @@ export const MainPage = () => {
   const serials = allCinema.filter(item => item.type === 'Сериал');
   const movies = findTopRatedLastMonth(allCinema.filter(item => item.type === 'Фильм'));
 
-  console.log('Movies:', movies);
-  console.log('Serials:', serials);
-
   const isLoading = useSelector(getCinemaIsLoading);
 
   const backgroundRef = useRef<HTMLDivElement>(null);
