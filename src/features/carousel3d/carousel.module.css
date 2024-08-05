@@ -66,7 +66,7 @@
   .banner .slider {
     width: 120px;
     height: 80px;
-    left: calc(50% - 45px);
+    left: calc(50% - 60px);
     top: 16%;
   }
 
@@ -75,21 +75,21 @@
   }
 
   .banner .slider .item {
-    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(260px);
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(280px);
   }
 }
 @media (max-width: 340px) {
   .banner .slider {
-    width: 95px;
+    width: 100px;
     height: 50px;
-    left: calc(50% - 40px);
+    left: calc(50% - 50px);
   }
 
   .banner .slider .item .image {
-    height: 75px;
+    height: 80px;
   }
 
   .banner .slider .item {
-    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(230px);
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(240px);
   }
 }
