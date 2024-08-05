@@ -64,14 +64,14 @@
 }
 @media (max-width: 540px) {
   .banner .slider {
-    width: 110px;
+    width: 120px;
     height: 80px;
     left: calc(50% - 45px);
     top: 16%;
   }
 
   .banner .slider .item .image {
-    height: 90px;
+    height: 100px;
   }
 
   .banner .slider .item {
@@ -80,13 +80,13 @@
 }
 @media (max-width: 340px) {
   .banner .slider {
-    width: 90px;
+    width: 95px;
     height: 50px;
     left: calc(50% - 40px);
   }
 
   .banner .slider .item .image {
-    height: 70px;
+    height: 75px;
   }
 
   .banner .slider .item {
