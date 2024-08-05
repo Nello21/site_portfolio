@@ -7,61 +7,61 @@ export const Footer = () => {
         <div className={styles.container}>
           <div className={styles.row}>
             <div className={styles.footerCol}>
-              <h4>company</h4>
+              <h4>Компания</h4>
               <ul>
                 <li>
-                  <a href="#">about us</a>
+                  <a href="#">о нас</a>
                 </li>
                 <li>
-                  <a href="#">our services</a>
+                  <a href="#">наши сервесы</a>
                 </li>
                 <li>
-                  <a href="#">privacy policy</a>
+                  <a href="#">политика конфиденциальности</a>
                 </li>
                 <li>
-                  <a href="#">affiliate program</a>
+                  <a href="#">партнерская программа</a>
                 </li>
               </ul>
             </div>
             <div className={styles.footerCol}>
-              <h4>get help</h4>
+              <h4>Помощь</h4>
               <ul>
                 <li>
                   <a href="#">FAQ</a>
                 </li>
                 <li>
-                  <a href="#">shipping</a>
+                  <a href="#">подписка</a>
                 </li>
                 <li>
-                  <a href="#">returns</a>
+                  <a href="#">возврат</a>
                 </li>
                 <li>
-                  <a href="#">order status</a>
+                  <a href="#">аккаунт</a>
                 </li>
                 <li>
-                  <a href="#">payment options</a>
+                  <a href="#">поддержка</a>
                 </li>
               </ul>
             </div>
             <div className={styles.footerCol}>
-              <h4>online shop</h4>
+              <h4>Просмотр</h4>
               <ul>
                 <li>
-                  <a href="#">watch</a>
+                  <a href="#">билеты</a>
                 </li>
                 <li>
-                  <a href="#">bag</a>
+                  <a href="#">все фильмы</a>
                 </li>
                 <li>
-                  <a href="#">shoes</a>
+                  <a href="#">все сериалы</a>
                 </li>
                 <li>
-                  <a href="#">dress</a>
+                  <a href="#">акции</a>
                 </li>
               </ul>
             </div>
             <div className={styles.footerCol}>
-              <h4>follow us</h4>
+              <h4>Подпишись на нас</h4>
               <div className={styles.socialLinks}>
                 <a href="#">
                   <i className="fa-brands fa-facebook-f"></i>

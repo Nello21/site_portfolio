@@ -9,8 +9,10 @@ export const Sidebar = () => {
 
   useEffect(() => {
     const sidebar = sidebarRef.current;
-    if (sidebar && (location.pathname === '/navigator' || location.pathname === '/')) {
-      sidebar.style.display = 'none';
+    if (sidebar && window.scrollY >= 350 && window.innerWidth <= 1280) {
+      sidebar.style.width = '0';
+    } else if (sidebar) {
+      sidebar.style.width = '200px';
     }
   }, [location.pathname]);
 

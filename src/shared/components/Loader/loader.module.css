@@ -1,20 +1,18 @@
 .loader {
   position: absolute;
-  left: 42.5%;
-  top: 20%;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
   background-color: transparent;
   z-index: 2;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 1280px) {
   .loader {
-    left: 20%;
-    top: 10%;
-  }
-}
-@media (max-width: 400px) {
-  .loader {
-    left: 14%;
-    top: 10%;
+    display: block;
+    top: 20%;
+    left: 42.5%;
+    width: auto;
   }
 }

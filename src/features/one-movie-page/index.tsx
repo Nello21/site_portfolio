@@ -53,7 +53,6 @@ export const OneMovieContent = () => {
 
   useEffect(() => {
     if (id) {
-      // dispatch(fetchUser());
       dispatch(fetchAllUsers());
       dispatch(getOneMovie(id));
       dispatch(fetchReviews(id));
