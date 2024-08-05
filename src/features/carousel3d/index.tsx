@@ -62,14 +62,14 @@ export const Carousel3d = ({ cards }: { cards: cinemaData[] }) => {
 
       if (track && window.innerWidth <= 768) {
         track.style.transform = `perspective(1000px) rotateX(${nextDegreeY}deg) rotateY(${nextDegreeX}deg)`;
-        track.style.transition = 'transform 0.25s ease';
+        track.style.transition = 'transform 0.3s ease';
       } else {
         if (track) {
           track.animate(
             {
               transform: `perspective(1000px) rotateX(${nextDegreeY}deg) rotateY(${nextDegreeX}deg)`,
             },
-            { duration: 5000 },
+            { duration: 4000, fill: 'forwards' },
           );
         }
       }

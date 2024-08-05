@@ -25,7 +25,7 @@ export const Slider = ({ cards }: { cards: cinemaData[] }) => {
     if (track) {
       const visibleWidth = track.clientWidth;
       const imageWidth = (visibleWidth - (imageQuantity - 1) * gap) / imageQuantity;
-      const imageHeight = imageWidth * 1.2;
+      const imageHeight = imageWidth * 1.25;
 
       track.style.height = `${imageHeight}px`;
 
@@ -103,12 +103,12 @@ export const Slider = ({ cards }: { cards: cinemaData[] }) => {
       const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), maxPercentage);
       setPercentage(nextPercentage);
 
-      if (trackRef.current) {
+      if (trackRef.current && windowWidth > 1280) {
         trackRef.current.animate(
           {
             transform: `translate(${nextPercentage}%)`,
           },
-          { duration: 1200, fill: 'forwards' },
+          { duration: 1500, fill: 'forwards' },
         );
 
         for (const image of trackRef.current.getElementsByClassName(styles.image)) {
@@ -116,12 +116,23 @@ export const Slider = ({ cards }: { cards: cinemaData[] }) => {
             {
               objectPosition: `${100 + nextPercentage}% center`,
             },
-            { duration: 1200, fill: 'forwards' },
+            { duration: 1500, fill: 'forwards' },
           );
+        }
+      } else if (trackRef.current) {
+        trackRef.current.style.transform = `translate(${nextPercentage}%)`;
+        trackRef.current.style.transition = 'transform 0.8s ease-in-out';
+
+        const images = trackRef.current.getElementsByClassName(styles.image);
+
+        for (const image of images) {
+          const htmlImage = image as HTMLElement;
+          htmlImage.style.objectPosition = `${100 + nextPercentage}% center`;
+          htmlImage.style.transition = 'object-position 0.8s ease-in';
         }
       }
     },
-    [isDragging, startX, prevPercentage, maxPercentage],
+    [isDragging, startX, prevPercentage, maxPercentage, windowWidth],
   );
 
   useEffect(() => {

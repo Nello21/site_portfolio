@@ -105,8 +105,8 @@
     padding-left: 5vh;
   }
   .content {
-    padding: 3vmin 0;
-    gap: 3vmin;
+    padding: 1vmin 0;
+    gap: 1vmin;
   }
 }
 @media (max-width: 540px) {
