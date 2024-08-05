@@ -61,7 +61,7 @@ export const Footer = () => {
               </ul>
             </div>
             <div className={styles.footerCol}>
-              <h4>Подпишись на нас</h4>
+              <h4>Контакты и соцсети</h4>
               <div className={styles.socialLinks}>
                 <a href="#">
                   <i className="fa-brands fa-facebook-f"></i>

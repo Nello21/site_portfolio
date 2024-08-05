@@ -35,7 +35,7 @@ export const MainPage = () => {
     };
   }, [dispatch, handleScroll]);
 
-  if (!isLoading) return <Loader />;
+  if (isLoading) return <Loader />;
   if (!(movies && serials)) return <div>Нет данных</div>;
 
   return (
