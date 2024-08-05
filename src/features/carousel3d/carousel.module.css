@@ -75,7 +75,7 @@
   }
 
   .banner .slider .item {
-    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(250px);
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(260px);
   }
 }
 @media (max-width: 340px) {
@@ -90,6 +90,6 @@
   }
 
   .banner .slider .item {
-    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(220px);
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(230px);
   }
 }
