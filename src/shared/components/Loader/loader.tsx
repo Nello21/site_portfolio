@@ -1,10 +1,12 @@
 import { FireRing } from 'shared/animations/fire-ring/fire-ring';
-import style from './loader.module.css';
+import styles from './loader.module.css';
 
 export const Loader = () => {
   return (
-    <div className={style.loader}>
-      <FireRing />
+    <div className={styles.container}>
+      <div className={styles.loader}>
+        <FireRing />
+      </div>
     </div>
   );
 };
